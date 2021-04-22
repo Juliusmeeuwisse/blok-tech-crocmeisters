@@ -1,10 +1,10 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const expressHandlebars  = require('express-handlebars');
+const xhbs  = require('express-handlebars');
 
 
-app.engine('handlebars', expressHandlebars());
+app.engine('handlebars', xhbs());
 app.set('view engine', 'handlebars');
 
 app.get('/', function (req, res) {
@@ -13,12 +13,12 @@ app.get('/', function (req, res) {
 
 
 app.get('/settings', (req, res) => {
-    res.send('settings')
+    res.render('settings')
   })
 
 
 app.get('/myprofile', (req, res) => {
-    res.send('my profile')
+    res.render('profile')
 
 })
 
@@ -30,5 +30,5 @@ app.use(function (req, res, next) {
 
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`listening at http://localhost:${port}`)
 })
