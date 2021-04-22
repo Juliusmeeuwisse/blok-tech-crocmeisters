@@ -1,15 +1,16 @@
 const express = require('express')
 const app = express()
 const port = 3000
-
-const Handlebars = require("handlebars");
-const template = Handlebars.compile("Name: {{name}}");
+const expressHandlebars  = require('express-handlebars');
 
 
-app.get('/', (req, res) => {
-  res.send('<h1> Welcome {name} <h1/>')
-  console.log(template({ name: "joeri" }));
-})
+app.engine('handlebars', expressHandlebars());
+app.set('view engine', 'handlebars');
+
+app.get('/', function (req, res) {
+    res.render('home');
+});
+
 
 app.get('/settings', (req, res) => {
     res.send('settings')
