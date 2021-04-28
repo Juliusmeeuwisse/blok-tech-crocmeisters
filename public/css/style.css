@@ -1,0 +1,10 @@
+html,
+body{
+    background-color: pink;
+}
+
+header{
+    display: flex;
+    justify-content: space-around;
+    background-color: #69e695;
+}
