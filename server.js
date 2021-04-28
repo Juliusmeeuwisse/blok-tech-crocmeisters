@@ -12,6 +12,7 @@ app.get('/', function (req, res) {
 });
 
 
+
 app.get('/settings', (req, res) => {
     res.render('settings')
   })
