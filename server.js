@@ -13,13 +13,13 @@ app.get('/', function (req, res) {
 
 
 
-app.get('/settings', (req, res) => {
-    res.render('settings')
+app.get('/login', (req, res) => {
+    res.render('login')
   })
 
 
-app.get('/myprofile', (req, res) => {
-    res.render('profile')
+app.get('/match', (req, res) => {
+    res.render('match')
 
 })
 
