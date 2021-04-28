@@ -3,30 +3,36 @@ const express = require('express')
 const app = express()
 const port = 3000
 const path = require('path')
-const xhbs  = require('express-handlebars');
+const hbs = require('express-handlebars');
 
 
-app.engine('handlebars', xhbs());
-app.set('views', path.join(__dirname, 'views'));
+app.engine('handlebars', hbs({
+  layoutsDir: __dirname + '/views/layouts',}));
+// app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'main', layoutsDir: __dirname + '/views/layouts/'}))
 app.set('view engine', 'handlebars');
 
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static('public'));
 
-app.get('/', function (req, res) {
-    res.render('home');
-});
+// app.get('/', function (req, res) {
+//     res.render('home');
+// });
+
+app.get('/', (req, res) => {
+  //Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"
+  res.render('home', {layout : 'main'});
+  });
 
 
 
 app.get('/login', (req, res) => {
-    res.render('login')
-  })
+    res.render('login');
+  });
 
 
 app.get('/match', (req, res) => {
-    res.render('match')
+    res.render('match');
 
-})
+});
 
 
 app.use(function (req, res, next) {
