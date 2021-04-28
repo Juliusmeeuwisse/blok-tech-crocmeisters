@@ -1,46 +1,20 @@
-// import dependecies
-const express = require('express')
-const app = express()
-const port = 3000
-const path = require('path')
-const hbs = require('express-handlebars');
-
-
-app.engine('handlebars', hbs({
-  layoutsDir: __dirname + '/views/layouts',}));
-// app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'main', layoutsDir: __dirname + '/views/layouts/'}))
-app.set('view engine', 'handlebars');
-
-app.use(express.static('public'));
-
-// app.get('/', function (req, res) {
-//     res.render('home');
-// });
-
+const express = require('express');
+const app = express();
+const port = 3000;
+//Loads the handlebars module
+const handlebars = require('express-handlebars');
+//Sets our app to use the handlebars engine
+app.set('view engine', 'hbs');
+//Sets handlebars configurations (we will go through them later on)
+app.engine('hbs', handlebars({
+  layoutsDir: __dirname + '/views/layouts',
+  //new configuration parameter
+  extname: 'hbs', defaultLayout: 'index',
+  }));
+app.use(express.static('public/'))
 app.get('/', (req, res) => {
-  //Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"
-  res.render('home', {layout : 'main'});
-  });
-
-
-
-app.get('/login', (req, res) => {
-    res.render('login');
-  });
-
-
-app.get('/match', (req, res) => {
-    res.render('match');
-
+//Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"
+res.render('main');
 });
 
-
-app.use(function (req, res, next) {
-    res.status(404).send("404 Page not found")
-  })
-
-
-
-app.listen(port, () => {
-  console.log(`listening at http://localhost:${port}`)
-})
+app.listen(port, () => console.log(`App listening to port ${port}`));
