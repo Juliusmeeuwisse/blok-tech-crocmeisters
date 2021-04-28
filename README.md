@@ -19,7 +19,7 @@ The application is still under construction, more information about installation
 
 ## Author and collaborators
 
-J. Bouwman: [https://github.com/joeriBouwman25](joeriBouwman25)
+J. Bouwman: [joeriBouwman25](https://github.com/joeriBouwman25)
 
 Later on in the project I will collaborate with other students to make a full working application.
 
