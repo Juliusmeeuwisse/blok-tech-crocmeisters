@@ -14,8 +14,26 @@ app.listen(port, () => {
   console.log(`Server running!`)
 })
 
+fakeApi = () => {
+  return {
+      name: 'John F.',
+      song1: {
+        title: 'Maggot Brain',
+        artist: 'Funkadelic'
+      },
+      song2:{
+        title: 'The Musical Box',
+        artist: 'Genesis'
+      },
+      song3: {
+        title: 'Tiny Dancer',
+        artist: 'Elton John'
+      }
+  };
+}
+
 app.get('/', (req, res) => {
-  res.render('home');
+  res.render('home',{userProfile: fakeApi()});
   });
 
 
