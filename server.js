@@ -3,6 +3,11 @@ const express = require('express')
 const app = express()
 const port = 3000
 const handlebars = require('express-handlebars');
+const request = require('request');
+const cors = require('cors');
+const querystring = require('querystring');
+const cookieParser = require('cookie-parser');
+
 
 app.set('view engine', 'hbs');
 app.set('views', 'views');
