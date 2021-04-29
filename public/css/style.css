@@ -1,5 +1,58 @@
 header {
     display: flex;
     justify-content: space-evenly;
-    background-color: pink;
+    background-color: #1DB954;
+}
+
+article {
+    display: flex;
+}
+
+section article img{
+    position: relative;
+    width: 12em;
+    height: 12em;
+    margin: .1em;
+}
+
+section:first-of-type{
+    display:flex;
+    flex-wrap: wrap;
+    min-width: 400px;
+    justify-content: center;
+}
+
+section article button{
+    position: absolute;
+}
+
+section:nth-of-type(2){
+
+}
+
+section:nth-of-type(2) form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+section:nth-of-type(2) form img {
+    width: 2.5em;
+}
+footer {
+    background-color: #1DB954;
+}
+
+footer nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+footer img {
+    width: 3em;
+}
+
+footer a {
+    display: flex;
+    flex-direction: column; 
 }
