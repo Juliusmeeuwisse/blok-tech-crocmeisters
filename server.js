@@ -19,54 +19,67 @@ app.listen(port, () => {
 const users = [
   {
     name: 'John Frusciante',
+    picture: '/images/john frusciante.jpeg',
     song1: {
       title: 'Maggot Brain',
-      artist: 'Funkadelic'
+      artist: 'Funkadelic',
+      albumArt: '/images/albumArt/maggot brain.jpeg'
     },
     song2:{
       title: 'The Musical Box',
-      artist: 'Genesis'
+      artist: 'Genesis',
+      albumArt: '/images/albumArt/nursery cryme.jpeg'
     },
     song3: {
       title: 'Tiny Dancer',
-      artist: 'Elton John'
+      artist: 'Elton John',
+      albumArt: '/images/albumArt/madman across the water.jpeg'
     }
 },
 {
   name: 'Thom Yorke',
+  picture: '/images/thom yorke.jpg',
   song1: {
     title: 'Psycho Killer',
-    artist: 'Talking Heads'
+    artist: 'Talking Heads',
+    albumArt: '/images/albumArt/77.jpg'
   },
   song2:{
     title: 'The Headmasters Ritual',
-    artist: 'The Smiths'
+    artist: 'The Smiths',
+    albumArt: '/images/albumArt/meat is murder.jpg'
   },
   song3: {
     title: 'Underworld',
-    artist: 'Born Slippy'
+    artist: 'Born Slippy',
+    albumArt: '/images/albumArt/born slippy.jpg'
   }
 },
 {
 name: 'David Bowie',
+picture: '/images/david bowie.jpg',
 song1: {
   title: 'Cosmic Dancer',
-  artist: 'T-Rex'
+  artist: 'T-Rex',
+  albumArt: '/images/albumArt/cosmic danser.jpg'
 },
 song2:{
   title: 'Lust For Life',
-  artist: 'Iggy Pop'
+  artist: 'Iggy Pop',
+  albumArt: '/images/albumArt/lust for life.jpg'
 },
 song3: {
   title: 'All Tommorows Parties',
-  artist: 'Velvet Underground'
+  artist: 'Velvet Underground',
+  albumArt: '/images/albumArt/velvet underground.jpg'
+
 }
-},
+}
 ]
 
 //fake objects to test
 fakeApi = () => {
-  return users[randomUser(3)]
+  return users[randomUser(users.length)]
 }
 
 

@@ -1,20 +1,20 @@
 <section>
     <article>
-        <img src="/images/John_frusciante_hills_observatory_press_pic_aura_t-09_0.jpg" alt="profiel foto">
+        <img src='{{userProfile.picture}}' alt="profiel foto">
         <p>{{userProfile.name}}</p>
     </article>
     <article>
-        <img src="/images/4-men-with-beards-funkadelic-maggot-brain-lp.jpg" alt="favourite song 1">
+        <img src='{{userProfile.song1.albumArt}}' alt="favourite song 1">
         <button>play</button>
         <p>{{userProfile.song1.title}} - {{userProfile.song1.artist}}</p>
     </article>
     <article>
-        <img src="/images/550x550.jpg" alt="favourite song 2">
+        <img src='{{userProfile.song2.albumArt}}' alt="favourite song 2">
         <button>play</button>
         <p>{{userProfile.song2.title}} - {{userProfile.song2.artist}}</p>
     </article>
     <article>
-        <img src="/images/R-811783-1428933697-3944.jpg" alt="favourite song 3">
+        <img src='{{userProfile.song3.albumArt}}' alt="favourite song 3">
         <button>play</button>
         <p>{{userProfile.song3.title}} - {{userProfile.song3.artist}}</p>
     </article>
