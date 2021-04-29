@@ -1,20 +1,38 @@
-const express = require('express');
-const app = express();
-const port = 3000;
-//Loads the handlebars module
+// import dependecies
+const express = require('express')
+const app = express()
+const port = 3000
 const handlebars = require('express-handlebars');
-//Sets our app to use the handlebars engine
+
 app.set('view engine', 'hbs');
-//Sets handlebars configurations (we will go through them later on)
-app.engine('hbs', handlebars({
-  layoutsDir: __dirname + '/views/layouts',
-  //new configuration parameter
-  extname: 'hbs', defaultLayout: 'index',
-  }));
-app.use(express.static('public/'))
+app.set('views', 'views');
+app.engine('hbs', handlebars({extname: 'hbs'}))
+
+app.use(express.static('public'))
+
+app.listen(port, () => {
+  console.log(`Server running!`)
+})
+
 app.get('/', (req, res) => {
-//Serves the body of the page aka "main.handlebars" to the container //aka "index.handlebars"
-res.render('main');
+  res.render('home');
+  });
+
+
+
+app.get('/login', (req, res) => {
+    res.render('login');
+  });
+
+
+app.get('/match', (req, res) => {
+    res.render('match');
+
 });
 
-app.listen(port, () => console.log(`App listening to port ${port}`));
+
+app.use(function (req, res, next) {
+    res.status(404).send("404 Page not found")
+  })
+
+ 
