@@ -68,7 +68,7 @@ form button:first-of-type{
 }
 
 form button:last-of-type{
-    background-color: red;
+    background-color: black;
 }
 footer {
     background-color: #1DB954;
