@@ -20,8 +20,9 @@
     </article>
 </section>
 <section>
-    <form action="#">
-        <button> <img src="/images/heart.png" alt="heart"></button>
-        <button> <img src="/images/cross.png" alt="cross"></button>
+    <form action="/" method="post">
+        <button name="like" value="true"> <img src="/images/heart.png" alt="heart"></button>
+        <button name="like" value="false"> <img src="/images/cross.png" alt="cross"></button>
     </form>
+    <ul>{{match}}</ul>
 </section>

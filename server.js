@@ -11,15 +11,19 @@ app.set('views', 'views');
 app.engine('hbs', handlebars({extname: 'hbs'}))
 
 app.use(express.static('public'))
+app.use(express.json())
+app.use(express.urlencoded())
 
 app.listen(port, () => {
   console.log(`Server running!`)
 })
 
+
 const users = [
   {
     name: 'John Frusciante',
     picture: '/images/john frusciante.jpeg',
+    like: undefined,
     song1: {
       title: 'Maggot Brain',
       artist: 'Funkadelic',
@@ -39,6 +43,7 @@ const users = [
 {
   name: 'Thom Yorke',
   picture: '/images/thom yorke.jpg',
+  like: undefined,
   song1: {
     title: 'Psycho Killer',
     artist: 'Talking Heads',
@@ -58,6 +63,7 @@ const users = [
 {
 name: 'David Bowie',
 picture: '/images/david bowie.jpg',
+like: undefined,
 song1: {
   title: 'Cosmic Dancer',
   artist: 'T-Rex',
@@ -78,16 +84,25 @@ song3: {
 ]
 
 //fake objects to test
-fakeApi = () => {
+  fakeApi = () => {
   return users[randomUser(users.length)]
 }
 
 
-randomUser = (max) => {
+ randomUser = (max) => {
   return Math.floor(Math.random() * max) 
 }
 
-console.log(fakeApi());
+  filter = (array, test) => {
+    let match = [];
+    for (let element of array) {
+      if (test(element)){
+        match.push(element);
+      }
+    }
+    return match
+}
+
 
 app.get('/', (req, res) => {
   res.render('home',{
@@ -95,6 +110,14 @@ app.get('/', (req, res) => {
   });
   });
 
+  app.post('/',(req, res) => {
+    users.like = req.body.like
+    let matches = users.filter(users => users.like == 'true')
+    console.log(matches)
+    res.render('home', {
+      userProfile: fakeApi(),
+    })
+  })
 
 
 app.get('/login', (req, res) => {
@@ -103,7 +126,9 @@ app.get('/login', (req, res) => {
 
 
 app.get('/match', (req, res) => {
-    res.render('match');
+    res.render('match', {
+      users: users[0]
+    });
 
 });
 
