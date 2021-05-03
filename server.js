@@ -18,7 +18,7 @@ app.listen(port, () => {
   console.log(`Server running!`)
 })
 
-
+let match = []
 const users = [
   {
     name: 'John Frusciante',
@@ -93,15 +93,6 @@ song3: {
   return Math.floor(Math.random() * max) 
 }
 
-  filter = (array, test) => {
-    let match = [];
-    for (let element of array) {
-      if (test(element)){
-        match.push(element);
-      }
-    }
-    return match
-}
 
 
 app.get('/', (req, res) => {
@@ -109,17 +100,26 @@ app.get('/', (req, res) => {
     userProfile: fakeApi(),
   });
   });
+  
 
   app.post('/',(req, res) => {
     let randomUser = fakeApi()
     randomUser.like = req.body.like
-    let match = users.map(s => s.like)
-    console.log('test')
-    console.log(match.filter(s=>s == "true"))
+    if(randomUser.like == 'true'){
+      match.push(randomUser)
+    }
+    else if(randomUser.like == 'false'){
+      users.pop(randomUser)
+    }
+    if(users == '[]'){
+      res.render('noMatches')
+    }
+    else{
     res.render('home', {
       userProfile: randomUser,
       match: match,
     })
+  }
   })
 
 
