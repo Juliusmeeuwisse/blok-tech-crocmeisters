@@ -4,7 +4,12 @@ const app = express()
 const port = 3000
 const handlebars = require('express-handlebars');
 const request = require('request');
+const { MongoClient } = require("mongodb");
 
+const url = "mongodb+srv://joeribouwman:brocoli12@mymusicmatch.y2o3q.mongodb.net/mymusicmatch?retryWrites=true&w=majority";
+const client = new MongoClient(url);
+//database i use
+const dbName = "MyMusicMatch";
 
 app.set('view engine', 'hbs');
 app.set('views', 'views');
@@ -18,85 +23,38 @@ app.listen(port, () => {
   console.log(`Server running!`)
 })
 
-let match = []
-const users = [
-  {
-    name: 'John Frusciante',
-    picture: '/images/john frusciante.jpeg',
-    like: undefined,
-    match: undefined,
-    song1: {
-      title: 'Maggot Brain',
-      artist: 'Funkadelic',
-      albumArt: '/images/albumArt/maggot brain.jpeg'
-    },
-    song2:{
-      title: 'The Musical Box',
-      artist: 'Genesis',
-      albumArt: '/images/albumArt/nursery cryme.jpeg'
-    },
-    song3: {
-      title: 'Tiny Dancer',
-      artist: 'Elton John',
-      albumArt: '/images/albumArt/madman across the water.jpeg'
-    }
-},
-{
-  name: 'Thom Yorke',
-  picture: '/images/thom yorke.jpg',
-  like: undefined,
-  match: undefined,
-  song1: {
-    title: 'Psycho Killer',
-    artist: 'Talking Heads',
-    albumArt: '/images/albumArt/77.jpg'
-  },
-  song2:{
-    title: 'The Headmasters Ritual',
-    artist: 'The Smiths',
-    albumArt: '/images/albumArt/meat is murder.jpg'
-  },
-  song3: {
-    title: 'Underworld',
-    artist: 'Born Slippy',
-    albumArt: '/images/albumArt/born slippy.jpg'
+async function run() {
+  try {
+       await client.connect();
+       console.log("Connected correctly to server");
+       const db = client.db(dbName);
+
+       // Use the collection "people"
+       const allUsers = db.collection("users");
+       
+       const users = await allUsers.find({}).toArray();
+       
+       //returns one random user from database
+       fakeApi = () => {
+        return users[randomUser(users.length)]
+      }
+       randomUser = (max) => {
+        return Math.floor(Math.random() * max) 
+      }
+       // Print to the console
+      } catch (err) {
+       console.log(err.stack);
+   }
+
+   finally {
+      await client.close();
   }
-},
-{
-name: 'David Bowie',
-picture: '/images/david bowie.jpg',
-like: undefined,
-match: undefined,
-song1: {
-  title: 'Cosmic Dancer',
-  artist: 'T-Rex',
-  albumArt: '/images/albumArt/cosmic danser.jpg'
-},
-song2:{
-  title: 'Lust For Life',
-  artist: 'Iggy Pop',
-  albumArt: '/images/albumArt/lust for life.jpg'
-},
-song3: {
-  title: 'All Tommorows Parties',
-  artist: 'Velvet Underground',
-  albumArt: '/images/albumArt/velvet underground.jpg'
-
-}
-}
-]
-
-//fake objects to test
-  fakeApi = () => {
-  return users[randomUser(users.length)]
 }
 
-
- randomUser = (max) => {
-  return Math.floor(Math.random() * max) 
-}
+run().catch(console.dir);
 
 
+let match = []
 
 app.get('/', (req, res) => {
   res.render('home',{
@@ -108,14 +66,17 @@ app.get('/', (req, res) => {
   app.post('/',(req, res) => {
     let randomUser = fakeApi()
     randomUser.like = req.body.like
-    if(randomUser.like == 'true'){
-      match.push(randomUser)
-    }
+    // if(randomUser.like == 'true'){
+    //   match.push(randomUser)
+    // }
     res.render('home', {
       userProfile: randomUser,
       match: match,
     })
   })
+
+
+
 
 
 app.get('/login', (req, res) => {
