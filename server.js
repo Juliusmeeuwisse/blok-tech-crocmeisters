@@ -24,6 +24,7 @@ const users = [
     name: 'John Frusciante',
     picture: '/images/john frusciante.jpeg',
     like: undefined,
+    match: undefined,
     song1: {
       title: 'Maggot Brain',
       artist: 'Funkadelic',
@@ -44,6 +45,7 @@ const users = [
   name: 'Thom Yorke',
   picture: '/images/thom yorke.jpg',
   like: undefined,
+  match: undefined,
   song1: {
     title: 'Psycho Killer',
     artist: 'Talking Heads',
@@ -64,6 +66,7 @@ const users = [
 name: 'David Bowie',
 picture: '/images/david bowie.jpg',
 like: undefined,
+match: undefined,
 song1: {
   title: 'Cosmic Dancer',
   artist: 'T-Rex',
@@ -108,18 +111,10 @@ app.get('/', (req, res) => {
     if(randomUser.like == 'true'){
       match.push(randomUser)
     }
-    else if(randomUser.like == 'false'){
-      users.pop(randomUser)
-    }
-    if(users == '[]'){
-      res.render('noMatches')
-    }
-    else{
     res.render('home', {
       userProfile: randomUser,
       match: match,
     })
-  }
   })
 
 
