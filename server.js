@@ -106,16 +106,19 @@ song3: {
 
 app.get('/', (req, res) => {
   res.render('home',{
-    userProfile: fakeApi()
+    userProfile: fakeApi(),
   });
   });
 
   app.post('/',(req, res) => {
-    users.like = req.body.like
-    let matches = users.filter(users => users.like == 'true')
-    console.log(matches)
+    let randomUser = fakeApi()
+    randomUser.like = req.body.like
+    let match = users.map(s => s.like)
+    console.log('test')
+    console.log(match.filter(s=>s == "true"))
     res.render('home', {
-      userProfile: fakeApi(),
+      userProfile: randomUser,
+      match: match,
     })
   })
 
@@ -127,7 +130,7 @@ app.get('/login', (req, res) => {
 
 app.get('/match', (req, res) => {
     res.render('match', {
-      users: users[0]
+      users: users
     });
 
 });

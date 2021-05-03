@@ -21,8 +21,9 @@
 </section>
 <section>
     <form action="/" method="post">
+        <input type="text" name="test">
         <button name="like" value="true"> <img src="/images/heart.png" alt="heart"></button>
         <button name="like" value="false"> <img src="/images/cross.png" alt="cross"></button>
     </form>
-    <ul>{{match}}</ul>
+    <ul>{{usersProfile.name}} is a match: {{match}}</ul>
 </section>
