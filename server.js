@@ -1,16 +1,22 @@
 // import dependecies
 const express = require('express')
 const app = express()
-const port = procces.env.PORT
+const port = process.env.PORT
 const handlebars = require('express-handlebars');
 const request = require('request');
 const MongoClient = require("mongodb").MongoClient;
+require('dotenv').config
 
-const client = new MongoClient(url);
 
 
 //database i use
-const dbName = "MyMusicMatch";
+const dbName = process.env.DB_NAME;
+
+const url = process.env.MONGODB_URL;
+const client = new MongoClient({
+  uri: url
+});
+
 
 app.set('view engine', 'hbs');
 app.set('views', 'views');
