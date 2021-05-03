@@ -1,13 +1,14 @@
 // import dependecies
 const express = require('express')
 const app = express()
-const port = 3000
+const port = procces.env.PORT
 const handlebars = require('express-handlebars');
 const request = require('request');
-const { MongoClient } = require("mongodb");
+const MongoClient = require("mongodb").MongoClient;
 
-const url = "mongodb+srv://joeribouwman:brocoli12@mymusicmatch.y2o3q.mongodb.net/mymusicmatch?retryWrites=true&w=majority";
 const client = new MongoClient(url);
+
+
 //database i use
 const dbName = "MyMusicMatch";
 
@@ -62,13 +63,18 @@ app.get('/', (req, res) => {
   });
   });
   
-
   app.post('/',(req, res) => {
     let randomUser = fakeApi()
+    const userId = randomUser._id
+    const replace = {
+      like : true,
+    }
+    // const result = await collection.replaceOne(userId, replace)
     randomUser.like = req.body.like
     // if(randomUser.like == 'true'){
     //   match.push(randomUser)
     // }
+    console.log(randomUser._id)
     res.render('home', {
       userProfile: randomUser,
       match: match,
