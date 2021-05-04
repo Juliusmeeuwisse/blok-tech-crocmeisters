@@ -1,89 +1,77 @@
 // import dependecies
 const express = require('express')
-const app = express()
-const port = process.env.PORT
-const handlebars = require('express-handlebars');
+const bodyparser = require('body-parser');
+const MongoClient = require('mongodb').MongoClient;
 const request = require('request');
-const MongoClient = require("mongodb").MongoClient;
-require('dotenv').config
+const handlebars = require('express-handlebars');
+require('dotenv').config()
 
+const app = express()
+const urlencodedParser = bodyparser.urlencoded({
+  extended: false
+})
 
-
-//database i use
-const dbName = process.env.DB_NAME;
-
-const url = process.env.MONGODB_URL;
-const client = new MongoClient({
-  uri: url
-});
-
+const port = process.env.PORT
+const url = process.env.DB_URL;
+let users = null;
+// let users = null;
+// let db = null;
 
 app.set('view engine', 'hbs');
 app.set('views', 'views');
 app.engine('hbs', handlebars({extname: 'hbs'}))
-
 app.use(express.static('public'))
 app.use(express.json())
-app.use(express.urlencoded())
-
 app.listen(port, () => {
   console.log(`Server running!`)
 })
 
-async function run() {
-  try {
-       await client.connect();
-       console.log("Connected correctly to server");
-       const db = client.db(dbName);
-
-       // Use the collection "people"
-       const allUsers = db.collection("users");
-       
-       const users = await allUsers.find({}).toArray();
-       
-       //returns one random user from database
-       fakeApi = () => {
-        return users[randomUser(users.length)]
-      }
-       randomUser = (max) => {
-        return Math.floor(Math.random() * max) 
-      }
-       // Print to the console
-      } catch (err) {
-       console.log(err.stack);
-   }
-
-   finally {
-      await client.close();
+//connection with database
+MongoClient.connect(url, {useUnifiedTopology: true}, (err, client) => {
+  if (err){
+    console.log(err)
   }
-}
+  else{
+    users = client.db(process.env.DB_NAME).collection('users')
+    // db = client.db(process.env.DB_NAME);
+    // users = db.collection('users')
+  }
+})
+    
+       
 
-run().catch(console.dir);
 
 
 let match = []
 
 app.get('/', (req, res) => {
-  res.render('home',{
-    userProfile: fakeApi(),
-  });
-  });
-  
-  app.post('/',(req, res) => {
-    let randomUser = fakeApi()
-    const userId = randomUser._id
-    const replace = {
-      like : true,
+  users.findOne(function(error, result){
+    if(error) {
+      console.log(error)
+    } 
+    else{
+      let userProfile = result
+      res.render('home',{
+        userProfile: userProfile,
+      })
     }
-    // const result = await collection.replaceOne(userId, replace)
-    randomUser.like = req.body.like
-    // if(randomUser.like == 'true'){
-    //   match.push(randomUser)
-    // }
-    console.log(randomUser._id)
-    res.render('home', {
-      userProfile: randomUser,
-      match: match,
+  })
+})
+  
+  app.post('/', (req, res) => {
+    //returns one random user
+    users.aggregate([{$sample: {size: 1}}]).toArray(function(error, result){
+      if(error) {
+        console.log(error)
+      } 
+      else{
+        let userProfile = result
+        console.log(userProfile)
+ 
+        res.render('home',{
+          userProfile: userProfile[0],
+        })
+      }
     })
   })
 
@@ -102,6 +90,7 @@ app.get('/match', (req, res) => {
     });
 
 });
+
 
 
 app.use(function (req, res, next) {
