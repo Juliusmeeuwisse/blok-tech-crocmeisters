@@ -53,17 +53,16 @@ app.get('/', (req, res) => {
 })
   
   app.post('/', (req, res) => {
-    
     //returns one random user
-    users.aggregate([{$sample: {size: 1}}]).toArray(function(error, result){
-      if(error) {
-        console.log(error)
+    users.aggregate([{$sample: {size: 1}}]).toArray( (err, result) => {
+      if(err) {
+        console.log(err)
       } 
       else{
         let userProfile = result[0]
-        console.log(userProfile._id)
         if(req.body.like == 'true' ){
-        db.findOneAndUpdate({"name":"joeri"}, {$push: {likes: userProfile._id}}, (err, user) => {
+        db.findOneAndUpdate({"name":"joeri"}, {$push: {likes: userProfile._id}}, 
+        (err, user) => {
           if (err){
             console.log(err)
           }
@@ -71,6 +70,10 @@ app.get('/', (req, res) => {
             console.log('update succesfull🥳')
           }
         })
+        }
+        else if(req.body.like == 'false'){
+          let doc = {userProfile: userProfile._id}
+          users.deleteOne(doc)
         }
         res.render('home',{
           userProfile: userProfile,

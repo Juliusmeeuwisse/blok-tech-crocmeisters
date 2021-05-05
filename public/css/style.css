@@ -1,37 +1,66 @@
 body{
-    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    font-family: sans-serif, Helvetica, Arial;
+    background-color: #191414;
 }
 header {
     display: flex;
-    justify-content: space-evenly;
-    background-color: #1DB954;
+    background-image: linear-gradient(#1db954 ,#191414 87.95%);
+}
+header img {
+    height: 4em;
 }
 
-h1{
-    color: white;
+h2{ 
+    font-size: 16px;
+    font-family: sans-serif, Helvetica, Arial;
+    font-weight: normal;
+    color: #fff;
+    margin: 0;
+    max-width: 7em;
+}
+
+p { 
+    font-family: sans-serif, Helvetica, Arial;
+    color: #b3b3b3;
+    font-size: 14px;
+    margin:0;
+}
+
+section:first-of-type{
+    margin: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
 }
 
 article {
 position:relative;
-background-color: rgb(68, 68, 68);
-padding: .8em;
+/* background-color: pink; */
+background-color: #282828;
+min-height: 10em;
+padding: 1em;
+padding-bottom: 2em;
 color: white;
 margin: .2em;
 }
 
-section article img{
-    width: 8em;
-    height: 8em;
+
+article:hover{
+    background-color: #504f4f;
+    transition: .1s;
 }
 
-section:first-of-type{
-    /* position: absolute; */
-    display:flex;
-    flex-wrap: wrap;
-    min-width: 400px;
-    justify-content:center;
-    /* min-width: 25em; */
+section article:first-of-type img {
+    border-radius: 50%;
 }
+
+section article img{
+    width: 7em;
+    height: 7em;
+}
+
+
 
 section article button{
     position: absolute;
@@ -45,7 +74,7 @@ section article button{
 }
 
 section article p {
-    max-width: 8em;
+    max-width: 7.5em;
 }
 
 
@@ -59,8 +88,11 @@ section:nth-of-type(2) form img {
 }
 
 form button{
-    width: 80%;
-    height: 5em;
+    border-style: none;
+    border: 0;
+    border-radius: 5%;
+    width: 60%;
+    height: 3em;
 }
 
 form button:first-of-type{

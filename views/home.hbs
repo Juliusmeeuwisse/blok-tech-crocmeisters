@@ -1,22 +1,26 @@
-<section>
+<section class='home'>
     <article>
         <img src='{{userProfile.picture}}' alt="profiel foto">
-        <p>{{userProfile.name}}</p>
+        <h2>{{userProfile.name}}</h2>
+        <p>{{userProfile.genres}}</p>
     </article>
     <article>
         <img src='{{userProfile.song1.albumArt}}' alt="favourite song 1">
         <button>play</button>
-        <p>{{userProfile.song1.title}} - {{userProfile.song1.artist}}</p>
+        <h2>{{userProfile.song1.title}}</h2>
+        <p>{{userProfile.song1.artist}}</p>
     </article>
     <article>
         <img src='{{userProfile.song2.albumArt}}' alt="favourite song 2">
         <button>play</button>
-        <p>{{userProfile.song2.title}} - {{userProfile.song2.artist}}</p>
+        <h2>{{userProfile.song2.title}}</h2>
+        <p>{{userProfile.song2.artist}}</p>
     </article>
     <article>
         <img src='{{userProfile.song3.albumArt}}' alt="favourite song 3">
         <button>play</button>
-        <p>{{userProfile.song3.title}} - {{userProfile.song3.artist}}</p>
+        <h2>{{userProfile.song3.title}}</h2>
+        <p>{{userProfile.song3.artist}}</p>
     </article>
 </section>
 <section>
@@ -24,5 +28,4 @@
         <button name="like" value="true"> <img src="/images/heart.png" alt="heart"></button>
         <button name="like" value="false"> <img src="/images/cross.png" alt="cross"></button>
     </form>
-    <ul>new match: {{match}}</ul>
 </section>
