@@ -5,10 +5,21 @@ body{
 }
 header {
     display: flex;
+    justify-content: space-evenly;
     background-image: linear-gradient(#1db954 ,#191414 87.95%);
 }
-header img {
+header img:first-of-type {
     height: 4em;
+}
+
+header img:nth-of-type(2){
+    height: 2.5em;
+}
+
+h1 {
+    color: white;
+    font-size: 2em;
+    font-family: sans-serif;
 }
 
 h2{ 
@@ -28,7 +39,7 @@ p {
 }
 
 section:first-of-type{
-    margin: 1em;
+    /* margin: 1em; */
     display: flex;
     flex-wrap: wrap;
     justify-content:center;
@@ -38,7 +49,7 @@ article {
 position:relative;
 /* background-color: pink; */
 background-color: #282828;
-min-height: 10em;
+min-height: 12em;
 padding: 1em;
 padding-bottom: 2em;
 color: white;
@@ -55,7 +66,7 @@ section article:first-of-type img {
     border-radius: 50%;
 }
 
-section article img{
+section:first-of-type article img{
     width: 7em;
     height: 7em;
 }
@@ -81,38 +92,56 @@ section article p {
 section:nth-of-type(2) form {
     display: flex;
     flex-direction: row-reverse;
+    justify-content: center;
 }
 
-section:nth-of-type(2) form img {
-    width: 5em;
+section:nth-of-type(2) form img{
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: .3em;
 }
 
 form button{
+    font-size: 14px;
+    display: flex;
+    align-items: center;
     border-style: none;
     border: 0;
-    border-radius: 5%;
-    width: 60%;
+    border-radius: 5px;
     height: 3em;
+    width: 10.5em;
+    color: #fff;
+    margin: .2em;
+    margin-bottom: .6em;
+    margin-top: .6em;
 }
 
 form button:first-of-type{
-    background-color: rgb(248, 196, 246);
+    background-color: #1db954;
 }
 
 form button:last-of-type{
-    background-color: black;
+    background-color: #e22136;
 }
 footer {
-    background-color: #1DB954;
+    position: fixed;
+    bottom:0; left:0; right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(#191414 ,#1db954 87.95%);;
+    height: 4em;
 }
 
 footer nav {
     display: flex;
     justify-content: space-between;
+    width: 90%;
 }
 
 footer img {
-    width: 3em;
+    width: 2em;
+    height: 2em;
 }
 
 footer a {
