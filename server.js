@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
 const request = require('request');
 const handlebars = require('express-handlebars');
+const mongoose = require('mongoose')
 const { ObjectID } = require('bson');
 require('dotenv').config()
 
@@ -49,6 +50,7 @@ app.get('/', (req, res) => {
       //render the user
       let banner = "/images/banners/Banner MMM-home.png"
       let userProfile = user
+      console.log(ObjectID)
         res.render('home',{
           heartIcon: heartIcon,
           banner: banner,
