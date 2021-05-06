@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
 const request = require('request');
 const handlebars = require('express-handlebars');
+const { ObjectID } = require('bson');
 require('dotenv').config()
 
 const app = express()
@@ -11,7 +12,7 @@ const app = express()
 const port = process.env.PORT
 const url = process.env.DB_URL;
 let users = null;
-let collection = null;
+let idCheck;
 app.set('view engine', 'hbs');;
 app.set('views', 'views');;
 app.engine('hbs', handlebars({extname: 'hbs'}));
@@ -47,17 +48,22 @@ app.get('/', (req, res) => {
       console.log(err)
     }
     else{
-      let randomUser = users.aggregate([{$sample: {size: 1}}]).toArray( (err, result) =>{
-        let userID = result[0]._id;
-        let seenArray = joeri.seen;
-        let idCheck = seenArray.filter(saw => saw == userID)
+      //find random user from database
+      let randomUser = users.aggregate([{$sample: {
+            size: 1},}]).toArray( (err, result) =>{
+        
+        let userID = result[0]._id.toString();
+        idCheck = joeri.seen;
+
         if(err) {
           console.log(err)
         }
+        //if already saw the random user get new user from database
         else if(userID == idCheck[0]){
           randomUser
           console.log('check')
         }
+        // render the random user
         else{
           let banner = "/images/banners/Banner MMM-home.png"
           let userProfile = result[0]
@@ -70,23 +76,28 @@ app.get('/', (req, res) => {
       })
     }
   })
-
 })
   
   app.post('/', (req, res) => {
     //returns one random user
-    users.aggregate([{$sample: {size: 1}}]).toArray( (err, result) => {
+    let randomUser = users.aggregate([{$sample: {
+          size: 1}}]).toArray( (err, result) => {
+
+      let userID = result[0]._id.toString();
       if(err) {
         console.log(err)
-      } 
+      }
       else{
         let userProfile = result[0]
         let banner = "/images/banners/Banner MMM-home.png"
-        if(req.body.like == 'true' ){
-        users.findOneAndUpdate({"name":"joeri"}, {$push: {likes: userProfile._id}}, 
+        if(req.body.like == 'true'){
+        users.findOneAndUpdate({"name":"joeri"}, {$push: {likes: userProfile._id, seen: userProfile._id}}, 
         (err, user) => {
           if (err){
             console.log(err)
+          }
+          else if(userID === idCheck[0]){
+            randomUser
           }
           else{
             console.log(user + 'update succesfull🥳')
@@ -94,8 +105,18 @@ app.get('/', (req, res) => {
         })
         }
         else if(req.body.like == 'false'){
-          let doc = {userProfile: userProfile._id}
-          users.deleteOne(doc)
+          users.findOneAndUpdate({"name":"joeri"}, {$push: {seen: userProfile._id}},
+          (err, res) => {
+            if(err){
+              console.log(err)
+            }         
+            else if(userID === idCheck[0]){
+              randomUser
+            }
+            else{
+              console.log('no match')
+            }
+          })
         }
         res.render('home',{
           banner: banner,
