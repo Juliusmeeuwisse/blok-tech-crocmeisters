@@ -41,21 +41,36 @@ let heartIconGreen = "/images/icons/green heart.png"
 let heartIcon = "/images/icons/white heart.png"
 
 app.get('/', (req, res) => {
-  users.aggregate([{$sample: {size: 1}}]).toArray( (err, result) =>{
-    if(err) {
+  //find the session user, fake it for now
+  users.findOne({"name":"joeri"},(err, joeri) =>{
+    if(err){
       console.log(err)
-    } 
+    }
     else{
-      let banner = "/images/banners/Banner MMM-home.png"
-      let userProfile = result[0]
-      console.log(userProfile)
-      res.render('home',{
-        heartIcon: heartIcon,
-        banner: banner,
-        userProfile: userProfile,
+      let randomUser = users.aggregate([{$sample: {size: 1}}]).toArray( (err, result) =>{
+        let userID = result[0]._id;
+        let seenArray = joeri.seen;
+        let idCheck = seenArray.filter(saw => saw == userID)
+        if(err) {
+          console.log(err)
+        }
+        else if(userID == idCheck[0]){
+          randomUser
+          console.log('check')
+        }
+        else{
+          let banner = "/images/banners/Banner MMM-home.png"
+          let userProfile = result[0]
+          res.render('home',{
+            heartIcon: heartIcon,
+            banner: banner,
+            userProfile: userProfile,
+          })
+        }
       })
     }
   })
+
 })
   
   app.post('/', (req, res) => {
@@ -68,13 +83,13 @@ app.get('/', (req, res) => {
         let userProfile = result[0]
         let banner = "/images/banners/Banner MMM-home.png"
         if(req.body.like == 'true' ){
-        db.findOneAndUpdate({"name":"joeri"}, {$push: {likes: userProfile._id}}, 
+        users.findOneAndUpdate({"name":"joeri"}, {$push: {likes: userProfile._id}}, 
         (err, user) => {
           if (err){
             console.log(err)
           }
           else{
-            console.log('update succesfull🥳')
+            console.log(user + 'update succesfull🥳')
           }
         })
         }
