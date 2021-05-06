@@ -1,0 +1,13 @@
+<section class='musicList'>
+    <ul>
+        {{#if songs}}
+        {{#each songs}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ul>
+        {{else}}
+            <h1>There are no songs yet...</h1>
+            <p>Discover new people, when a match occurs their songs will be added to this page automatically</p>
+            {{!-- <a href="/">Explore further</a> --}}
+        {{/if}}
+</section>

@@ -2,7 +2,10 @@
     <article>
         <img src='{{userProfile.picture}}' alt="profiel foto">
         <h2>{{userProfile.name}}</h2>
-        <p>{{userProfile.genres}}</p>
+        <ul>{{#each userProfile.genres}}
+            <li>{{this}},</li>
+            {{/each}}
+        </ul>
     </article>
     <article>
         <img src='{{userProfile.song1.albumArt}}' alt="favourite song 1">
@@ -25,7 +28,7 @@
 </section>
 <section>
     <form action="/" method="post">
-        <button name="like" value="true"> <img src="/images/empty heart.png" alt="heart"> Like</button>
-        <button name="like" value="false"> <img src="/images/cross.png" alt="cross"> Dislike</button>
+        <button name="like" value="true"> <img src="/images/icons/empty heart.png" alt="heart"> Like</button>
+        <button name="like" value="false"> <img src="/images/icons/cross.png" alt="cross"> Dislike</button>
     </form>
 </section>

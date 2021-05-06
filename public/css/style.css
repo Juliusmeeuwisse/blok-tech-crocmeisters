@@ -5,21 +5,43 @@ body{
 }
 header {
     display: flex;
-    justify-content: space-evenly;
     background-image: linear-gradient(#1db954 ,#191414 87.95%);
 }
-header img:first-of-type {
-    height: 4em;
+header nav a:first-of-type img {
+    height: 3.5em;
+    margin-top: .3em;
 }
 
-header img:nth-of-type(2){
+header nav a:nth-of-type(2) img{
     height: 2.5em;
+    border-radius: 50%;
+    border: 1px solid #1db954;
 }
 
-h1 {
+header nav {
+    height: 4em;
+    width:97%;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+header > img {
+    margin:0;
+    position: absolute;
     color: white;
-    font-size: 2em;
+    max-height: 2.3em;
     font-family: sans-serif;
+    left: 50%; top: .5em;
+    transform: translate(-50%);
+}
+
+h1{
+    color:white;
+    position: absolute;
+    left:50%; top:40%;
+    /* transform: translate(-50%, -50%); */
 }
 
 h2{ 
@@ -70,14 +92,27 @@ section:first-of-type article img{
     width: 7em;
     height: 7em;
 }
+section article:first-of-type ul{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 7.5em;
+}
 
-
+section article:first-of-type ul li{
+    list-style: none;
+    color: #b3b3b3;
+    font-size: 14px;
+    margin-right: 3px;
+}
 
 section article button{
     position: absolute;
     width: 4em;
     height: 4em;
-    top: calc(50% - 5.5em); left: calc(50% - 2em);
+    top: calc(50% - 5.9em); left: calc(50% - 2em);
     background-color: #1db954e5;
     border-radius: 50%;
     border-style: none; 
@@ -124,13 +159,13 @@ form button{
 
 form button:first-of-type{
     position: absolute;
-    right: 1.9em; bottom: 7.5em;
+    right: 1.9em; bottom: 6em;
     background-color: #1db954;
 }
 
 form button:last-of-type{
     position: absolute;
-    left: 1.9em; bottom: 7.5em;
+    left: 1.9em; bottom: 6em;
     background-color: #e22136;
 }
 footer {
@@ -139,7 +174,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: linear-gradient(#191414 ,#1db954 87.95%);;
+    background-image: linear-gradient(#191414 ,#1db954 112%);;
     height: 5em;
 }
 

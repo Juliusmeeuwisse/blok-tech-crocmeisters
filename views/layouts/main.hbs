@@ -8,18 +8,20 @@
 </head>
 <body>
 <header>
-    <img src="/images/mmm logo.png" alt="MMM-logo">
-    {{!-- <img src="/images/banner.png" alt="banner"> --}}
-    <h1>My Music Match</h1>
+    <nav>
+        <a href="/"><img src="/images/banners/mmm logo-1.png" alt="MMM-logo"></a>
+        <a href="/profile"><img src="images/joeri.jpg" alt="user-profile"></a>
+    </nav>
+    <img src="{{banner}}" alt="banner">
 </header>
 <main>
     {{{body}}}
 </main>
 <footer> 
     <nav>
-        <a href="#"><img src="/images/Spotify_Icon_CMYK_White.png" alt="spotify"></a>
-        <a href="#"><img src="/images/white heart.png" alt="matches"></a>
-        <a href="#"><img src="/images/gears.png" alt="settings"></a>
+        <a href="/musiclist"><img src="/images/icons/Spotify_Icon_CMYK_White.png" alt="spotify"></a>
+        <a href="/match"><img src="{{heartIcon}}" alt="matches"></a>
+        <a href="/settings"><img src="/images/icons/gears.png" alt="settings"></a>
     </nav>
 </footer>
 <script src="/js/index.js"></script>

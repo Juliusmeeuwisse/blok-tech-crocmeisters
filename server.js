@@ -35,17 +35,23 @@ MongoClient.connect(url, {useUnifiedTopology: true}, (err, client) => {
   }
 })
     
-       
+//page templates      
 let match = []
+let heartIconGreen = "/images/icons/green heart.png"
+let heartIcon = "/images/icons/white heart.png"
 
 app.get('/', (req, res) => {
-  users.findOne(function(error, result){
-    if(error) {
-      console.log(error)
+  users.aggregate([{$sample: {size: 1}}]).toArray( (err, result) =>{
+    if(err) {
+      console.log(err)
     } 
     else{
-      let userProfile = result
+      let banner = "/images/banners/Banner MMM-home.png"
+      let userProfile = result[0]
+      console.log(userProfile)
       res.render('home',{
+        heartIcon: heartIcon,
+        banner: banner,
         userProfile: userProfile,
       })
     }
@@ -60,6 +66,7 @@ app.get('/', (req, res) => {
       } 
       else{
         let userProfile = result[0]
+        let banner = "/images/banners/Banner MMM-home.png"
         if(req.body.like == 'true' ){
         db.findOneAndUpdate({"name":"joeri"}, {$push: {likes: userProfile._id}}, 
         (err, user) => {
@@ -76,6 +83,8 @@ app.get('/', (req, res) => {
           users.deleteOne(doc)
         }
         res.render('home',{
+          banner: banner,
+          heartIcon: heartIcon,
           userProfile: userProfile,
         })
       }
@@ -84,22 +93,33 @@ app.get('/', (req, res) => {
 
 
 
+app.get('/profile', (req, res) =>{
+  res.render('profile');
+});
 
-
-app.get('/login', (req, res) => {
-    res.render('login');
-  });
-
-app.post('/login/', (req, res) =>{
+app.get('/musiclist', (req, res) => {
   console.log(req.body)
-  res.render('login')
+    let banner = "/images/banners/banner mmm-musiclist.png"
+    res.render('musiclist', {
+    heartIcon: heartIcon,
+    banner: banner
+  });
+});
+
+app.get('/settings', (req, res) =>{
+  res.render('settings', {
+    heartIcon: heartIcon
+  })
 })
 
 app.get('/match', (req, res) => {
+  let banner = "/images/banners/Banner MMM-match.png"
+  let users = undefined;
     res.render('match', {
+      heartIcon: heartIconGreen,
+      banner: banner,
       users: users
     });
-
 });
 
 app.use(function (req, res, next) {

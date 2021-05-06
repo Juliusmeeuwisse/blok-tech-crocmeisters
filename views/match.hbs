@@ -1,1 +1,12 @@
-<ul><li>{{userProfile}}</li></ul>
+<section class='match'>
+    <ul>
+        {{#if users}}
+        {{#each user}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ul>
+        {{else}}
+            <h1>You have no matches yet...</h1>
+            {{!-- <a href="/">Explore further</a> --}}
+        {{/if}}
+</section>
