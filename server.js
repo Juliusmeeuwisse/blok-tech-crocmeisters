@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
 const request = require('request');
 const handlebars = require('express-handlebars');
-const mongoose = require('mongoose')
-const { ObjectID } = require('bson');
 require('dotenv').config()
 
 const app = express()
@@ -20,6 +18,8 @@ app.engine('hbs', handlebars({extname: 'hbs'}));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
+
 
 
 app.listen(port, () => {
@@ -43,14 +43,17 @@ let heartIconGreen = "/images/icons/green heart.png"
 let heartIcon = "/images/icons/white heart.png"
 
 app.get('/', (req, res) => {
+
+
+
   //find user from database
   users.findOne((err, user) =>{
-    if (err) { console.log(err) }
+    if (err) throw err; 
     else{
       //render the user
       let banner = "/images/banners/Banner MMM-home.png"
       let userProfile = user
-      console.log(ObjectID)
+      console.log()
         res.render('home',{
           heartIcon: heartIcon,
           banner: banner,
@@ -59,23 +62,34 @@ app.get('/', (req, res) => {
       }
     })
 })
-  
+
 app.post('/', (req, res) => {
   users.findOne((err, user) => {
     if (err) { console.log(err) }
     else{      
         if(req.body.like == 'true'){
-          users.updateOne({$set: {likes: true}},(err, like) => {
+          users.updateOne({name: "john"},
+            {$set: {likes: true}},(err, like) => {
             if(err){ console.log(err) }
             else{
-              console.log(like)
+              // console.log(like)
             }
           })
       }
     }
-  })
-
+  }
 })
+
+// function update(req, res) {
+//   if(req.body.like == 'true'){
+//     users.updateone(
+//       {name: "john"},
+//       {$set: {likes: 'true'}})
+//       res.redirect('/')
+//     }
+// }
+  
+
  
 
 
