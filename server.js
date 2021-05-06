@@ -42,90 +42,39 @@ let heartIconGreen = "/images/icons/green heart.png"
 let heartIcon = "/images/icons/white heart.png"
 
 app.get('/', (req, res) => {
-  //find the session user, fake it for now
-  users.findOne({"name":"joeri"},(err, joeri) =>{
-    if(err){
-      console.log(err)
-    }
+  //find user from database
+  users.findOne((err, user) =>{
+    if (err) { console.log(err) }
     else{
-      //find random user from database
-      let randomUser = users.aggregate([{$sample: {
-            size: 1},}]).toArray( (err, result) =>{
-        
-        let userID = result[0]._id.toString();
-        idCheck = joeri.seen;
-
-        if(err) {
-          console.log(err)
-        }
-        //if already saw the random user get new user from database
-        else if(userID == idCheck[0]){
-          randomUser
-          console.log('check')
-        }
-        // render the random user
-        else{
-          let banner = "/images/banners/Banner MMM-home.png"
-          let userProfile = result[0]
-          res.render('home',{
-            heartIcon: heartIcon,
-            banner: banner,
-            userProfile: userProfile,
-          })
-        }
-      })
-    }
-  })
-})
-  
-  app.post('/', (req, res) => {
-    //returns one random user
-    let randomUser = users.aggregate([{$sample: {
-          size: 1}}]).toArray( (err, result) => {
-
-      let userID = result[0]._id.toString();
-      if(err) {
-        console.log(err)
-      }
-      else{
-        let userProfile = result[0]
-        let banner = "/images/banners/Banner MMM-home.png"
-        if(req.body.like == 'true'){
-        users.findOneAndUpdate({"name":"joeri"}, {$push: {likes: userProfile._id, seen: userProfile._id}}, 
-        (err, user) => {
-          if (err){
-            console.log(err)
-          }
-          else if(userID === idCheck[0]){
-            randomUser
-          }
-          else{
-            console.log(user + 'update succesfull🥳')
-          }
-        })
-        }
-        else if(req.body.like == 'false'){
-          users.findOneAndUpdate({"name":"joeri"}, {$push: {seen: userProfile._id}},
-          (err, res) => {
-            if(err){
-              console.log(err)
-            }         
-            else if(userID === idCheck[0]){
-              randomUser
-            }
-            else{
-              console.log('no match')
-            }
-          })
-        }
+      //render the user
+      let banner = "/images/banners/Banner MMM-home.png"
+      let userProfile = user
         res.render('home',{
-          banner: banner,
           heartIcon: heartIcon,
+          banner: banner,
           userProfile: userProfile,
-        })
+        })  
       }
     })
+})
+  
+app.post('/', (req, res) => {
+  users.findOne((err, user) => {
+    if (err) { console.log(err) }
+    else{      
+        if(req.body.like == 'true'){
+          users.updateOne({$set: {likes: true}},(err, like) => {
+            if(err){ console.log(err) }
+            else{
+              console.log(like)
+            }
+          })
+      }
+    }
   })
+
+})
+ 
 
 
 
@@ -163,3 +112,55 @@ app.use(function (req, res, next) {
   })
 
  
+
+
+
+
+   // app.post('/', (req, res) => {
+  //   //returns one random user
+  //   let randomUser = users.aggregate([{$sample: {
+  //         size: 1}}]).toArray( (err, result) => {
+
+  //     let userID = result[0]._id.toString();
+  //     if(err) {
+  //       console.log(err)
+  //     }
+  //     else{
+  //       let userProfile = result[0]
+  //       let banner = "/images/banners/Banner MMM-home.png"
+  //       if(req.body.like == 'true'){
+  //       users.findOneAndUpdate({"name":"joeri"}, {$push: {likes: userProfile._id, seen: userProfile._id}}, 
+  //       (err, user) => {
+  //         if (err){
+  //           console.log(err)
+  //         }
+  //         else if(userID === idCheck[0]){
+  //           randomUser
+  //         }
+  //         else if(user.likes === userID){
+  //           console.log(user + 'update succesfull🥳')
+  //         }
+  //       })
+  //       }
+  //       else if(req.body.like == 'false'){
+  //         users.findOneAndUpdate({"name":"joeri"}, {$push: {seen: userProfile._id}},
+  //         (err, res) => {
+  //           if(err){
+  //             console.log(err)
+  //           }         
+  //           else if(userID === idCheck[0]){
+  //             randomUser
+  //           }
+  //           else{
+  //             console.log('no match')
+  //           }
+  //         })
+  //       }
+  //       res.render('home',{
+  //         banner: banner,
+  //         heartIcon: heartIcon,
+  //         userProfile: userProfile,
+  //       })
+  //     }
+  //   })
+  // })
