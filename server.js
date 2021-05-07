@@ -12,6 +12,7 @@ const app = express()
 const port = process.env.PORT
 const url = process.env.DB_URL;
 let users = null;
+let matches = null;
 app.set('view engine', 'hbs');;
 app.set('views', 'views');;
 app.engine('hbs', handlebars({extname: 'hbs'}));
@@ -33,7 +34,7 @@ MongoClient.connect(url, {useUnifiedTopology: true}, (err, client) => {
   }
   else{
     users = client.db(process.env.DB_NAME).collection('users')
-    db = client.db(process.env.DB_NAME).collection('user')
+    matches = client.db(process.env.DB_NAME).collection('matches')
   }
 })
 // variables
@@ -81,7 +82,7 @@ app.post('/', (req, res) => {
         }
         else if(result[0].likes.includes(myID)){
           console.log('match🥳')
-          users.findOneAndUpdate({'id':myID}, {$push: {matches: userProfile.id}},
+          matches.inserOne(userProfile,
           (err, res) =>{
             if(err){console.log(err)}
           })
@@ -118,7 +119,6 @@ app.get('/profile', (req, res) =>{
 });
 
 app.get('/musiclist', (req, res) => {
-  console.log(req.body)
     let banner = "/images/banners/banner mmm-musiclist.png"
     res.render('musiclist', {
     heartIcon: heartIcon,
@@ -134,12 +134,17 @@ app.get('/settings', (req, res) =>{
 
 app.get('/match', (req, res) => {
   let banner = "/images/banners/Banner MMM-match.png"
-  let users = undefined;
-    res.render('match', {
-      heartIcon: heartIconGreen,
-      banner: banner,
-      users: users
-    });
+  matches.find({}).toArray( (err ,match) =>{
+    if(err){ console.log(err)
+    } else{
+      console.log(match)
+      res.render('match', {
+        heartIcon: heartIconGreen,
+        banner: banner,
+        users: match
+      });
+    }
+  })
 });
 
 app.use(function (req, res, next) {

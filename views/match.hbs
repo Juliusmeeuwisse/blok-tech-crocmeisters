@@ -1,9 +1,14 @@
 <section class='match'>
-    <ul>
-        {{#if users}}
-        {{#each user}}
-            <li>{{this}}</li>
+        {{#if users}} {{#each users}}
+    <article>
+        <img src= {{users.picture}} alt="profile-picture">
+        <h2>{{users.name}}</h2>
+        <ul>{{#each users.genres}}
+            <li>{{this}},</li>
         {{/each}}
+        </ul>
+    </article>
+    {{/each}}
     </ul>
         {{else}}
             <h1>You have no matches yet...</h1>

@@ -168,6 +168,11 @@ form button:last-of-type{
     left: 1.9em; bottom: 6em;
     background-color: #e22136;
 }
+
+.match ul {
+    color:white;
+}
+
 footer {
     position: fixed;
     bottom:0; left:0; right: 0;
