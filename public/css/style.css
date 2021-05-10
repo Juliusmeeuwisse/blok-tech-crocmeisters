@@ -173,6 +173,10 @@ form button:last-of-type{
     color:white;
 }
 
+.noProfiles {
+    position: absolute;
+}
+
 footer {
     position: fixed;
     bottom:0; left:0; right: 0;

@@ -1,4 +1,5 @@
 <section class='home'>
+    {{#if userProfile}}
     <article>
         <img src='{{userProfile.picture}}' alt="profiel foto">
         <h2>{{userProfile.name}}</h2>
@@ -31,4 +32,10 @@
         <button name="like" value="true"> <img src="/images/icons/empty heart.png" alt="heart"> Like</button>
         <button name="like" value="false"> <img src="/images/icons/cross.png" alt="cross"> Dislike</button>
     </form>
+    {{else}} 
+    <article class="noProfiles">
+        <h1>Sorry...We couldn't find any users</h1>
+        <p>change your settings to discover more new people</p>
+    </article>
+     {{/if}}       
 </section>

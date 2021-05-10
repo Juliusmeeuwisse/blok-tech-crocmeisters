@@ -68,7 +68,6 @@ app.get('/', (req, res) => {
         })
     }
   })
-  
 })
 
 
@@ -93,54 +92,51 @@ let getMatches = () =>{
 
 
 app.post('/', (req, res) => {
-  //returns one random user
-  let randomUser = users.aggregate([{$sample: {
-        size: 1}}]).toArray( (err, result) => {
-
-    let userID = result[0].id;
-    if(err) throw(err);
-    else{
-      let userProfile = result[0]
-      console.log(userProfile.seen)
       let banner = "/images/banners/Banner MMM-home.png"
-      if(req.body.like == 'true'){
-      users.findOneAndUpdate({'id':'def757fc-5bfe-4ae1-9fe6-ce46fec2ebfe'}, {$push: {likes: userProfile, seen: userProfile}}, 
-      (err, user) => {
-        if (err){console.log(err)}
-        else if(userProfile.seen.includes(userID)){
-          randomUser
-        }
-        else if(result[0].likes.includes(myID)){
-          console.log('match🥳')
-          matches.inserOne(userProfile,
-          (err, res) =>{
-            if(err){console.log(err)}
-          })
-        }
-      })
-      }
-      else if(req.body.like == 'false'){
-        users.findOneAndUpdate({'id':myID}, {$push: {seen: userProfile}},
-        (err, res) => {
-          if(err){
-            console.log(err)
-          }         
-          else if(userProfile.seen.includes(userID)){
-            randomUser
-          }
-          else{
-            console.log('no match')
-          }
-        })
-      }
+      users.find({}).toArray( (err,profiles) =>{
+        if(err){console.log(err)
+        } else{
+          let myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
+          
+          let likes = myProfile.likes
+          let dislikes = myProfile.dislikes
+          let userProfiles = profiles.filter(user => {return !likes.includes(user.id) 
+            && !dislikes.includes(user.id)})
+            if(!userProfiles){return}
+          let randomUserProfile = userProfiles[Math.floor(Math.random()* userProfiles.length)];  
+            let match = randomUserProfile.likes.find(match => match.includes(myID))
+            if(req.body.like == 'true' && match){
+                users.updateOne( {'id': myID}, {$push:{'matches': randomUserProfile.id, 'likes':randomUserProfile.id}},
+                (err, res) => {
+                  if(err){console.log(err)
+                  } else{
+                     console.log('MATCH🎉🥳🎉🥳🎉')
+                  }
+                })
+            } else if(req.body.like == 'true'){
+              users.updateOne( {'id': myID}, {$push:{'likes':randomUserProfile.id}},
+              (err, res) => {
+                if(err){console.log(err)
+                } 
+              })
+            } else{
+              users.updateOne( {'id': myID}, {$push:{'dislikes':randomUserProfile.id}},
+              (err, res) => {
+                if(err){console.log(err)
+                } 
+              })
+            }
+           
+         
       res.render('home',{
         banner: banner,
         heartIcon: heartIcon,
-        userProfile: userProfile,
+        userProfile: randomUserProfile,
       })
-    }
-  })
-})
+        }
+      })
+    })
+      
 
 
 
