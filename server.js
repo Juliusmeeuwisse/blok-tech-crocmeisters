@@ -46,40 +46,31 @@ let myID = "1128bae9-5a62-4905-a404-2c9386e26df9" //Fake it for now, later this 
 let heartIconGreen = "/images/icons/green heart.png"
 let heartIcon = "/images/icons/white heart.png"
 
-//Functions
+
 
 app.get('/', (req, res) => {
   let banner = "/images/banners/Banner MMM-home.png"
   users.find({}).toArray( (err,profiles) =>{
     if(err){console.log(err)
     } else{
-      let myProfile = profiles.filter(myProfile => myProfile.id.includes(myID))
-      let likes = myProfile[0].likes
-      let dislikes = myProfile[0].dislikes
-      for (let i = 0; i< likes.length; i++) {
-      let liked = profiles.filter(profile => profile.id.includes(likes[i]))
-        for (let n = 0; n < dislikes.length; n++) {
-          let disliked = profiles.filter(profile => profile.id.includes(dislikes[n]))
-          let watchedProfiles = [].concat(liked, disliked)
-            for (let x = 0; x < watchedProfiles.length; x++) {
-              userProfiles = profiles.filter(profiles => profiles.id.includes(watchedProfiles[x].id))
-              console.log(userProfiles)    
-            }
-        }
-      }
-        res.render('home', {
+      let myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
+      
+      let likes = myProfile.likes
+      let dislikes = myProfile.dislikes
+      let userProfiles = profiles.filter(user => {return !likes.includes(user.id) 
+        && !dislikes.includes(user.id)})
+      let randomUserProfile = userProfiles[Math.floor(Math.random()* userProfiles.length)];  
+      
+      res.render('home', {
           heartIcon: heartIcon,
           banner: banner,
-          // userProfile: userProfiles,
+          userProfile: randomUserProfile,
         })
     }
   })
   
 })
 
-let getProfiles = () =>{
-
-}
 
 let getMatches = () =>{
   users.findOne({'id':myID}, (err, match) =>{
