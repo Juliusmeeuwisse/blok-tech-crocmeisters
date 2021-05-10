@@ -1,11 +1,10 @@
 <section class='match'>
-        {{#if users}} {{#each users}}
+        {{#if match}} {{#each match}}
     <article>
-        <img src= {{users.picture}} alt="profile-picture">
-        <h2>{{users.name}}</h2>
-        <ul>{{#each users.genres}}
-            <li>{{this}},</li>
-        {{/each}}
+        <img src='{{picture}}' alt="profile-picture">
+        <h2>{{name}}</h2>
+        <ul>
+            <li>{{genre}}</li>{{genre}}
         </ul>
     </article>
     {{/each}}

@@ -5,14 +5,14 @@ const MongoClient = require('mongodb').MongoClient;
 const request = require('request');
 const handlebars = require('express-handlebars');
 const { v4: uuidv4 } = require('uuid');
+const { json } = require('body-parser');
 require('dotenv').config()
 
 const app = express()
 
 const port = process.env.PORT
 const url = process.env.DB_URL;
-let users = null;
-let matches = null;
+
 app.set('view engine', 'hbs');;
 app.set('views', 'views');;
 app.engine('hbs', handlebars({extname: 'hbs'}));
@@ -24,7 +24,7 @@ app.use(express.static('public'));
 
 
 app.listen(port, () => {
-  console.log(`Server running!`)
+  console.log(`😃😃Server running!😃😃`)
 })
 
 //connection with database
@@ -34,33 +34,72 @@ MongoClient.connect(url, {useUnifiedTopology: true}, (err, client) => {
   }
   else{
     users = client.db(process.env.DB_NAME).collection('users')
-    matches = client.db(process.env.DB_NAME).collection('matches')
   }
 })
-// variables
-let myID = "1128bae9-5a62-4905-a404-2c9386e26df9"
+// Global variables
+let users = null;
+let matches
+let pictures;
+let names;
+let genres;
+let myID = "1128bae9-5a62-4905-a404-2c9386e26df9" //Fake it for now, later this wil be the session id
 let heartIconGreen = "/images/icons/green heart.png"
 let heartIcon = "/images/icons/white heart.png"
 
-//page templates      
+//Functions
+
 app.get('/', (req, res) => {
-  //find random user from database
-  users.aggregate([{$sample: {
-    size: 1}}]).toArray( (err, result) => {
-    if (err) throw err; 
-    else{
-      //render the user
-      let banner = "/images/banners/Banner MMM-home.png"
-      let userProfile = result[0]
-      console.log()
+  let banner = "/images/banners/Banner MMM-home.png"
+  users.find({}).toArray( (err,profiles) =>{
+    if(err){console.log(err)
+    } else{
+      let myProfile = profiles.filter(myProfile => myProfile.id.includes(myID))
+      let likes = myProfile[0].likes
+      let dislikes = myProfile[0].dislikes
+      for (let i = 0; i< likes.length; i++) {
+      let liked = profiles.filter(profile => profile.id.includes(likes[i]))
+        for (let n = 0; n < dislikes.length; n++) {
+          let disliked = profiles.filter(profile => profile.id.includes(dislikes[n]))
+          let watchedProfiles = [].concat(liked, disliked)
+            for (let x = 0; x < watchedProfiles.length; x++) {
+              userProfiles = profiles.filter(profiles => profiles.id.includes(watchedProfiles[x].id))
+              console.log(userProfiles)    
+            }
+        }
+      }
         res.render('home', {
           heartIcon: heartIcon,
           banner: banner,
-          userProfile: userProfile,
-        })  
-      }
-    })
+          // userProfile: userProfiles,
+        })
+    }
+  })
+  
 })
+
+let getProfiles = () =>{
+
+}
+
+let getMatches = () =>{
+  users.findOne({'id':myID}, (err, match) =>{
+    if(err){console.log(err)
+    } else{
+      matches = match.likes
+      match.likes.forEach(match => {
+        names = match.name
+        pictures = match.picture
+        genres = match.genres
+      });
+    }
+  })
+}
+
+
+
+//page templates      
+
+
 
 app.post('/', (req, res) => {
   //returns one random user
@@ -74,7 +113,7 @@ app.post('/', (req, res) => {
       console.log(userProfile.seen)
       let banner = "/images/banners/Banner MMM-home.png"
       if(req.body.like == 'true'){
-      users.findOneAndUpdate({'id':myID}, {$push: {likes: userProfile.id, seen: userProfile.id}}, 
+      users.findOneAndUpdate({'id':'def757fc-5bfe-4ae1-9fe6-ce46fec2ebfe'}, {$push: {likes: userProfile, seen: userProfile}}, 
       (err, user) => {
         if (err){console.log(err)}
         else if(userProfile.seen.includes(userID)){
@@ -90,7 +129,7 @@ app.post('/', (req, res) => {
       })
       }
       else if(req.body.like == 'false'){
-        users.findOneAndUpdate({'id':myID}, {$push: {seen: userProfile.id}},
+        users.findOneAndUpdate({'id':myID}, {$push: {seen: userProfile}},
         (err, res) => {
           if(err){
             console.log(err)
@@ -132,20 +171,21 @@ app.get('/settings', (req, res) =>{
   })
 })
 
+
 app.get('/match', (req, res) => {
-  let banner = "/images/banners/Banner MMM-match.png"
-  matches.find({}).toArray( (err ,match) =>{
-    if(err){ console.log(err)
-    } else{
-      console.log(match)
-      res.render('match', {
-        heartIcon: heartIconGreen,
-        banner: banner,
-        users: match
-      });
-    }
+      getMatches()
+  let banner= "/images/banners/banner mmm-match.png"
+  res.render('match', {
+    heartIcon: heartIconGreen,
+    banner: banner,
+    match: matches,
+    picture: pictures,
+    name: names,
+    genre: genres
   })
-});
+})
+
+
 
 app.use(function (req, res, next) {
     res.status(404).send("404 Page not found")
