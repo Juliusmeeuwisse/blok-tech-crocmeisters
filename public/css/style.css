@@ -3,7 +3,12 @@ body{
     font-family: sans-serif, Helvetica, Arial;
     background-color: #191414;
 }
+
+
 header {
+    position: sticky;
+    top:0;
+    z-index: 100;
     display: flex;
     background-image: linear-gradient(#1db954 ,#191414 87.95%);
 }
@@ -15,7 +20,7 @@ header nav a:first-of-type img {
 header nav a:nth-of-type(2) img{
     height: 2.5em;
     border-radius: 50%;
-    border: 1px solid #1db954;
+    box-shadow: 1px 5px 15px #282828;
 }
 
 header nav {
@@ -141,6 +146,7 @@ section article button{
     background-color: #1db954e5;
     border-radius: 50%;
     border-style: none; 
+    box-shadow:1px 1px 15px black;
 }
 
 section article button span {
@@ -180,6 +186,7 @@ form button{
     height: 3em;
     width: 9.65em;
     color: #fff;
+    
 }
 
 form button:first-of-type{
@@ -195,13 +202,13 @@ form button:last-of-type{
 }
 
 .match, .musicList {
-    margin-top: 1em;
     color:#b3b3b3;
     position: relative;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
-.match article, .musicList article{
+.match article{
     display: flex;
     align-items: center;
     min-height: 0;
@@ -234,6 +241,20 @@ margin-left: .5em;
     font-size: 14px;
     margin-right: .3em;
 }
+
+.musicList article {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 0;
+    padding: 3px;
+}
+
+.musicList div {
+    position: absolute;
+    left: 5.5em;
+}
+
 .musicList h2 {
     max-width: 100%;
     margin-left: .5em;
@@ -248,11 +269,30 @@ margin-left: .5em;
 .musicList article img {
     width:5em;
     height: 5em;
+    box-shadow: 1px 1px 15px #282828;
 }
+
+.musicList article button {
+    position:unset;
+    width: 3em;
+    height: 3em;
+    margin-right: 1em;
+}
+
+.musicList article button span {
+    margin-left: 0.65em;
+}
+
+.musicList article:last-of-type, .match article:last-of-type {
+    margin-bottom: 5em;
+}
+
+
 
 footer {
     position: fixed;
-    bottom:0; left:0; right: 0;
+    bottom:0; left: 0; right: 0;
+    z-index: 100;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -281,4 +321,8 @@ footer a {
     50%  {transform: scale(1.02);}
     100%  {transform: scale(0.99);}
     /* 100% {transform: scale(1);} */
+}
+
+audio {
+    display: none;
 }
