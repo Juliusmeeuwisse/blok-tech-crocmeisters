@@ -40,8 +40,32 @@ header > img {
 h1{
     color:white;
     position: absolute;
-    left:50%; top:40%;
-    /* transform: translate(-50%, -50%); */
+    top:48%;
+    text-align: center;
+    text-shadow: 1px 1px 6px #191414;
+
+}
+
+section > a {
+    position: absolute;
+    top: 60%; 
+    text-align: center;
+    color: #b3b3b3;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: sans-serif, Helvetica, Arial;
+    max-width: 12em;
+}
+
+.logo{
+    position: absolute;
+    -webkit-filter:drop-shadow( 1px 1px 60px #1fd954);
+    top: 30%;
+    width: 14em;
+    animation-name: logoGrow;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    transition: ease;
 }
 
 h2{ 
@@ -61,8 +85,6 @@ p {
 }
 
 section:first-of-type{
-    position:absolute;
-    top: 7em;
     display: flex;
     flex-wrap: wrap;
     justify-content:center;
@@ -170,12 +192,9 @@ form button:last-of-type{
 }
 
 .match ul {
-    color:white;
+    background-color: white;
 }
 
-.noProfiles {
-    position: absolute;
-}
 
 footer {
     position: fixed;
@@ -201,4 +220,11 @@ footer img {
 footer a {
     display: flex;
     flex-direction: column; 
+}
+
+@keyframes logoGrow {
+    0%   {transform: scale(1);}
+    50%  {transform: scale(1.02);}
+    100%  {transform: scale(0.99);}
+    /* 100% {transform: scale(1);} */
 }

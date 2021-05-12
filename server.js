@@ -52,7 +52,10 @@ app.get('/', (req, res) => {
   let banner = "/images/banners/Banner MMM-home.png"
   users.find({}).toArray( (err,profiles) =>{
     if(err){console.log(err)
-    } else{
+    } else if(profiles == undefined){
+      return
+    }
+    else{
       let myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
       
       let likes = myProfile.likes
@@ -71,37 +74,19 @@ app.get('/', (req, res) => {
 })
 
 
-let getMatches = () =>{
-  users.findOne({'id':myID}, (err, match) =>{
-    if(err){console.log(err)
-    } else{
-      matches = match.likes
-      match.likes.forEach(match => {
-        names = match.name
-        pictures = match.picture
-        genres = match.genres
-      });
-    }
-  })
-}
+
 
 
 
 //page templates      
-
-
-
 app.post('/', (req, res) => {
       let banner = "/images/banners/Banner MMM-home.png"
       users.find({}).toArray( (err,profiles) =>{
         if(err){console.log(err)
         } else{
           let myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
-          
-          let likes = myProfile.likes
-          let dislikes = myProfile.dislikes
-          let userProfiles = profiles.filter(user => {return !likes.includes(user.id) 
-            && !dislikes.includes(user.id)})
+          let userProfiles = profiles.filter(user => {return !myProfile.likes.includes(user.id) 
+            && !myProfile.dislikes.includes(user.id)})
             if(!userProfiles){return}
           let randomUserProfile = userProfiles[Math.floor(Math.random()* userProfiles.length)];  
             let match = randomUserProfile.likes.find(match => match.includes(myID))
@@ -126,8 +111,7 @@ app.post('/', (req, res) => {
                 } 
               })
             }
-           
-         
+            
       res.render('home',{
         banner: banner,
         heartIcon: heartIcon,
@@ -160,15 +144,22 @@ app.get('/settings', (req, res) =>{
 
 
 app.get('/match', (req, res) => {
-      getMatches()
   let banner= "/images/banners/banner mmm-match.png"
-  res.render('match', {
-    heartIcon: heartIconGreen,
-    banner: banner,
-    match: matches,
-    picture: pictures,
-    name: names,
-    genre: genres
+  users.find({}).toArray( (err,profiles) =>{
+    if(err){console.log(err)
+    } else if(profiles == undefined){
+      return
+    }
+    else{
+      let myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
+      let myMatches = profiles.filter(match => { return myProfile.matches.includes(match.id)})
+
+      res.render('match', {
+          heartIcon: heartIcon,
+          banner: banner,
+          matches: myMatches
+        })
+    }
   })
 })
 

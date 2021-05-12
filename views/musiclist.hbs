@@ -1,13 +1,13 @@
 <section class='musicList'>
-    <ul>
         {{#if songs}}
+    <ul>
         {{#each songs}}
             <li>{{this}}</li>
         {{/each}}
     </ul>
         {{else}}
+            <img class='logo' src="/images/banners/mmm logo-1.png" alt="mmm logo">
             <h1>There are no songs yet...</h1>
-            <p>Discover new people, when a match occurs their songs will be added to this page automatically</p>
-            {{!-- <a href="/">Explore further</a> --}}
+            <a href="/">Keep on searching for new music!</a>
         {{/if}}
 </section>
