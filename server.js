@@ -49,19 +49,16 @@ let heartIcon = "/images/icons/white heart.png"
 
 
 app.get('/', (req, res) => {
-  let banner = "/images/banners/Banner MMM-home.png"
+  const banner = "/images/banners/Banner MMM-home.png"
   users.find({}).toArray( (err,profiles) =>{
     if(err){console.log(err)
     } else if(profiles == undefined){
       return
     }
     else{
-      let myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
-      
-      let likes = myProfile.likes
-      let dislikes = myProfile.dislikes
-      let userProfiles = profiles.filter(user => {return !likes.includes(user.id) 
-        && !dislikes.includes(user.id)})
+      const myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
+      let userProfiles = profiles.filter(user => {return !myProfile.likes.includes(user.id) 
+        && !myProfile.dislikes.includes(user.id)})
       let randomUserProfile = userProfiles[Math.floor(Math.random()* userProfiles.length)];  
       
       res.render('home', {
@@ -80,11 +77,11 @@ app.get('/', (req, res) => {
 
 //page templates      
 app.post('/', (req, res) => {
-      let banner = "/images/banners/Banner MMM-home.png"
+      const banner = "/images/banners/Banner MMM-home.png"
       users.find({}).toArray( (err,profiles) =>{
         if(err){console.log(err)
         } else{
-          let myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
+          const myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
           let userProfiles = profiles.filter(user => {return !myProfile.likes.includes(user.id) 
             && !myProfile.dislikes.includes(user.id)})
             if(!userProfiles){return}
@@ -129,11 +126,24 @@ app.get('/profile', (req, res) =>{
 });
 
 app.get('/musiclist', (req, res) => {
-    let banner = "/images/banners/banner mmm-musiclist.png"
-    res.render('musiclist', {
-    heartIcon: heartIcon,
-    banner: banner
-  });
+  const banner = "/images/banners/banner mmm-musiclist.png"
+  users.find({}).toArray( (err,profiles) =>{
+    if(err){console.log(err)
+    } else if(profiles == undefined){
+      return
+    }
+    else{
+      const myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
+      let myMatches = profiles.filter(match => { return myProfile.matches.includes(match.id)})
+      let mySongs = myMatches.map(song => song.songs).flat()
+
+      res.render('musiclist', {
+      heartIcon: heartIcon,
+      banner: banner,
+      songs: mySongs
+    });
+    }
+  })
 });
 
 app.get('/settings', (req, res) =>{
@@ -153,7 +163,6 @@ app.get('/match', (req, res) => {
     else{
       let myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
       let myMatches = profiles.filter(match => { return myProfile.matches.includes(match.id)})
-
       res.render('match', {
           heartIcon: heartIcon,
           banner: banner,

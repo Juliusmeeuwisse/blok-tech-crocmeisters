@@ -1,11 +1,17 @@
-<section class='musicList'>
-        {{#if songs}}
-    <ul>
+{{#if songs}} 
+    <section class='musicList'>
         {{#each songs}}
-            <li>{{this}}</li>
+        <article>
+            <img src='{{albumArt}}' alt="profile-picture">
+            <div>
+                <h2>{{title}}</h2>
+                <p>{{artist}}</p>
+            </div>
+        </article>
         {{/each}}
-    </ul>
-        {{else}}
+    </section>
+{{else}}
+    <section>
             <img class='logo' src="/images/banners/mmm logo-1.png" alt="mmm logo">
             <h1>There are no songs yet...</h1>
             <a href="/">Keep on searching for new music!</a>

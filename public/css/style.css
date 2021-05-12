@@ -106,29 +106,32 @@ article:hover{
     transition: .1s;
 }
 
-section article:first-of-type img {
+.home article:first-of-type img {
     border-radius: 50%;
 }
 
-section:first-of-type article img{
+.home article img, .musicList article img{
     width: 7em;
     height: 7em;
 }
-section article:first-of-type ul{
+.home article:first-of-type ul{
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     max-width: 7.5em;
+    font-size: 14px;
 }
 
-section article:first-of-type ul li{
+.home article:first-of-type ul li{
     list-style: none;
     color: #b3b3b3;
     font-size: 14px;
     margin-right: 3px;
 }
+
+
 
 section article button{
     position: absolute;
@@ -191,10 +194,61 @@ form button:last-of-type{
     background-color: #e22136;
 }
 
-.match ul {
-    background-color: white;
+.match, .musicList {
+    margin-top: 1em;
+    color:#b3b3b3;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.match article, .musicList article{
+    display: flex;
+    align-items: center;
+    min-height: 0;
+    padding: 3px;
 }
 
+.match img{
+    width: 5em;
+    border-radius: 50%;
+    box-shadow: 1px 5px 15px #282828;
+}
+
+.match h2{
+align-self: flex-start;
+margin-left: .5em;
+}
+
+.match ul{
+    display: flex;
+    flex-flow: row wrap;
+    position: absolute;
+    left: 3.2em;
+    top: 1.3em;
+    margin:0;
+}
+
+.match ul li{
+    list-style: none;
+    color: #b3b3b3;
+    font-size: 14px;
+    margin-right: .3em;
+}
+.musicList h2 {
+    max-width: 100%;
+    margin-left: .5em;
+}
+
+
+.musicList p {
+    font-size: 14px;
+    margin-left: .5em;
+}
+
+.musicList article img {
+    width:5em;
+    height: 5em;
+}
 
 footer {
     position: fixed;

@@ -1,20 +1,21 @@
-<section>
-        {{#if matches}} {{#each matches}}
-    <article class='match'>
-        <img src='{{picture}}' alt="profile-picture">
-        <h2>{{name}}</h2>
-        <ul>
-            {{#each genres}}
-            <li>{{this}},</li>
-            {{/each}}
-        </ul>
-    </article>
-    {{/each}}
-    </ul>
-
-        {{else}}
+{{#if matches}} 
+    <section class='match'>
+        {{#each matches}}
+        <article>
+            <img src='{{picture}}' alt="profile-picture">
+            <h2>{{name}}</h2>
+            <ul>
+                {{#each genres}}
+                <li>{{this}},</li>
+                {{/each}}
+            </ul>
+        </article>
+        {{/each}}
+    </section>
+{{else}}
+    <section>
             <img class='logo' src="/images/banners/mmm logo-1.png" alt="mmm logo">
             <h1>You have no matches yet...</h1>
             <a href="/">Keep on searching for new music!</a>
-        {{/if}}
-</section>
+{{/if}}
+    </section>
