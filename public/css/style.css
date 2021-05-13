@@ -149,15 +149,53 @@ section article button{
     box-shadow:1px 1px 15px black;
 }
 
-section article button span {
+.home span {
     display: block;
-    margin-left:1em;
+    margin-left:calc(50% - 6.5px);
     width:0; 
     height:0;
     border-top: 12px solid transparent;
     border-bottom:12px solid transparent;
     border-left: 17px solid #fff;
 }
+
+
+article div .pause {
+      border-top: 0px;
+      border-bottom: 0px;
+      border-left:0px;
+      border-style: double;
+      border-width: 0px 0 0px 14px;
+      height: 14px;
+      margin-left: calc(50% - 6.5px);
+      border-color: #fff;
+    
+}
+
+article .pause {
+    border-top: 0px;
+    border-bottom: 0px;
+    border-left:0px;
+    border-style: double;
+    border-width: 0px 0 0px 17px;
+    height: 17px;
+    margin-left: calc(50% - 8.5px);
+    border-color: #fff;
+
+}
+/* .pause {
+    width: 12px;
+    height: 12px;
+    border-style: solid;
+    border-width: 17px;
+    border-color: #fff;
+
+    border-style: double;
+    border-width: 0px 12px 0px 12px;
+
+    border-width: 0px 0px 0px 12px;
+    border-color: #fff;
+} */
 
 section article p {
     max-width: 7.5em;
@@ -245,25 +283,22 @@ margin-left: .5em;
 .musicList article {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     min-height: 0;
     padding: 3px;
 }
 
 .musicList div {
-    position: absolute;
-    left: 5.5em;
+    margin-left: .5em;
 }
 
 .musicList h2 {
     max-width: 100%;
-    margin-left: .5em;
 }
 
 
 .musicList p {
     font-size: 14px;
-    margin-left: .5em;
 }
 
 .musicList article img {
@@ -273,14 +308,20 @@ margin-left: .5em;
 }
 
 .musicList article button {
-    position:unset;
+    left: 80%; top: calc(50% - 1.5em);
     width: 3em;
     height: 3em;
     margin-right: 1em;
 }
 
-.musicList article button span {
-    margin-left: 0.65em;
+.musicList span {
+        display: block;
+        margin-left: 0.75em;
+        width:0; 
+        height:0;
+        border-top: 9px solid transparent;
+        border-bottom:9px solid transparent;
+        border-left: 11.5px solid #fff
 }
 
 .musicList article:last-of-type, .match article:last-of-type {
@@ -324,5 +365,6 @@ footer a {
 }
 
 audio {
+    margin-top: .3em;
     display: none;
 }
