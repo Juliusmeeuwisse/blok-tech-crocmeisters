@@ -24,3 +24,7 @@ for (let i = 0; i < button.length; i++) {
     return closure;
     }
 }
+
+function match() {
+    console.log('test')
+}

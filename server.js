@@ -38,16 +38,12 @@ MongoClient.connect(url, {useUnifiedTopology: true}, (err, client) => {
 })
 // Global variables
 let users = null;
-let matches
-let pictures;
-let names;
-let genres;
 let myID = "1128bae9-5a62-4905-a404-2c9386e26df9" //Fake it for now, later this wil be the session id
-let heartIconGreen = "/images/icons/green heart.png"
+// let heartIconGreen = "/images/icons/green heart.png"
 let heartIcon = "/images/icons/white heart.png"
 
 
-
+//templates
 app.get('/', (req, res) => {
   const banner = "/images/banners/Banner MMM-home.png"
   users.find({}).toArray( (err,profiles) =>{
@@ -84,8 +80,11 @@ app.post('/', (req, res) => {
           const myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
           let userProfiles = profiles.filter(user => {return !myProfile.likes.includes(user.id) 
             && !myProfile.dislikes.includes(user.id)})
-            if(!userProfiles){return}
-          let randomUserProfile = userProfiles[Math.floor(Math.random()* userProfiles.length)];  
+          let randomUserProfile = userProfiles[Math.floor(Math.random()* userProfiles.length)]; 
+            if(randomUserProfile == undefined){res.render('home',{
+              banner: banner,
+              heartIcon: heartIcon,
+            })} else{
             let match = randomUserProfile.likes.find(match => match.includes(myID))
             if(req.body.like == 'true' && match){
                 users.updateOne( {'id': myID}, {$push:{'matches': randomUserProfile.id, 'likes':randomUserProfile.id}},
@@ -114,9 +113,10 @@ app.post('/', (req, res) => {
         heartIcon: heartIcon,
         userProfile: randomUserProfile,
       })
-        }
-      })
-    })
+    }
+  }
+  })
+})
       
 
 
