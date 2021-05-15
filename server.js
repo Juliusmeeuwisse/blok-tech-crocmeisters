@@ -3,7 +3,7 @@
 // import dependecies
 const express = require('express')
 const bodyParser = require('body-parser')
-const { MongoClient } = require('mongodb')
+const mongo = require('mongodb')
 const request = require('request')
 const path = require('path')
 const handlebars = require('express-handlebars')
@@ -33,7 +33,7 @@ app.use(express.static('public'))
 app.listen(port, () => console.log('Server running!'))
 
 // Connection with database
-MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
+mongo.MongoClient.connect(url, { useNewUrlParser: true }, (err, client) => {
   if (err) {
     console.log(err)
   } else {
