@@ -9,6 +9,11 @@ My Music Match, shortened to MMM, is an online matching application where people
 ### Libraries
 This project uses a number of libraries in able to make te project work. The following libraries are used:
 
+* mongodb 
+* express
+* body-parser
+* uuivd
+* Spotify API library
 [https://developer.spotify.com/documentation/web-api/libraries/](
 https://developer.spotify.com/documentation/web-api/libraries/)
 
