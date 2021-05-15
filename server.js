@@ -19,7 +19,7 @@ const sessionID = '1128bae9-5a62-4905-a404-2c9386e26df9' // Fake it sessionID fo
 const heartIcon = '/images/icons/white heart.png'
 
 const app = express()
-const port = process.env.PORT
+const port = process.env.PORT || 3000
 const url = process.env.DB_URL
 let users = null
 
