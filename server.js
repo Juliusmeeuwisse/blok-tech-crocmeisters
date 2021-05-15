@@ -37,13 +37,13 @@ MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
   if (err) {
     console.log(err)
   } else {
-    console.log(users = client.db(process.env.DB_NAME).collection('users'))
+    users = client.db(process.env.DB_NAME).collection('users')
   }
 })
 
 // page templates
 app.get('/', (req, res) => {
-  users.collection('users').find({}).toArray((err, profiles) => {
+  users.find({}).toArray((err, profiles) => {
     if (err) {
       console.log(err)
     } else if (profiles === undefined) {
@@ -126,7 +126,7 @@ app.post('/', (req, res) => {
 })
 
 app.get('/musiclist', (req, res) => {
-  users.collection('users').find({}).toArray((err, profiles) => {
+  users.find({}).toArray((err, profiles) => {
     if (err) {
       console.log(err)
     } else if (profiles === undefined) {
@@ -163,7 +163,7 @@ app.get('/profile', (req, res) => {
 })
 
 app.get('/match', (req, res) => {
-  users.collection('users').find({}).toArray((err, profiles) => {
+  users.find({}).toArray((err, profiles) => {
     if (err) {
       console.log(err)
     } else if (profiles === undefined) {
