@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "test test",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "author": "Joeri",
   "license": "MIT",
@@ -20,6 +22,9 @@
   },
   "devDependencies": {
     "eslint": "^7.26.0",
-    "nodemon": "^2.0.7"
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.23.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1"
   }
 }

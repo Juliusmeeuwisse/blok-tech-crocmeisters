@@ -1,185 +1,191 @@
+/* eslint-disable no-unused-vars */
+
 // import dependecies
 const express = require('express')
-const bodyParser = require('body-parser');
-const MongoClient = require('mongodb').MongoClient;
-const request = require('request');
-const handlebars = require('express-handlebars');
-const { v4: uuidv4 } = require('uuid');
-const { json } = require('body-parser');
+const bodyParser = require('body-parser')
+const { MongoClient } = require('mongodb')
+const request = require('request')
+const path = require('path')
+const handlebars = require('express-handlebars')
+const { v4: uuidv4 } = require('uuid')
+const { json } = require('body-parser')
 require('dotenv').config()
 
+// Global variables
+const mainBanner = '/images/banners/Banner MMM-home.png'
+const matchBanner = '/images/banners/banner mmm-match.png'
+const musicListBanner = '/images/banners/banner mmm-musiclist.png'
+const sessionID = '1128bae9-5a62-4905-a404-2c9386e26df9' // Fake it sessionID for now
+const heartIcon = '/images/icons/white heart.png'
+
 const app = express()
-
 const port = process.env.PORT
-const url = process.env.DB_URL;
+const url = process.env.DB_URL
+let users = null
 
-app.set('view engine', 'hbs');;
-app.set('views', 'views');;
-app.engine('hbs', handlebars({extname: 'hbs'}));
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-app.use(express.static('public'));
+// set viewport
+app.set('view engine', 'hbs')
+app.set('views', 'views')
+app.engine('hbs', handlebars({ extname: 'hbs' }))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(express.static('public'))
+app.listen(port, () => console.log('Server running!'))
 
-
-
-
-app.listen(port, () => {
-  console.log(`😃😃Server running!😃😃`)
-})
-
-//connection with database
-MongoClient.connect(url, {useUnifiedTopology: true}, (err, client) => {
-  if (err){
+// Connection with database
+MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
+  if (err) {
     console.log(err)
-  }
-  else{
+  } else {
     users = client.db(process.env.DB_NAME).collection('users')
   }
 })
-// Global variables
-let users = null;
-let myID = "1128bae9-5a62-4905-a404-2c9386e26df9" //Fake it for now, later this wil be the session id
-// let heartIconGreen = "/images/icons/green heart.png"
-let heartIcon = "/images/icons/white heart.png"
 
-
-//templates
+// page templates
 app.get('/', (req, res) => {
-  const banner = "/images/banners/Banner MMM-home.png"
-  users.find({}).toArray( (err,profiles) =>{
-    if(err){console.log(err)
-    } else if(profiles == undefined){
-      return
-    }
-    else{
-      const myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
-      let userProfiles = profiles.filter(user => {return !myProfile.likes.includes(user.id) 
-        && !myProfile.dislikes.includes(user.id)})
-      let randomUserProfile = userProfiles[Math.floor(Math.random()* userProfiles.length)];  
-      
+  users.find({}).toArray((err, profiles) => {
+    if (err) {
+      console.log(err)
+    } else if (profiles === undefined) {
       res.render('home', {
-          heartIcon: heartIcon,
-          banner: banner,
-          userProfile: randomUserProfile,
-        })
-    }
-  })
-})
-
-
-
-
-
-
-//page templates      
-app.post('/', (req, res) => {
-      const banner = "/images/banners/Banner MMM-home.png"
-      users.find({}).toArray( (err,profiles) =>{
-        if(err){console.log(err)
-        } else{
-          const myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
-          let userProfiles = profiles.filter(user => {return !myProfile.likes.includes(user.id) 
-            && !myProfile.dislikes.includes(user.id)})
-          let randomUserProfile = userProfiles[Math.floor(Math.random()* userProfiles.length)]; 
-            if(randomUserProfile == undefined){res.render('home',{
-              banner: banner,
-              heartIcon: heartIcon,
-            })} else{
-            let match = randomUserProfile.likes.find(match => match.includes(myID))
-            if(req.body.like == 'true' && match){
-                users.updateOne( {'id': myID}, {$push:{'matches': randomUserProfile.id, 'likes':randomUserProfile.id}},
-                (err, res) => {
-                  if(err){console.log(err)
-                  } else{
-                     console.log('MATCH🎉🥳🎉🥳🎉')
-                  }
-                })
-            } else if(req.body.like == 'true'){
-              users.updateOne( {'id': myID}, {$push:{'likes':randomUserProfile.id}},
-              (err, res) => {
-                if(err){console.log(err)
-                } 
-              })
-            } else{
-              users.updateOne( {'id': myID}, {$push:{'dislikes':randomUserProfile.id}},
-              (err, res) => {
-                if(err){console.log(err)
-                } 
-              })
-            }
-            
-      res.render('home',{
-        banner: banner,
-        heartIcon: heartIcon,
-        userProfile: randomUserProfile,
+        heartIcon,
+        banner: mainBanner
+      })
+    } else {
+      const myProfile = profiles.find((profile) => profile.id.includes(sessionID))
+      const userProfiles = profiles.filter(
+        (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
+      )
+      const userProfile = userProfiles[0]
+      // const randomUserProfile = userProfiles[Math.floor(Math.random() * userProfiles.length)];
+      // console.log(userProfile);
+      // console.log('🦧');
+      res.render('home', {
+        heartIcon,
+        banner: mainBanner,
+        userProfile
       })
     }
-  }
   })
 })
-      
 
-
-
-app.get('/profile', (req, res) =>{
-  res.render('profile');
-});
+app.post('/', (req, res) => {
+  users.find({}).toArray((err, profiles) => {
+    if (err) {
+      console.log(err)
+    } else {
+      const myProfile = profiles.find((profile) => profile.id.includes(sessionID))
+      const userProfiles = profiles.filter(
+        (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
+      )
+      const userProfile = userProfiles[0]
+      // console.log(userProfile);
+      // console.log('🌚');
+      if (userProfile === undefined) {
+        res.render('home', {
+          banner: mainBanner,
+          heartIcon
+        })
+      } else {
+        const match = userProfile.likes.find((matches) => matches.includes(sessionID))
+        if (req.body.like === 'true' && match) {
+          users.updateOne(
+            { id: sessionID },
+            {
+              $push: {
+                matches: userProfile.id,
+                likes: userProfile.id
+              }
+            },
+            (err, res) => {
+              if (err) {
+                console.log(err)
+              } else {
+                console.log('MATCH🎉🥳🎉🥳🎉')
+              }
+            }
+          )
+        } else if (req.body.like === 'true') {
+          users.updateOne({ id: sessionID }, { $push: { likes: userProfile.id } }, (err, res) => {
+            if (err) {
+              console.log(err)
+            }
+          })
+        } else {
+          users.updateOne({ id: sessionID }, { $push: { dislikes: userProfile.id } }, (err, res) => {
+            if (err) {
+              console.log(err)
+            }
+          })
+        }
+        res.render('home', {
+          banner: mainBanner,
+          heartIcon,
+          userProfile
+        })
+      }
+    }
+  })
+})
 
 app.get('/musiclist', (req, res) => {
-  const banner = "/images/banners/banner mmm-musiclist.png"
-  users.find({}).toArray( (err,profiles) =>{
-    if(err){console.log(err)
-    } else if(profiles == undefined){
-      return
-    }
-    else{
-      const myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
-      let myMatches = profiles.filter(match => { return myProfile.matches.includes(match.id)})
-      let mySongs = myMatches.map(song => song.songs).flat()
+  users.find({}).toArray((err, profiles) => {
+    if (err) {
+      console.log(err)
+    } else if (profiles === undefined) {
+      res.render('musiclist', {
+        heartIcon,
+        banner: musicListBanner
+      })
+    } else {
+      const myProfile = profiles.find((myProfile) => myProfile.id.includes(sessionID))
+      const myMatches = profiles.filter((match) => myProfile.matches.includes(match.id))
+      const mySongs = myMatches.map((song) => song.songs).flat()
 
       res.render('musiclist', {
-      heartIcon: heartIcon,
-      banner: banner,
-      songs: mySongs
-    });
+        heartIcon,
+        banner: musicListBanner,
+        songs: mySongs
+      })
     }
-  })
-});
-
-app.get('/settings', (req, res) =>{
-  res.render('settings', {
-    heartIcon: heartIcon
   })
 })
 
+app.get('/settings', (req, res) => {
+  res.render('settings', {
+    banner: mainBanner,
+    heartIcon
+  })
+})
+
+app.get('/profile', (req, res) => {
+  res.render('profile', {
+    banner: mainBanner,
+    heartIcon
+  })
+})
 
 app.get('/match', (req, res) => {
-  let banner= "/images/banners/banner mmm-match.png"
-  users.find({}).toArray( (err,profiles) =>{
-    if(err){console.log(err)
-    } else if(profiles == undefined){
-      return
-    }
-    else{
-      let myProfile = profiles.find(myProfile => myProfile.id.includes(myID))
-      let myMatches = profiles.filter(match => { return myProfile.matches.includes(match.id)})
+  users.find({}).toArray((err, profiles) => {
+    if (err) {
+      console.log(err)
+    } else if (profiles === undefined) {
       res.render('match', {
-          heartIcon: heartIcon,
-          banner: banner,
-          matches: myMatches
-        })
+        heartIcon,
+        banner: matchBanner
+      })
+    } else {
+      const myProfile = profiles.find((myProfile) => myProfile.id.includes(sessionID))
+      const myMatches = profiles.filter((match) => myProfile.matches.includes(match.id))
+      res.render('match', {
+        heartIcon,
+        banner: matchBanner,
+        matches: myMatches
+      })
     }
   })
 })
 
-
-
 app.use(function (req, res, next) {
-    res.status(404).send("404 Page not found")
-  })
-
- 
-
-
-
-
+  res.status(404).send('404 Page not found')
+})
