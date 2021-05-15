@@ -3,7 +3,7 @@
 // import dependecies
 const express = require('express')
 const bodyParser = require('body-parser')
-const mongo = require('mongodb')
+const { MongoClient } = require('mongodb')
 const request = require('request')
 const path = require('path')
 const handlebars = require('express-handlebars')
@@ -33,17 +33,17 @@ app.use(express.static('public'))
 app.listen(port, () => console.log('Server running!'))
 
 // Connection with database
-mongo.MongoClient.connect(url, { useNewUrlParser: true }, (err, client) => {
+MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
   if (err) {
     console.log(err)
   } else {
-    users = client.db(process.env.DB_NAME).collection('users')
+    users = client.db(process.env.DB_NAME)
   }
 })
 
 // page templates
 app.get('/', (req, res) => {
-  users.find({}).toArray((err, profiles) => {
+  users.collection('users').find({}).toArray((err, profiles) => {
     if (err) {
       console.log(err)
     } else if (profiles === undefined) {
@@ -69,67 +69,67 @@ app.get('/', (req, res) => {
   })
 })
 
-app.post('/', (req, res) => {
-  users.find({}).toArray((err, profiles) => {
-    if (err) {
-      console.log(err)
-    } else {
-      const myProfile = profiles.find((profile) => profile.id.includes(sessionID))
-      const userProfiles = profiles.filter(
-        (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
-      )
-      const userProfile = userProfiles[0]
-      // console.log(userProfile);
-      // console.log('🌚');
-      if (userProfile === undefined) {
-        res.render('home', {
-          banner: mainBanner,
-          heartIcon
-        })
-      } else {
-        const match = userProfile.likes.find((matches) => matches.includes(sessionID))
-        if (req.body.like === 'true' && match) {
-          users.updateOne(
-            { id: sessionID },
-            {
-              $push: {
-                matches: userProfile.id,
-                likes: userProfile.id
-              }
-            },
-            (err, res) => {
-              if (err) {
-                console.log(err)
-              } else {
-                console.log('MATCH🎉🥳🎉🥳🎉')
-              }
-            }
-          )
-        } else if (req.body.like === 'true') {
-          users.updateOne({ id: sessionID }, { $push: { likes: userProfile.id } }, (err, res) => {
-            if (err) {
-              console.log(err)
-            }
-          })
-        } else {
-          users.updateOne({ id: sessionID }, { $push: { dislikes: userProfile.id } }, (err, res) => {
-            if (err) {
-              console.log(err)
-            }
-          })
-        }
-        res.render('home', {
-          banner: mainBanner,
-          heartIcon,
-          userProfile
-        })
-      }
-    }
-  })
-})
+// app.post('/', (req, res) => {
+//   users.find({}).toArray((err, profiles) => {
+//     if (err) {
+//       console.log(err)
+//     } else {
+//       const myProfile = profiles.find((profile) => profile.id.includes(sessionID))
+//       const userProfiles = profiles.filter(
+//         (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
+//       )
+//       const userProfile = userProfiles[0]
+//       // console.log(userProfile);
+//       // console.log('🌚');
+//       if (userProfile === undefined) {
+//         res.render('home', {
+//           banner: mainBanner,
+//           heartIcon
+//         })
+//       } else {
+//         const match = userProfile.likes.find((matches) => matches.includes(sessionID))
+//         if (req.body.like === 'true' && match) {
+//           users.updateOne(
+//             { id: sessionID },
+//             {
+//               $push: {
+//                 matches: userProfile.id,
+//                 likes: userProfile.id
+//               }
+//             },
+//             (err, res) => {
+//               if (err) {
+//                 console.log(err)
+//               } else {
+//                 console.log('MATCH🎉🥳🎉🥳🎉')
+//               }
+//             }
+//           )
+//         } else if (req.body.like === 'true') {
+//           users.updateOne({ id: sessionID }, { $push: { likes: userProfile.id } }, (err, res) => {
+//             if (err) {
+//               console.log(err)
+//             }
+//           })
+//         } else {
+//           users.updateOne({ id: sessionID }, { $push: { dislikes: userProfile.id } }, (err, res) => {
+//             if (err) {
+//               console.log(err)
+//             }
+//           })
+//         }
+//         res.render('home', {
+//           banner: mainBanner,
+//           heartIcon,
+//           userProfile
+//         })
+//       }
+//     }
+//   })
+// })
 
 app.get('/musiclist', (req, res) => {
-  users.find({}).toArray((err, profiles) => {
+  users.collection('users').find({}).toArray((err, profiles) => {
     if (err) {
       console.log(err)
     } else if (profiles === undefined) {
@@ -166,7 +166,7 @@ app.get('/profile', (req, res) => {
 })
 
 app.get('/match', (req, res) => {
-  users.find({}).toArray((err, profiles) => {
+  users.collection('users').find({}).toArray((err, profiles) => {
     if (err) {
       console.log(err)
     } else if (profiles === undefined) {
