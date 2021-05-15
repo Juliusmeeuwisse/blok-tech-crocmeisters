@@ -37,7 +37,7 @@ MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
   if (err) {
     console.log(err)
   } else {
-    users = client.db(process.env.DB_NAME)
+    console.log(users = client.db(process.env.DB_NAME).collection('users'))
   }
 })
 
@@ -57,9 +57,6 @@ app.get('/', (req, res) => {
         (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
       )
       const userProfile = userProfiles[0]
-      // const randomUserProfile = userProfiles[Math.floor(Math.random() * userProfiles.length)];
-      // console.log(userProfile);
-      // console.log('🦧');
       res.render('home', {
         heartIcon,
         banner: mainBanner,
@@ -69,64 +66,64 @@ app.get('/', (req, res) => {
   })
 })
 
-// app.post('/', (req, res) => {
-//   users.find({}).toArray((err, profiles) => {
-//     if (err) {
-//       console.log(err)
-//     } else {
-//       const myProfile = profiles.find((profile) => profile.id.includes(sessionID))
-//       const userProfiles = profiles.filter(
-//         (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
-//       )
-//       const userProfile = userProfiles[0]
-//       // console.log(userProfile);
-//       // console.log('🌚');
-//       if (userProfile === undefined) {
-//         res.render('home', {
-//           banner: mainBanner,
-//           heartIcon
-//         })
-//       } else {
-//         const match = userProfile.likes.find((matches) => matches.includes(sessionID))
-//         if (req.body.like === 'true' && match) {
-//           users.updateOne(
-//             { id: sessionID },
-//             {
-//               $push: {
-//                 matches: userProfile.id,
-//                 likes: userProfile.id
-//               }
-//             },
-//             (err, res) => {
-//               if (err) {
-//                 console.log(err)
-//               } else {
-//                 console.log('MATCH🎉🥳🎉🥳🎉')
-//               }
-//             }
-//           )
-//         } else if (req.body.like === 'true') {
-//           users.updateOne({ id: sessionID }, { $push: { likes: userProfile.id } }, (err, res) => {
-//             if (err) {
-//               console.log(err)
-//             }
-//           })
-//         } else {
-//           users.updateOne({ id: sessionID }, { $push: { dislikes: userProfile.id } }, (err, res) => {
-//             if (err) {
-//               console.log(err)
-//             }
-//           })
-//         }
-//         res.render('home', {
-//           banner: mainBanner,
-//           heartIcon,
-//           userProfile
-//         })
-//       }
-//     }
-//   })
-// })
+app.post('/', (req, res) => {
+  users.find({}).toArray((err, profiles) => {
+    if (err) {
+      console.log(err)
+    } else {
+      const myProfile = profiles.find((profile) => profile.id.includes(sessionID))
+      const userProfiles = profiles.filter(
+        (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
+      )
+      const userProfile = userProfiles[0]
+      // console.log(userProfile);
+      // console.log('🌚');
+      if (userProfile === undefined) {
+        res.render('home', {
+          banner: mainBanner,
+          heartIcon
+        })
+      } else {
+        const match = userProfile.likes.find((matches) => matches.includes(sessionID))
+        if (req.body.like === 'true' && match) {
+          users.updateOne(
+            { id: sessionID },
+            {
+              $push: {
+                matches: userProfile.id,
+                likes: userProfile.id
+              }
+            },
+            (err, res) => {
+              if (err) {
+                console.log(err)
+              } else {
+                console.log('MATCH🎉🥳🎉🥳🎉')
+              }
+            }
+          )
+        } else if (req.body.like === 'true') {
+          users.updateOne({ id: sessionID }, { $push: { likes: userProfile.id } }, (err, res) => {
+            if (err) {
+              console.log(err)
+            }
+          })
+        } else {
+          users.updateOne({ id: sessionID }, { $push: { dislikes: userProfile.id } }, (err, res) => {
+            if (err) {
+              console.log(err)
+            }
+          })
+        }
+        res.render('home', {
+          banner: mainBanner,
+          heartIcon,
+          userProfile
+        })
+      }
+    }
+  })
+})
 
 app.get('/musiclist', (req, res) => {
   users.collection('users').find({}).toArray((err, profiles) => {
