@@ -5,7 +5,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const { MongoClient } = require('mongodb')
 const request = require('request')
-const path = require('path')
 const handlebars = require('express-handlebars')
 const { v4: uuidv4 } = require('uuid')
 const { json } = require('body-parser')
@@ -13,7 +12,7 @@ require('dotenv').config()
 
 // Global variables
 const mainBanner = '/images/banners/Banner MMM-home.png'
-const matchBanner = '/images/banners/banner mmm-match.png'
+const matchBanner = '/images/banners/Banner mmm-match.png'
 const musicListBanner = '/images/banners/banner mmm-musiclist.png'
 const sessionID = '1128bae9-5a62-4905-a404-2c9386e26df9' // Fake it sessionID for now
 const heartIcon = '/images/icons/white heart.png'
