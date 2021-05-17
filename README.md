@@ -1,4 +1,5 @@
-# MMM - My Music Match
+<img src="https://github.com/joeriBouwman25/CMD-Project-Tech-2021/blob/main/public/images/wiki/mmm%20logo.png" height=165><img src="https://github.com/joeriBouwman25/CMD-Project-Tech-2021/blob/main/public/images/wiki/banner.png" height=165>
+
 
 My Music Match, shortened to MMM, is an online matching application where people can find other people based on their musical tastes. MMM uses the Spotify API to create playlists with the favorite songs of users when matches occur. This github page will only show a part of the application because I will only work on one feature. This feature will be the matching of users.
 
