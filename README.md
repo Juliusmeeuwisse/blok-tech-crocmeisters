@@ -1,4 +1,5 @@
-# MMM - My Music Match
+<img src="https://github.com/joeriBouwman25/CMD-Project-Tech-2021/blob/main/public/images/wiki/mmm%20logo.png" height=130><img src="https://github.com/joeriBouwman25/CMD-Project-Tech-2021/blob/main/public/images/wiki/banner.png" height=130>
+
 
 My Music Match, shortened to MMM, is an online matching application where people can find other people based on their musical tastes. MMM uses the Spotify API to create playlists with the favorite songs of users when matches occur. This github page will only show a part of the application because I will only work on one feature. This feature will be the matching of users.
 
@@ -18,7 +19,7 @@ This project uses a number of libraries in able to make te project work. The fol
 https://developer.spotify.com/documentation/web-api/libraries/)
 
 ## Installation
-To install this project you will need to install node, if you already installed node skip to **Install packages**.
+To install this project you will need to install node, if you already installed node skip to **Install project**.
 
 #### install node
 1. In your terminal run the following code:
@@ -31,7 +32,7 @@ To install this project you will need to install node, if you already installed 
 To make use of this project you need to clone this github repository by executing the following command in your terminal:
 1.  ```$git clone https://github.com/joeriBouwman25/CMD-Project-Tech-2021.git``` 
 2. navigate to the cloned github folders in the terminal
-3. if you're in the right folder run the following code ```npm install``` the packages that are requirert for this project ywill now be installed and you're app is ready for running
+3. if you're in the right folder run the following code ```npm install``` the packages that are requirert for this project will now be installed and you're app is ready for running
 
 ## Author and collaborators
 
