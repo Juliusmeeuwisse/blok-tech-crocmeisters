@@ -41,29 +41,6 @@ MongoClient.connect(url, { useUnifiedTopology: true }, (err, client) => {
 })
 
 // page templates
-app.get('/', (req, res) => {
-  users.find({}).toArray((err, profiles) => {
-    if (err) {
-      console.log(err)
-    } else if (profiles === undefined) {
-      res.render('home', {
-        heartIcon,
-        banner: mainBanner
-      })
-    } else {
-      const myProfile = profiles.find((profile) => profile.id.includes(sessionID))
-      const userProfiles = profiles.filter(
-        (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
-      )
-      const userProfile = userProfiles[0]
-      res.render('home', {
-        heartIcon,
-        banner: mainBanner,
-        userProfile
-      })
-    }
-  })
-})
 
 app.post('/', (req, res) => {
   users.find({}).toArray((err, profiles) => {
@@ -75,14 +52,14 @@ app.post('/', (req, res) => {
         (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
       )
       const userProfile = userProfiles[0]
-      // console.log(userProfile);
-      // console.log('🌚');
+
       if (userProfile === undefined) {
         res.render('home', {
           banner: mainBanner,
           heartIcon
         })
       } else {
+        console.log(req.body)
         const match = userProfile.likes.find((matches) => matches.includes(sessionID))
         if (req.body.like === 'true' && match) {
           users.updateOne(
@@ -113,13 +90,42 @@ app.post('/', (req, res) => {
               console.log(err)
             }
           })
+          const nextUserProfile = profiles.filter(
+            (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
+          )
+
+          res.render('home', {
+            banner: mainBanner,
+            heartIcon,
+            userProfile: nextUserProfile[0]
+          })
         }
-        res.render('home', {
-          banner: mainBanner,
-          heartIcon,
-          userProfile
-        })
       }
+    }
+  })
+})
+
+app.get('/', (req, res) => {
+  users.find({}).toArray((err, profiles) => {
+    if (err) {
+      console.log(err)
+    } else if (profiles === undefined) {
+      res.render('home', {
+        heartIcon,
+        banner: mainBanner
+      })
+    } else {
+      const myProfile = profiles.find((profile) => profile.id.includes(sessionID))
+      const userProfiles = profiles.filter(
+        (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
+      )
+      const userProfile = userProfiles[0]
+      console.log(userProfile)
+      res.render('home', {
+        heartIcon,
+        banner: mainBanner,
+        userProfile
+      })
     }
   })
 })
@@ -185,3 +191,60 @@ app.get('/match', (req, res) => {
 app.use(function (req, res, next) {
   res.status(404).send('404 Page not found')
 })
+
+// app.post('/', (req, res) => {
+//   users.find({}).toArray((err, profiles) => {
+//     if (err) {
+//       console.log(err)
+//     } else if (profiles === undefined) {
+//       res.render('home', {
+//         banner: mainBanner,
+//         heartIcon
+//       })
+//     } else {
+//       const match = userProfile.likes.find((matches) => matches.includes(sessionID))
+
+//       if (req.body.like === 'true' && match) {
+//         users.updateOne(
+//           { id: sessionID },
+//           {
+//             $push: {
+//               matches: userProfile.id,
+//               likes: userProfile.id
+//             }
+//           },
+//           (err, res) => {
+//             if (err) {
+//               console.log(err)
+//             } else {
+//               console.log(userProfile)
+//             }
+//           }
+//         )
+//       } else if (req.body.like === 'true') {
+//         users.updateOne({ id: sessionID }, { $push: { likes: userProfile.id } }, (err, res) => {
+//           if (err) {
+//             console.log(err)
+//           }
+//         })
+//       } else {
+//         users.updateOne({ id: sessionID }, { $push: { dislikes: userProfile.id } }, (err, res) => {
+//           if (err) {
+//             console.log(err)
+//           }
+//         })
+//       }
+//       const myProfile = profiles.find((profile) => profile.id.includes(sessionID))
+//       const nextUserProfile = profiles.filter(
+//         (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
+//       )
+//       // console.log(nextUserProfile[0])
+
+//       res.render('home', {
+//         banner: mainBanner,
+//         heartIcon,
+//         userProfile: nextUserProfile[0]
+//       })
+//     }
+//   })
+// })
