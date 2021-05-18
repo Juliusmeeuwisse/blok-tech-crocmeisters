@@ -1,7 +1,6 @@
 <section class='home'>
 
     {{#if userProfile}}
-
     <article>
         <img src='{{userProfile.picture}}' alt="profiel foto">
         <h2>{{userProfile.name}}</h2>
@@ -38,5 +37,6 @@
         <a href="/settings"> change your settings to discover more new people</a>
      
      {{/if}}       
-
+<p class='matchID'>{{userProfile.likes}}</p>
+<p class='matchID'>{{myProfile.id}}</p>
 </section>

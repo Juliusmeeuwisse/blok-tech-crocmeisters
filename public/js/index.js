@@ -23,3 +23,16 @@ for (let i = 0; i < button.length; i++) {
     return closure
   }
 }
+
+const myID = document.getElementsByClassName('matchID')[1].innerHTML
+const matchArray = document.getElementsByClassName('matchID')[0].innerHTML.split(',')
+const match = matchArray.find((id) => id.includes(myID))
+const likeButton = document.querySelectorAll('form button')[0]
+
+const matching = () => {
+  if (match) {
+    alert('You Have A New Match🎉\nSee your new match in the matches page or listen to their favourite songs in your music list')
+  }
+}
+
+likeButton.addEventListener('click', matching)

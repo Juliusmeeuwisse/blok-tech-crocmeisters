@@ -56,7 +56,6 @@ app.get('/', (req, res) => {
         (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
       )
       const userProfile = userProfiles[0]
-
       res.render('home', {
         heartIcon,
         banner: mainBanner,
@@ -96,8 +95,6 @@ app.post('/', (req, res) => {
             (err, res) => {
               if (err) {
                 console.log(err)
-              } else {
-                console.log('MATCH🎉🥳🎉🥳🎉')
               }
             }
           )
