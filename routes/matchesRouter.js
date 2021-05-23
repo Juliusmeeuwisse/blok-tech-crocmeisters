@@ -18,7 +18,6 @@ router.get('/match', (req, res) => {
       } else {
         const myProfile = result.find((myProfile) => myProfile.id.includes(sessionID))
         const myMatches = result.filter((match) => myProfile.matches.includes(match.id))
-        console.log(myProfile)
         res.render('match', {
           heartIcon,
           banner: matchBanner,
