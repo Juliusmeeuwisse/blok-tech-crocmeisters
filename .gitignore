@@ -105,3 +105,6 @@ dist
 
 # dotenv file
 .env
+
+# DS_Store
+.DS_Store
