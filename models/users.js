@@ -1,9 +1,7 @@
-const { ObjectId } = require('bson')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
-  _id: ObjectId,
   id: String,
   name: String,
   age: Number,
@@ -16,8 +14,8 @@ const userSchema = new Schema({
   genres: [String]
 })
 
-const users = mongoose.model('users', userSchema)
-module.exports = users
+const Users = mongoose.model('users', userSchema)
+module.exports = Users
 
 // const { MongoClient } = require('mongodb')
 // require('dotenv').config()

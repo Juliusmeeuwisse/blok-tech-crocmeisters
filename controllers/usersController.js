@@ -1,4 +1,6 @@
-const users = require('../models/users')
+const { initParams } = require('request')
+const { findById } = require('../models/users')
+const Users = require('../models/users')
 
 // Global variables
 const mainBanner = '/images/banners/Banner MMM-home.png'
@@ -6,7 +8,7 @@ const sessionID = '1128bae9-5a62-4905-a404-2c9386e26df9' // Fake it sessionID fo
 const heartIcon = '/images/icons/white heart.png'
 
 const usersIndex = (req, res) => {
-  users.find({}).lean()
+  Users.find({}).lean()
     .then((result) => {
       if (result === undefined) {
         res.render('home', {
@@ -30,10 +32,33 @@ const usersIndex = (req, res) => {
     })
 }
 const likeAndMatch = (req, res) => {
-
-  // .catch((err) => {
-  //   console.log(err)
-  // })
+  Users.find({}).lean()
+    .then(result => {
+      if (result === undefined) {
+        res.redirect('/')
+      } else {
+        const match = result[0].likes.includes(sessionID)
+        const myProfile = result.find((profile) => profile.id.includes(sessionID))
+        if (req.body.like === 'true' && match) {
+          Users.likes.push(result[0].id)
+          Users.matches.push(result[0].id)
+        } else if (req.body === 'like') {
+          Users.likes.push(result[0].id)
+        } else {
+          Users.dislikes.push(result[0].id)
+        }
+        Users.save()
+          .then((result) => {
+            res.redirect('/')
+          })
+          .catch((err) => (
+            console.log(err)
+          ))
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }
 
 // router.post('/', (req, res) => {
