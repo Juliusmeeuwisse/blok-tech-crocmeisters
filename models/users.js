@@ -10,8 +10,12 @@ const userSchema = new Schema({
   likes: Array,
   dislikes: Array,
   matches: Array,
-  songs: [Object],
-  genres: [String]
+  songs: [
+    { title: String, artist: String, source: String },
+    { title: String, artist: String, source: String },
+    { title: String, artist: String, source: String }
+  ],
+  genres: Array
 })
 
 const Users = mongoose.model('users', userSchema)
