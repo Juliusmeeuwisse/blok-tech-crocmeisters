@@ -12,5 +12,10 @@ router.get('/match', matchDataController.getMatches)
 router.get('/musiclist', matchDataController.getSongsForMusicList)
 router.get('/profile', profileAndSettingsController.getProfile)
 router.get('/settings', profileAndSettingsController.getSettings)
+router.get('/login', profileAndSettingsController.getLogin)
+// Spotify authentication routes
+const spotifyController = require('../controllers/spotifyController')
+
+router.get('/test', spotifyController.searchSongs)
 
 module.exports = router

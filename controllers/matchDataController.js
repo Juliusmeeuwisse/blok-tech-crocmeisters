@@ -6,6 +6,7 @@ const sessionID = '1128bae9-5a62-4905-a404-2c9386e26df9' // Fake sessionID for n
 const heartIcon = '/images/icons/white heart.png'
 const matchBanner = '/images/banners/Banner MMM-Match.png'
 
+// get matches for session user from database
 const getMatches = (req, res) => {
   Users.find({}).lean()
     .then((result) => {
@@ -29,6 +30,7 @@ const getMatches = (req, res) => {
     })
 }
 
+// get favourite songs from session users matches from database
 const getSongsForMusicList = (req, res) => {
   Users.find({}).lean()
     .then((result) => {
