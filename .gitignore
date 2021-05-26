@@ -110,4 +110,4 @@ dist
 .DS_Store
 
 # audio
-audio
+public/audio
