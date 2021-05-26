@@ -319,6 +319,30 @@ form button:last-of-type {
   z-index: 1000;
   background-color: #1db95498;
 }
+
+.profile img {
+  width: 10em;
+  height: 10em;
+  border-radius: 50%;
+}
+
+#changeSongs {
+  position: absolute;
+  bottom: 2.5em;
+  left: 6.2px;
+  background-color: #1db954;
+  font-size: 16px;
+  border-style: none;
+  border: 0;
+  border-radius: 7px;
+  height: 2em;
+  width: 9.65em;
+  color: #fff;
+}
+
+.changeForm {
+  display: none;
+}
 footer {
   position: fixed;
   bottom: 0;

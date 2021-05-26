@@ -1,0 +1,41 @@
+<section class="profile" >
+     <article>
+        <img src='{{myProfile.picture}}' alt="profiel foto">
+        <h2>Username: {{myProfile.name}}</h2>
+        <p>E-mail: {{myProfile.email}}</p>
+        <p>Age: {{myProfile.age}}</p>
+    </article>
+</section>
+<section class="musicList">
+    <h2>My Favourite Songs:</h2>
+{{#each myProfile.songs}}
+    <article>
+        <img src='{{albumArt}}' alt="favourite song 1">
+        <div>
+        <audio src="{{source}}"></audio>
+        <button class='play'><span></span></button>
+        <h2>{{title}}</h2>
+        <p>{{artist}}</p>
+        </div>
+    </article>
+
+{{/each}}
+<button id="changeSongs">Change Songs</button>
+    <form action="/profile" method="post" class="changeform">
+        <input type="text" name="search" placeholder="search for artist or song title" class="changeForm">
+        <button class="changeForm">Search</button>
+    </form>
+{{#each data}}
+    <p>{{this}}</p>
+{{/each}}
+</section>
+<section>
+    <article>
+        <h2>My Genres</h2>
+    {{#each myProfile.genres}}
+    <ul>
+        <li>{{this}}</li>
+    </ul>
+    {{/each}}
+    </article>
+</section>

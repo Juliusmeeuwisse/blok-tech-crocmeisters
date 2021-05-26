@@ -16,6 +16,6 @@ router.get('/login', profileAndSettingsController.getLogin)
 // Spotify authentication routes
 const spotifyController = require('../controllers/spotifyController')
 
-router.get('/test', spotifyController.searchSongs)
+router.post('/profile', spotifyController.searchSongs)
 
 module.exports = router

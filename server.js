@@ -9,7 +9,7 @@ const cors = require('cors')
 const request = require('request')
 const querystring = require('querystring')
 const cookieParser = require('cookie-parser')
-const indexRoutes = require('./routes/routes')
+const indexRoutes = require('./src/routes/routes')
 require('dotenv').config()
 
 // const { v4: uuidv4 } = require('uuid')
@@ -22,7 +22,7 @@ const url = process.env.DB_URL
 // set viewport
 app
   .set('view engine', 'hbs')
-  .set('views', 'views')
+  .set('views', 'src/views')
   .engine('hbs', handlebars({ extname: 'hbs' }))
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
