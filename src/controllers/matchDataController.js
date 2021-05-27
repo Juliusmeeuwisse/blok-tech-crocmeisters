@@ -30,6 +30,13 @@ const getMatches = (req, res) => {
     })
 }
 
+// const deleteMatch = () => {
+//   Users.find({}).lean()
+//     .then((result) => {
+//       console.log(result)
+//     })
+// }
+
 // get favourite songs from session users matches from database
 const getSongsForMusicList = (req, res) => {
   Users.find({}).lean()

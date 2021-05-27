@@ -5,10 +5,10 @@ const express = require('express')
 const mongoose = require('mongoose')
 const handlebars = require('express-handlebars')
 const path = require('path')
-const cors = require('cors')
-const request = require('request')
-const querystring = require('querystring')
-const cookieParser = require('cookie-parser')
+// const cors = require('cors')
+// const request = require('request')
+// const querystring = require('querystring')
+// const cookieParser = require('cookie-parser')
 const indexRoutes = require('./src/routes/routes')
 require('dotenv').config()
 
@@ -24,6 +24,7 @@ app
   .set('view engine', 'hbs')
   .set('views', 'src/views')
   .engine('hbs', handlebars({ extname: 'hbs' }))
+
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
   .use(express.static('public'))
@@ -37,3 +38,6 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use(function (req, res, next) {
   res.status(404).send('404 Page not found')
 })
+
+// const { ObjectId } = require('mongodb');
+// const query = {_id: ObjectId(req.params.movieId)};

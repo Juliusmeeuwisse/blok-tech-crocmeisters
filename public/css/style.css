@@ -237,6 +237,9 @@ form button:last-of-type {
 
 .match img {
   width: 5em;
+  height: 5em;
+  object-fit: cover;
+  object-position: 100% 50%;
   border-radius: 50%;
   box-shadow: 1px 5px 15px #282828;
 }
@@ -321,9 +324,37 @@ form button:last-of-type {
 }
 
 .profile img {
-  width: 10em;
-  height: 10em;
+  width: 8em;
+  height: 8em;
   border-radius: 50%;
+}
+
+.profile article {
+  width: 100%;
+  display: flex;
+  min-height: 0;
+  padding: 6px;
+  margin: 0;
+}
+
+.profile li:nth-of-type(odd) {
+  list-style-type: none;
+  font-size: 15px;
+  margin-bottom: 0.1em;
+}
+
+.profile li:nth-of-type(even) {
+  list-style-type: none;
+  font-size: 14px;
+  color: #b3b3b3;
+  margin-bottom: 0.3em;
+}
+
+#profileH1 {
+  position: inherit;
+  margin: 0.3em;
+  font-size: 18px;
+  text-align: start;
 }
 
 #changeSongs {
@@ -340,9 +371,68 @@ form button:last-of-type {
   color: #fff;
 }
 
-.changeForm {
+#deleteButton {
+  border-radius: 5px;
+  height: 1.5em;
+  left: calc(90% - 2em);
+  top: 70%;
+  background-color: #e22136;
+  color: #fff;
+}
+
+.hiddenForm {
   display: none;
 }
+
+#newMatch {
+  position: absolute;
+  background-image: linear-gradient(#1db954f0, #191414a8 56.95%, #1db954f0);
+  box-shadow: 1px 1px 15px black;
+  z-index: 1000;
+  border: 0;
+  border-radius: 20px;
+  top: 6em;
+  width: 90%;
+  height: 65%;
+  margin: 0;
+}
+
+#newMatch img {
+  width: 15em;
+  position: absolute;
+  left: calc(50% - 7.5em);
+  top: 1em;
+  -webkit-filter: drop-shadow(1px 1px 10px #191414);
+}
+
+#newMatch h1 {
+  top: 25%;
+  left: calc(50% - 6em);
+}
+
+#newMatch img:last-of-type {
+  width: 11em;
+  height: 11em;
+  object-fit: fill;
+  top: 43%;
+  left: calc(50% - 5.5em);
+  border-radius: 50%;
+  -webkit-filter: drop-shadow(1px 1px 5px #191414);
+}
+
+#newMatch a {
+  position: absolute;
+  bottom: 0.5em;
+  left: calc(50% - 8em);
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+  font-family: sans-serif, Helvetica, Arial;
+  max-width: 16em;
+  text-shadow: 1px 1px 6px #191414;
+}
+
 footer {
   position: fixed;
   bottom: 0;

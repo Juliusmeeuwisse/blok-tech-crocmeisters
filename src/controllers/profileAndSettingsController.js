@@ -16,7 +16,6 @@ const getProfile = (req, res) => {
         })
       } else {
         const myProfile = result.find((profile) => profile.id.includes(sessionID))
-        console.log(myProfile)
         res.render('profile', {
           heartIcon,
           banner: mainBanner,

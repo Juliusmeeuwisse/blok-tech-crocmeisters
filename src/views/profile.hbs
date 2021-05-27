@@ -1,13 +1,18 @@
 <section class="profile" >
      <article>
         <img src='{{myProfile.picture}}' alt="profiel foto">
-        <h2>Username: {{myProfile.name}}</h2>
-        <p>E-mail: {{myProfile.email}}</p>
-        <p>Age: {{myProfile.age}}</p>
+        <ul>
+            <li>Username:</li>
+            <li>{{myProfile.name}}</li>
+            <li>E-mail:</li>
+            <li>{{myProfile.email}}</li>
+            <li>Age:</li>
+            <li>{{myProfile.age}}</li>
+        </ul>
     </article>
 </section>
 <section class="musicList">
-    <h2>My Favourite Songs:</h2>
+    <h1 id="profileH1">My Favourite Songs:</h1>
 {{#each myProfile.songs}}
     <article>
         <img src='{{albumArt}}' alt="favourite song 1">
@@ -21,10 +26,12 @@
 
 {{/each}}
 <button id="changeSongs">Change Songs</button>
-    <form action="/profile" method="post" class="changeform">
-        <input type="text" name="search" placeholder="search for artist or song title" class="changeForm">
-        <button class="changeForm">Search</button>
+<article>
+    <form action="/profile" method="post" class="hiddenForm">
+        <input type="text" name="search" placeholder="search for artist or song title" class="hiddenForm">
+        <button class="hiddenForm">Search</button>
     </form>
+    </article>
 {{#each data}}
     <p>{{this}}</p>
 {{/each}}

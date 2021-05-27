@@ -1,0 +1,40 @@
+<section class='home'>
+    <span id= "newMatch">
+        <img src="/images/banners/Banner MMM-newMatch.png" alt="">
+        <h1>You've got a new Match!🎉</h1>
+        <img src="{{newMatch.picture}}" alt="">
+        <a href="/">{{newMatch.name}}'s favourite songs been added to your musiclist♫</a>
+    </span>
+    {{#if userProfile}}
+    <article>
+        <img src='{{userProfile.picture}}' alt="profiel foto">
+        <h2>{{userProfile.name}}</h2>
+        <ul>
+            {{#each userProfile.genres}}
+                <li>{{this}},</li>
+            {{/each}}
+        </ul>
+    </article>
+
+{{#each userProfile.songs}}
+
+    <article>
+        <img src='{{albumArt}}' alt="favourite song 1">
+        <audio src="{{source}}"></audio>
+        <button><span></span></button>
+        <h2>{{title}}</h2>
+        <p>{{artist}}</p>
+    </article>
+
+{{/each}}
+
+</section>
+<section>
+    {{else}} 
+
+        <img class='logo' src="/images/banners/mmm logo-1.png" alt="mmm logo">
+        <h1>Sorry... We couldn't find any users</h1>
+        <a href="#"> change your settings to discover more new people</a>
+     
+     {{/if}}   
+</section>

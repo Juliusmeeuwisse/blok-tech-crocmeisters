@@ -12,6 +12,7 @@ const usersIndex = (req, res) => {
       if (result === undefined) {
         res.render('home', {
           heartIcon,
+          css: ['style.css'],
           banner: mainBanner
         })
       } else {
@@ -51,9 +52,13 @@ const likeAndMatch = (req, res) => {
                 likes: filtertUserProfiles[0].id
               }
             })
-            .catch((err) => {
-              console.log(err)
-            })
+            .then(
+              res.render('newMatch', {
+                heartIcon,
+                userProfile: filtertUserProfiles[1],
+                newMatch: filtertUserProfiles[0],
+                banner: mainBanner
+              }))
         } else if (req.body === 'like') {
           Users.updateOne(
             { id: sessionID },
@@ -62,9 +67,7 @@ const likeAndMatch = (req, res) => {
                 likes: filtertUserProfiles[0].id
               }
             })
-            .catch((err) => {
-              console.log(err)
-            })
+            .then(res.redirect('/'))
         } else {
           Users.updateOne(
             { id: sessionID },
@@ -73,12 +76,8 @@ const likeAndMatch = (req, res) => {
                 dislikes: filtertUserProfiles[0].id
               }
             })
-            .catch((err) => {
-              console.log(err)
-            })
+            .then(res.redirect('/'))
         }
-
-        res.redirect('/')
       }
     })
     .catch((err) => {
@@ -86,7 +85,34 @@ const likeAndMatch = (req, res) => {
     })
 }
 
+// const newMatch = (req, res) => {
+//   Users.find({}).lean()
+//     .then((result) => {
+//       if (result === undefined) {
+//         res.render('home', {
+//           heartIcon,
+//           css: ['style.css'],
+//           banner: mainBanner
+//         })
+//       } else {
+//         const myProfile = result.find((profile) => profile.id.includes(sessionID))
+//         const userProfiles = result.filter(
+//           (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
+//         )
+//         res.render('newMatch', {
+//           heartIcon,
+//           banner: mainBanner,
+//           userProfile: userProfiles[0]
+//         })
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err)
+//     })
+// }
+
 module.exports = {
   usersIndex,
   likeAndMatch
+  // newMatch
 }
