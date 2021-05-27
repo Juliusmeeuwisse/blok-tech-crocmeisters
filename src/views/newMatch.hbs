@@ -1,10 +1,12 @@
 <section class='home'>
-    <span id= "newMatch">
-        <img src="/images/banners/Banner MMM-newMatch.png" alt="">
-        <h1>You've got a new Match!🎉</h1>
-        <img src="{{newMatch.picture}}" alt="">
-        <a href="/">{{newMatch.name}}'s favourite songs been added to your musiclist♫</a>
-    </span>
+    <a id='a' href="/">
+        <span id= "newMatch">
+            <img src="/images/banners/Banner MMM-newMatch.png" alt="">
+            <h1>You've got a new Match!🎉</h1>
+            <img src="{{newMatch.picture}}" alt="">
+            <p>{{newMatch.name}}'s favourite songs been added to your musiclist ♫</p>
+        </span>
+    </a>
     {{#if userProfile}}
     <article>
         <img src='{{userProfile.picture}}' alt="profiel foto">

@@ -1,10 +1,7 @@
 const music = document.querySelectorAll('audio')
 const button = document.getElementsByClassName('play')
 const icon = document.querySelectorAll('span')
-// const myID = document.getElementsByClassName('matchID')[1].innerHTML
-// const matchArray = document.getElementsByClassName('matchID')[0].innerHTML.split(',')
-// const match = matchArray.find((id) => id.includes(myID))
-// const likeButton = document.querySelectorAll('form button')[0]
+
 // const changeButton = document.getElementById('changeSongs')
 
 let a = true
@@ -24,14 +21,6 @@ for (let i = 0; i < button.length; i++) {
   }
   button[i].addEventListener('click', playMusic)
 }
-// matching
-// const matching = () => {
-//   if (match) {
-//     alert('You Have A New Match🎉\nSee your new match in the matches page or listen to their favourite songs in your music list')
-//   }
-// }
-
-// likeButton.addEventListener('click', matching)
 
 // const searchForSongs = () => {
 //   const form = document.getElementsByClassName('hiddenForm')

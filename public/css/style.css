@@ -386,7 +386,7 @@ form button:last-of-type {
 
 #newMatch {
   position: absolute;
-  background-image: linear-gradient(#1db954f0, #191414a8 56.95%, #1db954f0);
+  background-image: linear-gradient(#1db954, #191414a8 56.95%, #1db954f0);
   box-shadow: 1px 1px 15px black;
   z-index: 1000;
   border: 0;
@@ -395,6 +395,9 @@ form button:last-of-type {
   width: 90%;
   height: 65%;
   margin: 0;
+  animation-name: matchYay;
+  animation-duration: 0.7s;
+  transition: ease;
 }
 
 #newMatch img {
@@ -420,7 +423,7 @@ form button:last-of-type {
   -webkit-filter: drop-shadow(1px 1px 5px #191414);
 }
 
-#newMatch a {
+#newMatch p {
   position: absolute;
   bottom: 0.5em;
   left: calc(50% - 8em);
@@ -431,6 +434,13 @@ form button:last-of-type {
   font-family: sans-serif, Helvetica, Arial;
   max-width: 16em;
   text-shadow: 1px 1px 6px #191414;
+}
+
+#a {
+  position: unset;
+  top: 0;
+  text-decoration: none;
+  max-width: 0;
 }
 
 footer {
@@ -473,6 +483,18 @@ footer a {
     transform: scale(0.99);
   }
   /* 100% {transform: scale(1);} */
+}
+
+@keyframes matchYay {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 audio {
