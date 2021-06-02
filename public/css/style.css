@@ -443,6 +443,11 @@ form button:last-of-type {
   max-width: 0;
 }
 
+#logoutButton {
+  position: unset;
+  background-color: #504f4f;
+}
+
 footer {
   position: fixed;
   bottom: 0;

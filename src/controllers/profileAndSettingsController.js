@@ -12,7 +12,6 @@ const getProfile = (req, res) => {
   spotifyApi.getMe()
     .then((data) => {
       const profileImg = data.body.images[0].url
-      console.log(data.body.items)
       Users.find({}).lean()
         .then((result) => {
           if (result === undefined) {
