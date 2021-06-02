@@ -1,5 +1,6 @@
 const Users = require('../models/users')
-
+const spotifyAuth = require('../models/spotify')
+const spotifyApi = spotifyAuth.spotifyApi
 // Global variables
 const mainBanner = '/images/banners/Banner MMM-home.png'
 const sessionID = '1128bae9-5a62-4905-a404-2c9386e26df9' // Fake sessionID for now
@@ -7,25 +8,31 @@ const heartIcon = '/images/icons/white heart.png'
 
 // get user profiles from database
 const usersIndex = (req, res) => {
-  Users.find({}).lean()
-    .then((result) => {
-      if (result === undefined) {
-        res.render('home', {
-          heartIcon,
-          css: ['style.css'],
-          banner: mainBanner
+  spotifyApi.getMe()
+    .then((data) => {
+      const profileImg = data.body.images[0].url
+      console.log(data)
+
+      Users.find({}).lean()
+        .then((result) => {
+          if (result === undefined) {
+            res.render('home', {
+              heartIcon,
+              banner: mainBanner
+            })
+          } else {
+            const myProfile = result.find((profile) => profile.id.includes(sessionID))
+            const userProfiles = result.filter(
+              (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
+            )
+            res.render('home', {
+              heartIcon,
+              banner: mainBanner,
+              userProfile: userProfiles[0],
+              profileImg
+            })
+          }
         })
-      } else {
-        const myProfile = result.find((profile) => profile.id.includes(sessionID))
-        const userProfiles = result.filter(
-          (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
-        )
-        res.render('home', {
-          heartIcon,
-          banner: mainBanner,
-          userProfile: userProfiles[0]
-        })
-      }
     })
     .catch((err) => {
       console.log(err)
@@ -84,32 +91,6 @@ const likeAndMatch = (req, res) => {
       console.log(err)
     })
 }
-
-// const newMatch = (req, res) => {
-//   Users.find({}).lean()
-//     .then((result) => {
-//       if (result === undefined) {
-//         res.render('home', {
-//           heartIcon,
-//           css: ['style.css'],
-//           banner: mainBanner
-//         })
-//       } else {
-//         const myProfile = result.find((profile) => profile.id.includes(sessionID))
-//         const userProfiles = result.filter(
-//           (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
-//         )
-//         res.render('newMatch', {
-//           heartIcon,
-//           banner: mainBanner,
-//           userProfile: userProfiles[0]
-//         })
-//       }
-//     })
-//     .catch((err) => {
-//       console.log(err)
-//     })
-// }
 
 module.exports = {
   usersIndex,

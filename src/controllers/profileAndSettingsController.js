@@ -28,13 +28,6 @@ const getProfile = (req, res) => {
     })
 }
 
-const getLogin = (req, res) => {
-  res.render('login', {
-    banner: mainBanner,
-    heartIcon
-  })
-}
-
 const searchSongs = (req, res) => {
   res.render('login', {
     banner: mainBanner,
@@ -52,7 +45,6 @@ const getSettings = (req, res) => {
 
 module.exports = {
   getProfile,
-  getLogin,
   getSettings,
   searchSongs
 }

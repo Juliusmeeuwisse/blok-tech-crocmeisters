@@ -34,7 +34,7 @@ const scopes = [
   'user-follow-modify'
 ]
 
-const authorizeURL = spotifyApi.createAuthorizeURL(scopes)
+const authorizeURL = spotifyApi.createAuthorizeURL(scopes, 'checkcheck')
 
 module.exports = {
   authorizeURL: authorizeURL,
