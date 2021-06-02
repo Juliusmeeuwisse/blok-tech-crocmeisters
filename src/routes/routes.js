@@ -10,8 +10,8 @@ const router = express.Router()
 const spotifyController = require('../controllers/spotifyController')
 router.post('/profile', spotifyController.searchSongs)
 router.get('/', loginController.getLogin)
-router.get('/login', loginController.login)
-router.get('/callback', loginController.getMe)
+router.get('/login', loginController.redirectToSpotifyLogin)
+router.get('/callback', loginController.setAccestokens)
 
 // routes
 router.get('/main', usersController.usersIndex)

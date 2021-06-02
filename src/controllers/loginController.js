@@ -14,11 +14,11 @@ const getLogin = (req, res) => {
   })
 }
 
-const login = (req, res) => {
+const redirectToSpotifyLogin = (req, res) => {
   res.redirect(authorizeURL)
 }
 
-const getMe = (req, res) => {
+const setAccestokens = (req, res) => {
   const { code } = req.query
 
   spotifyApi.authorizationCodeGrant(code)
@@ -34,7 +34,7 @@ const getMe = (req, res) => {
 }
 
 module.exports = {
-  login,
-  getMe,
-  getLogin
+  getLogin,
+  redirectToSpotifyLogin,
+  setAccestokens
 }
