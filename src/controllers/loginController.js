@@ -38,13 +38,7 @@ const setAccestokens = (req, res) => {
           const songName3 = data.body.items[2].name
           const artistName3 = data.body.items[2].artists[0].name
           const source3 = data.body.items[2].preview_url
-          console.log(data.body)
-          // const songNames = []
-          // data.body.items.forEach((item) => {
-          //   const songNames = item.name
-          //   const songArtists = item.artists[0]
-          //   console.log(songNames)
-          // })
+
           spotifyApi.getMe()
             .then((data) => {
               const profile = {
@@ -61,7 +55,14 @@ const setAccestokens = (req, res) => {
                   { title: songName3, artist: artistName3, source: source3 }
                 ]
               }
-              Users.create(profile)
+              Users.find({}).lean()
+                .then((result) => {
+                  const myProfile = result.find((profile) => profile.id.includes(data.body.id))
+                  console.log(myProfile)
+                  if (myProfile === undefined) {
+                    Users.create(profile)
+                  }
+                })
             })
         })
 
