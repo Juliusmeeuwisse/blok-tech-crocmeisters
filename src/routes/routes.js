@@ -2,6 +2,7 @@ const express = require('express')
 const usersController = require('../controllers/usersController')
 const matchDataController = require('../controllers/matchDataController')
 const profileAndSettingsController = require('../controllers/profileAndSettingsController')
+const loginController = require('../controllers/loginController')
 
 const router = express.Router()
 
@@ -17,5 +18,7 @@ router.get('/login', profileAndSettingsController.getLogin)
 // Spotify authentication routes
 const spotifyController = require('../controllers/spotifyController')
 router.post('/profile', spotifyController.searchSongs)
+router.get('/spotify', loginController.test)
+router.get('/callback', loginController.test2)
 
 module.exports = router
