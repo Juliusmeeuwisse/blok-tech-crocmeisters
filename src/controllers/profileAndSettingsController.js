@@ -1,4 +1,6 @@
 const Users = require('../models/users')
+const spotifyAuth = require('../models/spotify')
+const spotifyApi = spotifyAuth.spotifyApi
 
 // Global variables
 const mainBanner = '/images/banners/Banner MMM-home.png'
@@ -7,32 +9,30 @@ const sessionID = '1128bae9-5a62-4905-a404-2c9386e26df9' // Fake sessionID for n
 
 // render profile
 const getProfile = (req, res) => {
-  Users.find({}).lean()
-    .then((result) => {
-      if (result === undefined) {
-        res.render('home', {
-          heartIcon,
-          banner: mainBanner
+  spotifyApi.getMe()
+    .then((data) => {
+      const profileImg = data.body.images[0].url
+      Users.find({}).lean()
+        .then((result) => {
+          if (result === undefined) {
+            res.render('home', {
+              heartIcon,
+              banner: mainBanner
+            })
+          } else {
+            const myProfile = result.find((profile) => profile.id.includes(sessionID))
+            res.render('profile', {
+              heartIcon,
+              banner: mainBanner,
+              myProfile,
+              profileImg
+            })
+          }
         })
-      } else {
-        const myProfile = result.find((profile) => profile.id.includes(sessionID))
-        res.render('profile', {
-          heartIcon,
-          banner: mainBanner,
-          myProfile
-        })
-      }
     })
     .catch((err) => {
       console.log(err)
     })
-}
-
-const getLogin = (req, res) => {
-  res.render('login', {
-    banner: mainBanner,
-    heartIcon
-  })
 }
 
 const searchSongs = (req, res) => {
@@ -52,7 +52,6 @@ const getSettings = (req, res) => {
 
 module.exports = {
   getProfile,
-  getLogin,
   getSettings,
   searchSongs
 }

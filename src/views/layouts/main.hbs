@@ -10,8 +10,10 @@
 <body>
 <header>
     <nav>
-        <a href="/"><img src="/images/banners/mmm logo-1.png" alt="MMM-logo"></a>
-        <a href="/profile"><img src="images/joeri.jpg" alt="user-profile"></a>
+        {{#if profileImg}}
+        <a href="/main"><img src="/images/banners/mmm logo-1.png" alt="MMM-logo"></a>
+        <a href="/profile"><img src="{{profileImg}}" alt="user-profile"></a>
+        {{/if}}
     </nav>
     <img src="{{banner}}" alt="banner">
 </header>
