@@ -39,51 +39,55 @@ const usersIndex = (req, res) => {
 
 // update session user in database
 const likeAndMatch = (req, res) => {
-  Users.find({}).lean()
-    .then(result => {
-      if (result === undefined) {
-        res.redirect('/main')
-      } else {
-        const myProfile = result.find((profile) => profile.id.includes(sessionID))
-        const match = result[0].likes.includes(sessionID)
-        const filtertUserProfiles = result.filter((user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id))
+  spotifyApi.getMe()
+    .then((data) => {
+      sessionID = data.body.id
+      Users.find({}).lean()
+        .then(result => {
+          if (result === undefined) {
+            res.redirect('/main')
+          } else {
+            const myProfile = result.find((profile) => profile.id.includes(sessionID))
+            const match = result[0].likes.includes(sessionID)
+            const filtertUserProfiles = result.filter((user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id))
 
-        if (req.body.like === 'true' && match) {
-          Users.updateOne(
-            { id: sessionID },
-            {
-              $push: {
-                matches: filtertUserProfiles[0].id,
-                likes: filtertUserProfiles[0].id
-              }
-            })
-            .then(
-              res.render('newMatch', {
-                heartIcon,
-                userProfile: filtertUserProfiles[1],
-                newMatch: filtertUserProfiles[0],
-                banner: mainBanner
-              }))
-        } else if (req.body === 'like') {
-          Users.updateOne(
-            { id: sessionID },
-            {
-              $push: {
-                likes: filtertUserProfiles[0].id
-              }
-            })
-            .then(res.redirect('/main'))
-        } else {
-          Users.updateOne(
-            { id: sessionID },
-            {
-              $push: {
-                dislikes: filtertUserProfiles[0].id
-              }
-            })
-            .then(res.redirect('/main'))
-        }
-      }
+            if (req.body.like === 'true' && match) {
+              Users.updateOne(
+                { id: sessionID },
+                {
+                  $push: {
+                    matches: filtertUserProfiles[0].id,
+                    likes: filtertUserProfiles[0].id
+                  }
+                })
+                .then(
+                  res.render('newMatch', {
+                    heartIcon,
+                    userProfile: filtertUserProfiles[1],
+                    newMatch: filtertUserProfiles[0],
+                    banner: mainBanner
+                  }))
+            } else if (req.body === 'like') {
+              Users.updateOne(
+                { id: sessionID },
+                {
+                  $push: {
+                    likes: filtertUserProfiles[0].id
+                  }
+                })
+                .then(res.redirect('/main'))
+            } else {
+              Users.updateOne(
+                { id: sessionID },
+                {
+                  $push: {
+                    dislikes: filtertUserProfiles[0].id
+                  }
+                })
+                .then(res.redirect('/main'))
+            }
+          }
+        })
     })
     .catch((err) => {
       console.log(err)
