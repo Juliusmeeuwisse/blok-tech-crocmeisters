@@ -443,6 +443,23 @@ form button:last-of-type {
   max-width: 0;
 }
 
+#loginButton {
+  background-color: #1db954;
+  border-style: none;
+  height: 3em;
+  width: 22em;
+  border-radius: 20px;
+  box-shadow: 2px 3px 5px #504f4f;
+  position: absolute;
+  top: 70%;
+}
+#loginButton a {
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+  font-family: sans-serif, Helvetica, Arial;
+}
+
 #logoutButton {
   position: unset;
   background-color: #504f4f;

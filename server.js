@@ -5,10 +5,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const handlebars = require('express-handlebars')
 const path = require('path')
-// const cors = require('cors')
-// const request = require('request')
-// const querystring = require('querystring')
-// const cookieParser = require('cookie-parser')
+const session = require('express-session')
+
 const indexRoutes = require('./src/routes/routes')
 require('dotenv').config()
 
@@ -28,6 +26,7 @@ app
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
   .use(express.static('public'))
+  .use(session({ secret: 'test' }))
   .use(indexRoutes)
 
 // Connection with database

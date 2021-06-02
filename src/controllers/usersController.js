@@ -1,4 +1,5 @@
 const Users = require('../models/users')
+const session = require('express-session')
 const spotifyAuth = require('../models/spotify')
 const spotifyApi = spotifyAuth.spotifyApi
 // Global variables
@@ -11,6 +12,9 @@ const usersIndex = (req, res) => {
   spotifyApi.getMe()
     .then((data) => {
       const profileImg = data.body.images[0].url
+      const loggedInUser = data.body
+      req.session.data = data.body.id
+      console.log(loggedInUser)
       Users.find({}).lean()
         .then((result) => {
           if (result === undefined) {
@@ -42,7 +46,7 @@ const likeAndMatch = (req, res) => {
   Users.find({}).lean()
     .then(result => {
       if (result === undefined) {
-        res.redirect('/')
+        res.redirect('/main')
       } else {
         const myProfile = result.find((profile) => profile.id.includes(sessionID))
         const match = result[0].likes.includes(sessionID)
@@ -72,7 +76,7 @@ const likeAndMatch = (req, res) => {
                 likes: filtertUserProfiles[0].id
               }
             })
-            .then(res.redirect('/'))
+            .then(res.redirect('/main'))
         } else {
           Users.updateOne(
             { id: sessionID },
@@ -81,7 +85,7 @@ const likeAndMatch = (req, res) => {
                 dislikes: filtertUserProfiles[0].id
               }
             })
-            .then(res.redirect('/'))
+            .then(res.redirect('/main'))
         }
       }
     })
