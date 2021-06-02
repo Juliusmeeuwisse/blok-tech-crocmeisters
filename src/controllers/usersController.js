@@ -1,10 +1,8 @@
 const Users = require('../models/users')
-const session = require('express-session')
 const spotifyAuth = require('../models/spotify')
 const spotifyApi = spotifyAuth.spotifyApi
 // Global variables
 const mainBanner = '/images/banners/Banner MMM-home.png'
-const sessionID = '1128bae9-5a62-4905-a404-2c9386e26df9' // Fake sessionID for now
 const heartIcon = '/images/icons/white heart.png'
 
 // get user profiles from database
@@ -12,9 +10,7 @@ const usersIndex = (req, res) => {
   spotifyApi.getMe()
     .then((data) => {
       const profileImg = data.body.images[0].url
-      const loggedInUser = data.body
-      req.session.data = data.body.id
-      console.log(loggedInUser)
+      const sessionID = data.body.id
       Users.find({}).lean()
         .then((result) => {
           if (result === undefined) {
