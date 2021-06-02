@@ -4,13 +4,13 @@ const spotifyApi = spotifyAuth.spotifyApi
 // Global variables
 const mainBanner = '/images/banners/Banner MMM-home.png'
 const heartIcon = '/images/icons/white heart.png'
-
+let sessionID = null
 // get user profiles from database
 const usersIndex = (req, res) => {
   spotifyApi.getMe()
     .then((data) => {
       const profileImg = data.body.images[0].url
-      const sessionID = data.body.id
+      sessionID = data.body.id
       Users.find({}).lean()
         .then((result) => {
           if (result === undefined) {
