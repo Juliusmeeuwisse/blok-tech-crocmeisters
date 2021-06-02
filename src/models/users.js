@@ -11,9 +11,9 @@ const userSchema = new Schema({
   dislikes: Array,
   matches: Array,
   songs: [
-    { title: String, artist: String, source: String },
-    { title: String, artist: String, source: String },
-    { title: String, artist: String, source: String }
+    { title: String, artist: String, albumArt: String, source: String },
+    { title: String, artist: String, albumArt: String, source: String },
+    { title: String, artist: String, albumArt: String, source: String }
   ],
   genres: Array
 })
