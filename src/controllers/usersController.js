@@ -39,18 +39,18 @@ const usersIndex = (req, res) => {
 
 // update session user in database
 const likeAndMatch = (req, res) => {
-  spotifyApi.getMe()
-    .then((data) => {
-      const sessionID = data.body.id
-      Users.find({}).lean()
-        .then(result => {
-          if (result === undefined) {
-            res.redirect('/main')
-          } else {
+  Users.find({}).lean()
+    .then(result => {
+      if (result === undefined) {
+        res.redirect('/main')
+      } else {
+        spotifyApi.getMe()
+          .then((data) => {
+            const sessionID = data.body.id
+            // console.log(sessionID)
             const myProfile = result.find((profile) => profile.id.includes(sessionID))
-            const match = result[0].likes.includes(sessionID)
             const filtertUserProfiles = result.filter((user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id))
-
+            const match = filtertUserProfiles[0].likes.includes(sessionID)
             if (req.body.like === 'true' && match) {
               Users.updateOne(
                 { id: sessionID },
@@ -67,7 +67,7 @@ const likeAndMatch = (req, res) => {
                     newMatch: filtertUserProfiles[0],
                     banner: mainBanner
                   }))
-            } else if (req.body === 'like') {
+            } else if (req.body.like === 'like') {
               Users.updateOne(
                 { id: sessionID },
                 {
@@ -84,11 +84,13 @@ const likeAndMatch = (req, res) => {
                     dislikes: filtertUserProfiles[0].id
                   }
                 })
+
                 .then(res.redirect('/main'))
             }
-          }
-        })
+          })
+      }
     })
+
     .catch((err) => {
       console.log(err)
     })
@@ -97,5 +99,4 @@ const likeAndMatch = (req, res) => {
 module.exports = {
   usersIndex,
   likeAndMatch
-  // newMatch
 }

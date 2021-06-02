@@ -31,7 +31,7 @@ const setAccestokens = (req, res) => {
           const artistName1 = data.body.items[0].artists[0].name
           const albumArt1 = data.body.items[0].album.images[0].url
           const source1 = data.body.items[0].preview_url
-          console.log(albumArt1)
+
           const songName2 = data.body.items[1].name
           const artistName2 = data.body.items[1].artists[0].name
           const albumArt2 = data.body.items[1].album.images[0].url
