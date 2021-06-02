@@ -7,8 +7,6 @@ const loginController = require('../controllers/loginController')
 const router = express.Router()
 
 // Spotify authentication routes
-const spotifyController = require('../controllers/spotifyController')
-router.post('/profile', spotifyController.searchSongs)
 router.get('/', loginController.getLogin)
 router.get('/login', loginController.redirectToSpotifyLogin)
 router.get('/callback', loginController.setAccestokens)

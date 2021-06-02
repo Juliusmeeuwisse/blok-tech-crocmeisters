@@ -1,4 +1,5 @@
 const Users = require('../models/users')
+const session = require('express-session')
 const spotifyAuth = require('../models/spotify')
 const spotifyApi = spotifyAuth.spotifyApi
 // Global variables
@@ -11,7 +12,9 @@ const usersIndex = (req, res) => {
   spotifyApi.getMe()
     .then((data) => {
       const profileImg = data.body.images[0].url
-      console.log(data)
+      const loggedInUser = data.body
+      req.session.data = data.body.id
+      console.log(loggedInUser)
       Users.find({}).lean()
         .then((result) => {
           if (result === undefined) {
