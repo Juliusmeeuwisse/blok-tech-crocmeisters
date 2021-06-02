@@ -11,6 +11,7 @@ const usersIndex = (req, res) => {
   spotifyApi.getMe()
     .then((data) => {
       const profileImg = data.body.images[0].url
+      console.log(data)
       Users.find({}).lean()
         .then((result) => {
           if (result === undefined) {
@@ -42,7 +43,7 @@ const likeAndMatch = (req, res) => {
   Users.find({}).lean()
     .then(result => {
       if (result === undefined) {
-        res.redirect('/')
+        res.redirect('/main')
       } else {
         const myProfile = result.find((profile) => profile.id.includes(sessionID))
         const match = result[0].likes.includes(sessionID)
@@ -72,7 +73,7 @@ const likeAndMatch = (req, res) => {
                 likes: filtertUserProfiles[0].id
               }
             })
-            .then(res.redirect('/'))
+            .then(res.redirect('/main'))
         } else {
           Users.updateOne(
             { id: sessionID },
@@ -81,7 +82,7 @@ const likeAndMatch = (req, res) => {
                 dislikes: filtertUserProfiles[0].id
               }
             })
-            .then(res.redirect('/'))
+            .then(res.redirect('/main'))
         }
       }
     })
