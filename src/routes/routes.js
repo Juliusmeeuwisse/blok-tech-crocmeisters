@@ -2,6 +2,7 @@ const express = require('express')
 const usersController = require('../controllers/usersController')
 const matchDataController = require('../controllers/matchDataController')
 const profileAndSettingsController = require('../controllers/profileAndSettingsController')
+// const genresController = require('../controllers/genresController')
 
 const router = express.Router()
 
