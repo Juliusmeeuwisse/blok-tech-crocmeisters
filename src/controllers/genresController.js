@@ -1,31 +1,12 @@
 const Genres = require('../models/genres')
 const UserGenres = require('../models/userGenres')
 
-// get genres from database
-const getGenres = () => {
-  Genres.find({})
-    .lean()
-    .then((result) => {
-      if (result === undefined) {
-        console.log('Genres undefined')
-      } else {
-        const genres = result
-        return genres
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
+const currentUserGenres = []
+let genres = []
+let userGenres = []
 
-// get userGenres from database
-const getUserGenres = (userProfileID) => {
-  let genres = []
-  let userGenres = []
-  const userGenreList = []
-  const finalList = []
-
-  Genres.find({})
+const getGenres = async () => {
+  await Genres.find({})
     .lean()
     .then((result) => {
       if (result === undefined) {
@@ -37,8 +18,11 @@ const getUserGenres = (userProfileID) => {
     .catch((err) => {
       console.log(err)
     })
+}
 
-  UserGenres.find({})
+const getUserGenres = async (userID) => {
+  getGenres()
+  await UserGenres.find({})
     .lean()
     .then((result) => {
       if (result === undefined) {
@@ -48,24 +32,12 @@ const getUserGenres = (userProfileID) => {
 
         userGenres.forEach(userGenre => {
           genres.forEach(genre => {
-            if (userGenre.genreID === genre.id) {
-              const userGenreListItem = {
-                userID: userGenre.userID,
-                genreID: genre.id,
-                genreName: genre.name
-              }
-              userGenreList.push(userGenreListItem)
+            if (userGenre.genreID === genre.id && userGenre.userID === userID) {
+              currentUserGenres.push(genre.name)
             }
           })
         })
-        userGenreList.forEach(userGenreItem => {
-          if (userProfileID === userGenreItem.userID) {
-            finalList.push(userGenreItem.genreName)
-          }
-        })
       }
-
-      return finalList
     })
     .catch((err) => {
       console.log(err)
