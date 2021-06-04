@@ -9,26 +9,28 @@ const sessionID = '1128bae9-5a62-4905-a404-2c9386e26df9' // Fake sessionID for n
 
 // render profile
 const getProfile = (req, res) => {
-  spotifyApi.getMe()
-    .then((data) => {
-      const profileImg = data.body.images[0].url
-      Users.find({}).lean()
-        .then((result) => {
-          if (result === undefined) {
-            res.render('home', {
-              heartIcon,
-              banner: mainBanner
-            })
-          } else {
+  Users.find({}).lean()
+    .then((result) => {
+      if (result === undefined) {
+        res.render('home', {
+          heartIcon,
+          banner: mainBanner
+        })
+      } else {
+        spotifyApi.getMe()
+          .then((data) => {
+            const profileImg = data.body.images[0].url
+            const spotifyProfile = data.body
             const myProfile = result.find((profile) => profile.id.includes(sessionID))
             res.render('profile', {
               heartIcon,
               banner: mainBanner,
               myProfile,
+              spotifyProfile,
               profileImg
             })
-          }
-        })
+          })
+      }
     })
     .catch((err) => {
       console.log(err)
