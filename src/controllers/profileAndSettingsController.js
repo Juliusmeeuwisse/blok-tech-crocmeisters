@@ -1,62 +1,18 @@
 const Users = require('../models/users')
-const Genres = require('../models/genres')
-const UserGenres = require('../models/userGenres')
 const genresController = require('./genresController')
+const songsController = require('./songsController')
 
 // Global variables
 const mainBanner = '/images/banners/Banner MMM-home.png'
 const heartIcon = '/images/icons/white heart.png'
 const sessionID = '1128bae9-5a62-4905-a404-2c9386e26df9' // Fake sessionID for now
 
-const currentUserGenres = []
-let genres = []
-let userGenres = []
-
-const getGenres = async () => {
-  await Genres.find({})
-    .lean()
-    .then((result) => {
-      if (result === undefined) {
-        console.log('Genres undefined')
-      } else {
-        genres = result
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
-
-const getUserGenres = async (userID) => {
-  getGenres()
-  await UserGenres.find({})
-    .lean()
-    .then((result) => {
-      if (result === undefined) {
-        console.log('userGenres undefined')
-      } else {
-        userGenres = result
-
-        userGenres.forEach(userGenre => {
-          genres.forEach(genre => {
-            if (userGenre.genreID === genre.id && userGenre.userID === userID) {
-              currentUserGenres.push(genre.name)
-            }
-          })
-        })
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
+let currentUserGenres = []
+let currentUserSongs = []
 
 let myProfile
 // render profile
 const getProfile = async (req, res) => {
-  console.log(myProfile)
-  await getUserGenres('def757fc-5bfe-4ae1-9fe6-ce46fec2ebfe')
-
   await Users.find({}).lean()
     .then((result) => {
       if (result === undefined) {
@@ -69,13 +25,28 @@ const getProfile = async (req, res) => {
       console.log(err)
     })
 
+  if (!(currentUserGenres.length > 0)) {
+    // Gets genres based on loggedin user
+    await genresController.getUserGenres(myProfile.id)
+    // genre array data from the genresController goes in currentUserGenres
+    currentUserGenres = genresController.currentUserGenres
+  }
   console.log(currentUserGenres)
+
+  if (!(currentUserSongs.length > 0)) {
+    // Gets songs based on loggedin user
+    await songsController.getUserSongs(myProfile.id)
+    // song array data from the songsController goes in currentUserSongs
+    currentUserSongs = songsController.currentUserSongs
+  }
+  console.log(currentUserSongs)
 
   res.render('profile', {
     heartIcon,
     banner: mainBanner,
     myProfile,
-    currentUserGenres
+    currentUserGenres,
+    currentUserSongs
   })
 }
 
@@ -105,6 +76,5 @@ module.exports = {
   getProfile,
   getLogin,
   getSettings,
-  searchSongs,
-  getGenres
+  searchSongs
 }

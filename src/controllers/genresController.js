@@ -1,10 +1,11 @@
 const Genres = require('../models/genres')
 const UserGenres = require('../models/userGenres')
 
-const currentUserGenres = []
 let genres = []
 let userGenres = []
+const currentUserGenres = []
 
+// Gets all genres
 const getGenres = async () => {
   await Genres.find({})
     .lean()
@@ -20,6 +21,7 @@ const getGenres = async () => {
     })
 }
 
+// Gets genres based on given user
 const getUserGenres = async (userID) => {
   getGenres()
   await UserGenres.find({})
@@ -32,6 +34,10 @@ const getUserGenres = async (userID) => {
 
         userGenres.forEach(userGenre => {
           genres.forEach(genre => {
+            /* If current userGenre.genreID is the same as the current genre.id
+            and userGenre.userID is the same as the userID parameter, add to
+            the currentUserGenres array
+            */
             if (userGenre.genreID === genre.id && userGenre.userID === userID) {
               currentUserGenres.push(genre.name)
             }
@@ -46,5 +52,6 @@ const getUserGenres = async (userID) => {
 
 module.exports = {
   getGenres,
-  getUserGenres
+  getUserGenres,
+  currentUserGenres
 }
