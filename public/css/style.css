@@ -357,6 +357,60 @@ form button:last-of-type {
   margin-bottom: 0.3em;
 }
 
+.login h1 {
+  top: 10%;
+}
+
+.login .logo {
+  -webkit-filter: drop-shadow(1px 1px 70px #10682f);
+  top: 25%;
+}
+
+.login h2 {
+  position: absolute;
+  top: 70.5%;
+  color: #191414;
+  max-width: 20em;
+  left: calc(50% - 5em);
+  text-align: center;
+  font-size: 20px;
+  text-shadow: 1px 1px 4px #191414;
+  color: #fff;
+}
+
+.login button a {
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+  font-family: sans-serif, Helvetica, Arial;
+}
+
+.login button {
+  left: calc(50% - 5.5em);
+  position: absolute;
+  top: 75%;
+  width: 11em;
+  border-radius: 20px;
+  height: 3em;
+  background-color: #504f4f;
+  border-style: none;
+  box-shadow: 2px 3px 5px #504f4f;
+}
+
+/* .login h2 {
+  position: absolute;
+  top: 77%;
+  color: #191414;
+
+  max-width: 18em;
+  left: calc(50% - 9em);
+  text-align: center;
+} */
+
+.bodyColor {
+  background-color: #fff;
+}
+
 #profileH1 {
   position: inherit;
   margin: 0.3em;
@@ -382,7 +436,7 @@ form button:last-of-type {
   border-radius: 5px;
   height: 1.5em;
   left: calc(90% - 2em);
-  top: 70%;
+  top: 60%;
   background-color: #e22136;
   color: #fff;
 }
@@ -458,7 +512,8 @@ form button:last-of-type {
   border-radius: 20px;
   box-shadow: 2px 3px 5px #504f4f;
   position: absolute;
-  top: 70%;
+  top: 60%;
+  left: calc(50% - 11em);
 }
 #loginButton a {
   color: #fff;
@@ -470,6 +525,10 @@ form button:last-of-type {
 #logoutButton {
   position: unset;
   background-color: #504f4f;
+}
+
+#footerSpotifyLogo {
+  width: auto;
 }
 
 footer {
@@ -499,6 +558,11 @@ footer img {
 footer a {
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: #b3b3b3;
+  max-width: 12em;
+  justify-content: start;
+  text-align: end;
 }
 
 @keyframes logoGrow {

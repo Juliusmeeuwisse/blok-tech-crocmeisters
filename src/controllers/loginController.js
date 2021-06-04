@@ -5,12 +5,10 @@ const Users = require('../models/users')
 
 // Global variables
 const mainBanner = '/images/banners/Banner MMM-home.png'
-const heartIcon = '/images/icons/white heart.png'
 
 const getLogin = (req, res) => {
   res.render('login', {
-    banner: mainBanner,
-    heartIcon
+    banner: mainBanner
   })
 }
 
