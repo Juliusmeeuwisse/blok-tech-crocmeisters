@@ -18,5 +18,6 @@ router.get('/match', matchDataController.getMatches)
 router.get('/musiclist', matchDataController.getSongsForMusicList)
 router.get('/profile', profileAndSettingsController.getProfile)
 router.get('/settings', profileAndSettingsController.getSettings)
+router.get('/confirmProfile', profileAndSettingsController.getProfile)
 
 module.exports = router

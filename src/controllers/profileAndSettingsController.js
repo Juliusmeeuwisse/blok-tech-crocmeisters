@@ -14,6 +14,7 @@ const getProfile = (req, res) => {
       if (result === undefined) {
         res.render('home', {
           heartIcon,
+          check: 'check',
           banner: mainBanner
         })
       } else {
@@ -24,6 +25,7 @@ const getProfile = (req, res) => {
             const myProfile = result.find((profile) => profile.id.includes(sessionID))
             res.render('profile', {
               heartIcon,
+              check: 'check',
               banner: mainBanner,
               myProfile,
               spotifyProfile,
@@ -40,6 +42,7 @@ const getProfile = (req, res) => {
 const searchSongs = (req, res) => {
   res.render('login', {
     banner: mainBanner,
+    check: 'check',
     heartIcon
   })
 }
@@ -48,6 +51,7 @@ const searchSongs = (req, res) => {
 const getSettings = (req, res) => {
   res.render('settings', {
     banner: mainBanner,
+    check: 'check',
     heartIcon
   })
 }

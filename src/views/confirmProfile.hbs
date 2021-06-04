@@ -1,0 +1,49 @@
+<section class="profile" >
+     <article>
+        <img src='{{profileImg}}' alt="profiel foto">
+        <ul>
+            <li>Username:</li>
+            <li>{{myProfile.name}}</li>
+            <li>E-mail:</li>
+            <li>{{myProfile.email}}</li>
+            <li>Age:</li>
+            <li>{{myProfile.age}}</li>
+        </ul>
+        <a href="https://accounts.spotify.com/en/logout">Logout</a>
+    </article>
+</section>
+<section class="musicList">
+    <h1 id="profileH1">My Favourite Songs:</h1>
+{{#each myProfile.songs}}
+    <article>
+        <img src='{{albumArt}}' alt="favourite song 1">
+        <div>
+        <audio src="{{source}}"></audio>
+        <button class='play'><span></span></button>
+        <h2>{{title}}</h2>
+        <p>{{artist}}</p>
+        </div>
+    </article>
+
+{{/each}}
+<button id="changeSongs">Change Songs</button>
+<article>
+    <form action="/profile" method="post" class="hiddenForm">
+        <input type="text" name="search" placeholder="search for artist or song title" class="hiddenForm">
+        <button class="hiddenForm">Search</button>
+    </form>
+    </article>
+{{#each data}}
+    <p>{{this}}</p>
+{{/each}}
+</section>
+<section>
+    <article>
+        <h2>My Genres</h2>
+    {{#each myProfile.genres}}
+    <ul>
+        <li>{{this}}</li>
+    </ul>
+    {{/each}}
+    </article>
+</section>
