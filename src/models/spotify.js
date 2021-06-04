@@ -14,8 +14,6 @@ const spotifyApi = new SpotifyWebApi({
 // scope defines which information the user can ask for
 const scopes = [
   'ugc-image-upload',
-  'user-read-playback-state',
-  'user-modify-playback-state',
   'user-read-currently-playing',
   'streaming',
   'app-remote-control',
@@ -25,7 +23,6 @@ const scopes = [
   'playlist-modify-public',
   'playlist-read-private',
   'playlist-modify-private',
-  'user-library-modify',
   'user-library-read',
   'user-top-read',
   'user-read-playback-position',
