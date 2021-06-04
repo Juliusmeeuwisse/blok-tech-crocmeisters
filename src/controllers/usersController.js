@@ -20,6 +20,7 @@ const usersIndex = (req, res) => {
             })
           } else {
             const myProfile = result.find((profile) => profile.id.includes(sessionID))
+            console.log(myProfile)
             const userProfiles = result.filter(
               (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
             )

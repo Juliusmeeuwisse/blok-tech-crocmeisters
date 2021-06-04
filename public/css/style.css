@@ -337,6 +337,13 @@ form button:last-of-type {
   margin: 0;
 }
 
+.profile article ul li a {
+  text-decoration: none;
+  color: #b3b3b3;
+  /* max-width: ; */
+  font-size: 14px;
+}
+
 .profile li:nth-of-type(odd) {
   list-style-type: none;
   font-size: 15px;
