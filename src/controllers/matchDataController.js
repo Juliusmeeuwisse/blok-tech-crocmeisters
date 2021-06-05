@@ -11,7 +11,7 @@ const matchBanner = '/images/banners/Banner MMM-Match.png'
 const getMatches = (req, res) => {
   Users.find({}).lean()
     .then((result) => {
-      if (result === undefined) {
+      if (!result) {
         res.render('match', {
           heartIcon,
           banner: matchBanner
@@ -46,7 +46,7 @@ const getMatches = (req, res) => {
 const getSongsForMusicList = (req, res) => {
   Users.find({}).lean()
     .then((result) => {
-      if (result === undefined) {
+      if (!result) {
         res.render('musiclist', {
           heartIcon,
           banner: musicListBanner
