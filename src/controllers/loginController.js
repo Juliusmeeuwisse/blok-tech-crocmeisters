@@ -79,8 +79,7 @@ const setAccestokens = (req, res) => {
                           
                           Naam: ${profile.name} 
                           Email: ${profile.email} 
-                          
-                             `
+                        `
                         }
                         sendEmail(mailOptions)
                         Users.create(profile)
