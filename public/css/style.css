@@ -323,6 +323,10 @@ form button:last-of-type {
   background-color: #1db95498;
 }
 
+.profile h1 {
+  position: unset;
+}
+
 .profile img {
   width: 8em;
   height: 8em;
