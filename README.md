@@ -30,7 +30,7 @@ To install this project you will need to install node, if you already installed 
 
 #### install project
 To make use of this project you need to clone this github repository by executing the following command in your terminal:
-1.  ```$git clone https://github.com/joeriBouwman25/CMD-Project-Tech-2021.git``` 
+1.  ```$git clone https://github.com/Juliusmeeuwisse/blok-tech-crocmeisters.git``` 
 2. navigate to the cloned github folders in the terminal
 3. if you're in the right folder run the following code ```npm install``` the packages that are requirert for this project will now be installed and you're app is ready for running
 
