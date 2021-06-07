@@ -16,10 +16,10 @@
     <article>
         <img src='{{albumArt}}' alt="favourite song 1">
         <div>
-        <audio src="{{source}}"></audio>
-        <button class='play'><span></span></button>
-        <h2>{{title}}</h2>
-        <p>{{artist}}</p>
+            <audio src="{{source}}"></audio>
+            <button class='play'><span></span></button>
+            <h2>{{title}}</h2>
+            <p>{{artist}}</p>
         </div>
     </article>
 
@@ -38,10 +38,13 @@
 <section>
     <article>
         <h2>My Genres</h2>
-    {{#each myProfile.genres}}
     <ul>
+    {{#each myProfile.genres}}
         <li>{{this}}</li>
-    </ul>
     {{/each}}
+    </ul>
     </article>
+        <form action="main" method="POST">
+            <button>Confirm</button>
+        </form>
 </section>
