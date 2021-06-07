@@ -14,6 +14,7 @@ const getMatches = (req, res) => {
       if (!result) {
         res.render('match', {
           heartIcon,
+          javaScript: 'js/index.js',
           check: 'check',
           banner: matchBanner
         })
@@ -26,6 +27,7 @@ const getMatches = (req, res) => {
             res.render('match', {
               heartIcon,
               check: 'check',
+              javaScript: 'js/index.js',
               banner: matchBanner,
               matches: myMatches
             })
@@ -52,6 +54,7 @@ const getSongsForMusicList = (req, res) => {
         res.render('musiclist', {
           heartIcon,
           check: 'check',
+          javaScript: 'js/index.js',
           banner: musicListBanner
         })
       } else {
@@ -64,6 +67,7 @@ const getSongsForMusicList = (req, res) => {
             res.render('musiclist', {
               heartIcon,
               check: 'check',
+              javaScript: 'js/index.js',
               banner: musicListBanner,
               songs: mySongs
             })
