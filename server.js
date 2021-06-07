@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+require('dotenv').config()
 
 // import dependecies
 const express = require('express')
@@ -8,7 +9,6 @@ const path = require('path')
 const session = require('express-session')
 
 const indexRoutes = require('./src/routes/routes')
-require('dotenv').config()
 
 // const { v4: uuidv4 } = require('uuid')
 
