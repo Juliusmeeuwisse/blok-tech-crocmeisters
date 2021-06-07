@@ -89,7 +89,7 @@ const setAccestokens = (req, res) => {
                 })
             })
         })
-      res.redirect('main')
+      res.redirect('confirmProfile')
     })
     .catch((err) => {
       console.log(err)
@@ -103,7 +103,6 @@ const getConfirmProfileData = (req, res) => {
       const artistName1 = data.body.items[0].artists[0].name
       const albumArt1 = data.body.items[0].album.images[0].url
       const source1 = data.body.items[0].preview_url
-
       const songName2 = data.body.items[1].name
       const artistName2 = data.body.items[1].artists[0].name
       const albumArt2 = data.body.items[1].album.images[0].url
@@ -113,6 +112,7 @@ const getConfirmProfileData = (req, res) => {
       const artistName3 = data.body.items[2].artists[0].name
       const albumArt3 = data.body.items[2].album.images[0].url
       const source3 = data.body.items[2].preview_url
+      console.log(songName3 + ' ' + artistName3)
 
       spotifyApi.getArtists([data.body.items[0].artists[0].id, data.body.items[1].artists[0].id, data.body.items[2].artists[0].id])
         .then((data) => {
