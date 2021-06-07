@@ -17,13 +17,12 @@ const getLogin = (req, res) => {
 
 const redirectToSpotifyLogin = (req, res) => {
   res.redirect(authorizeURL)
-  console.log(req)
 }
 
 const setAccestokens = (req, res) => {
   const { code } = req.query
+  spotifyApi.authorizationCodeGrant(code)
     .then((data) => {
-      spotifyApi.authorizationCodeGrant(code)
       spotifyApi.setAccessToken(data.body.access_token)
       spotifyApi.setRefreshToken(data.body.refresh_token)
       spotifyApi.getMyTopTracks({ limit: 3 })
@@ -90,7 +89,6 @@ const setAccestokens = (req, res) => {
                 })
             })
         })
-
       res.redirect('main')
     })
     .catch((err) => {
