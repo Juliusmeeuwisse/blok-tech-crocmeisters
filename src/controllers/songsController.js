@@ -50,8 +50,30 @@ const getUserSongs = async (userID) => {
     })
 }
 
+const postSong = async (song) => {
+  const newSong = await Songs.create({
+    title: song.title,
+    artist: song.artist,
+    albumArt: song.albumArt,
+    source: song.source
+  })
+  newSong.save()
+}
+
+const postUserSong = async (userSong) => {
+  console.log('test postSong')
+  const newUserSong = await UserSongs.create({
+    userID: userSong.userID,
+    songID: userSong.songID
+  })
+  newUserSong.save()
+}
+
 module.exports = {
   getSongs,
   getUserSongs,
-  currentUserSongs
+  currentUserSongs,
+  postSong,
+  postUserSong,
+  songs
 }

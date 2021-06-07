@@ -22,26 +22,6 @@ const usersIndex = (req, res) => {
           (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
         )
 
-        // const test = genresController.getUserGenres(myProfile.id)
-        // console.log(test)
-        // // New
-        // const test = []
-        // userProfiles.forEach(userProfile => {
-        //   test.push({
-        //     id: userProfile.id,
-        //     name: userProfile.name,
-        //     age: userProfile.age,
-        //     email: userProfile.email,
-        //     picture: userProfile.email,
-        //     likes: userProfile.likes,
-        //     dislikes: userProfile.dislikes,
-        //     matches: userProfile.matches,
-        //     songs: userProfile.songs,
-        //     genres: genresController.getUserGenres(userProfile.id)
-        //   })
-        // })
-        // console.log(test)
-
         res.render('home', {
           heartIcon,
           banner: mainBanner,

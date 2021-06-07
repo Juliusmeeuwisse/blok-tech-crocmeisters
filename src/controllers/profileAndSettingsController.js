@@ -9,6 +9,7 @@ const sessionID = '1128bae9-5a62-4905-a404-2c9386e26df9' // Fake sessionID for n
 
 let currentUserGenres = []
 let currentUserSongs = []
+let songs = []
 
 let myProfile
 // render profile
@@ -31,7 +32,6 @@ const getProfile = async (req, res) => {
     // genre array data from the genresController goes in currentUserGenres
     currentUserGenres = genresController.currentUserGenres
   }
-  console.log(currentUserGenres)
 
   if (!(currentUserSongs.length > 0)) {
     // Gets songs based on loggedin user
@@ -39,7 +39,30 @@ const getProfile = async (req, res) => {
     // song array data from the songsController goes in currentUserSongs
     currentUserSongs = songsController.currentUserSongs
   }
-  console.log(currentUserSongs)
+
+  songsController.postSong({
+    title: 'titleTest',
+    artist: 'artistTest',
+    albumArt: 'albumArtTest',
+    source: 'sourceTest'
+  })
+
+  // TODO: Get 1 specific song
+  // this time based on just created song 
+  songsController.getSongs()
+  console.log('here songs')
+  songs = songsController.songs
+  console.log(songs)
+
+
+  // NEW
+  // songsController.getSong(newSong)
+  // const songTest = songsController.song
+  // console.log(songTest)
+  // songsController.postUserSong({
+  //   userID: myProfile.id,
+  //   songID: songs.find(element => element === song.id)
+  // })
 
   res.render('profile', {
     heartIcon,
