@@ -1,15 +1,6 @@
 const music = document.querySelectorAll('audio')
 const button = document.getElementsByClassName('play')
 const icon = document.querySelectorAll('span')
-const loginSection = document.getElementsByClassName('login')[0].className
-
-if (loginSection === 'login') {
-  document.querySelector('body').classList.add('bodyColor')
-} else {
-  document.querySelector('body').classList.remove('bodyColor')
-}
-
-// const changeButton = document.getElementById('changeSongs')
 
 let a = true
 

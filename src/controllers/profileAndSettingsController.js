@@ -5,7 +5,6 @@ const spotifyApi = spotifyAuth.spotifyApi
 // Global variables
 const mainBanner = '/images/banners/Banner MMM-home.png'
 const heartIcon = '/images/icons/white heart.png'
-const sessionID = '1128bae9-5a62-4905-a404-2c9386e26df9' // Fake sessionID for now
 
 // render profile
 const getProfile = (req, res) => {
@@ -14,6 +13,7 @@ const getProfile = (req, res) => {
       if (result === undefined) {
         res.render('home', {
           heartIcon,
+          javaScript: 'js/index.js',
           check: 'check',
           banner: mainBanner
         })
@@ -22,10 +22,12 @@ const getProfile = (req, res) => {
           .then((data) => {
             const profileImg = data.body.images[0].url
             const spotifyProfile = data.body
+            const sessionID = data.body.id
             const myProfile = result.find((profile) => profile.id.includes(sessionID))
             res.render('profile', {
               heartIcon,
               check: 'check',
+              javaScript: 'js/index.js',
               banner: mainBanner,
               myProfile,
               spotifyProfile,
@@ -42,6 +44,7 @@ const getProfile = (req, res) => {
 const searchSongs = (req, res) => {
   res.render('login', {
     banner: mainBanner,
+    javaScript: 'js/index.js',
     check: 'check',
     heartIcon
   })
@@ -51,6 +54,7 @@ const searchSongs = (req, res) => {
 const getSettings = (req, res) => {
   res.render('settings', {
     banner: mainBanner,
+    javaScript: 'js/index.js',
     check: 'check',
     heartIcon
   })

@@ -33,6 +33,7 @@ const searchSongs = async (req, res) => {
     console.log(names)
     res.render('profile', {
       heartIcon,
+      javaScript: 'js/index.js',
       check: 'check',
       banner: mainBanner,
       data: names,

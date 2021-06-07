@@ -9,7 +9,8 @@ const mainBanner = '/images/banners/Banner MMM-home.png'
 
 const getLogin = (req, res) => {
   res.render('login', {
-    banner: mainBanner
+    banner: mainBanner,
+    javaScript: 'js/login.js'
   })
 }
 

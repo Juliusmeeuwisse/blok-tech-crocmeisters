@@ -25,6 +25,7 @@ const usersIndex = (req, res) => {
             )
             res.render('home', {
               heartIcon,
+              javaScript: 'js/index.js',
               check: 'check',
               banner: mainBanner,
               userProfile: userProfiles[0],
@@ -64,6 +65,7 @@ const likeAndMatch = (req, res) => {
                 .then(
                   res.render('newMatch', {
                     heartIcon,
+                    javaScript: 'js/index.js',
                     check: 'check',
                     userProfile: filtertUserProfiles[1],
                     newMatch: filtertUserProfiles[0],
