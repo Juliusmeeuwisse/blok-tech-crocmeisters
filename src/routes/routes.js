@@ -12,12 +12,12 @@ router.get('/login', loginController.redirectToSpotifyLogin)
 router.get('/callback', loginController.setAccestokens)
 
 // routes
-router.get('/main', usersController.usersIndex)
-router.post('/main', usersController.likeAndMatch)
-router.get('/match', matchDataController.getMatches)
-router.get('/musiclist', matchDataController.getSongsForMusicList)
-router.get('/profile', profileAndSettingsController.getProfile)
-router.get('/settings', profileAndSettingsController.getSettings)
-router.get('/confirmProfile', loginController.getConfirmProfileData)
+router.get('/main', usersController.usersIndex, loginController.haltOnTimedout)
+router.post('/main', usersController.likeAndMatch, loginController.haltOnTimedout)
+router.get('/match', matchDataController.getMatches, loginController.haltOnTimedout)
+router.get('/musiclist', matchDataController.getSongsForMusicList, loginController.haltOnTimedout)
+router.get('/profile', profileAndSettingsController.getProfile, loginController.haltOnTimedout)
+router.get('/settings', profileAndSettingsController.getSettings, loginController.haltOnTimedout)
+router.get('/confirmProfile', loginController.getConfirmProfileData, loginController.haltOnTimedout)
 
 module.exports = router
