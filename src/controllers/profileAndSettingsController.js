@@ -20,8 +20,12 @@ const getProfile = (req, res) => {
       } else {
         spotifyApi.getMe()
           .then((data) => {
-            console.log(data)
-            const profileImg = data.body.images[0].url
+            let profileImg = null
+            if (!data.body.images[0]) {
+              profileImg = '/images/unknownImg.png'
+            } else {
+              profileImg = data.body.images[0].url
+            }
             const spotifyProfile = data.body
             const sessionID = data.body.id
             const myProfile = result.find((profile) => profile.id.includes(sessionID))

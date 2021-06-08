@@ -9,7 +9,12 @@ const heartIcon = '/images/icons/white heart.png'
 const usersIndex = (req, res) => {
   spotifyApi.getMe()
     .then((data) => {
-      const profileImg = data.body.images[0].url
+      let profileImg = null
+      if (!data.body.images[0]) {
+        profileImg = '/images/unknownImg.png'
+      } else {
+        profileImg = data.body.images[0].url
+      }
       const sessionID = data.body.id
       Users.find({}).lean()
         .then((result) => {
