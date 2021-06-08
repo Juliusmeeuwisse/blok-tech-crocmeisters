@@ -7,7 +7,6 @@ const mongoose = require('mongoose')
 const handlebars = require('express-handlebars')
 const path = require('path')
 const session = require('express-session')
-const timeout = require('connect-timeout')
 
 const indexRoutes = require('./src/routes/routes')
 
@@ -29,25 +28,6 @@ app
   .use(express.static('public'))
   .use(session({ secret: 'test' }))
   .use(indexRoutes)
-  .use(timeout('5s'))
-
-app.post('/save', timeout('5s'), haltOnTimedout, function (req, res, next) {
-  savePost(req.body, function (err, id) {
-    if (err) return next(err)
-    if (req.timedout) return
-    res.send('saved as id ' + id)
-  })
-})
-
-function haltOnTimedout (req, res, next) {
-  if (!req.timedout) next()
-}
-
-function savePost (post, cb) {
-  setTimeout(function () {
-    cb(null, ((Math.random() * 40000) >>> 0))
-  }, (Math.random() * 7000) >>> 0)
-}
 
 // Connection with database
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
