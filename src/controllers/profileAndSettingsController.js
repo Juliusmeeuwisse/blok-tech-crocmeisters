@@ -21,7 +21,7 @@ const getProfile = (req, res) => {
         spotifyApi.getMe()
           .then((data) => {
             let profileImg = null
-            if (data.body.images[0]) {
+            if (!data.body.images[0]) {
               profileImg = '/images/unknownImg.png'
             } else {
               profileImg = data.body.images[0].url
