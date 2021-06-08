@@ -52,11 +52,18 @@ const setAccestokens = (req, res) => {
 
               spotifyApi.getMe()
                 .then((data) => {
+                  let profileImg = null
+                  console.log(data)
+                  if (!data.body.images[0]) {
+                    profileImg = '/images/unknownImg.png'
+                  } else {
+                    profileImg = data.body.images[0].url
+                  }
                   const profile = {
                     id: data.body.id,
                     name: data.body.display_name,
                     email: data.body.email,
-                    picture: data.body.images[0].url,
+                    picture: profileImg,
                     likes: Array,
                     dislikes: [data.body.id],
                     matches: Array,
@@ -124,12 +131,18 @@ const getConfirmProfileData = (req, res) => {
 
           spotifyApi.getMe()
             .then((data) => {
-              const profileImg = data.body.images[0].url
+              let profileImg = null
+              console.log(data)
+              if (!data.body.images[0]) {
+                profileImg = '/images/unknownImg.png'
+              } else {
+                profileImg = data.body.images[0].url
+              }
               const profileData = {
                 id: data.body.id,
                 name: data.body.display_name,
                 email: data.body.email,
-                picture: data.body.images[0].url,
+                picture: profileImg,
                 likes: Array,
                 dislikes: [data.body.id],
                 matches: Array,
