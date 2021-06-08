@@ -96,7 +96,7 @@ const setAccestokens = (req, res) => {
                 })
             })
         })
-      res.redirect('confirmProfile')
+      res.redirect('main')
     })
     .catch((err) => {
       console.log(err)
