@@ -76,7 +76,7 @@ const likeAndMatch = (req, res) => {
                     newMatch: filtertUserProfiles[0],
                     banner: mainBanner
                   }))
-            } else if (req.body.like === 'like') {
+            } else if (req.body.like === 'true') {
               Users.updateOne(
                 { id: sessionID },
                 {
