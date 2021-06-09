@@ -2,9 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const genreSchema = new Schema({
-  id: String,
-  name: String,
-  genreArt: String
+  name: String
 })
 
 const genres = mongoose.model('genres', genreSchema)

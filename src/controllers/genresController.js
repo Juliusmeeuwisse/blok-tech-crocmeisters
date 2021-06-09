@@ -1,8 +1,10 @@
 const Genres = require('../models/genres')
 const UserGenres = require('../models/userGenres')
 
+const allGenres = []
 let genres = []
 let userGenres = []
+const allUserGenres = []
 const currentUserGenres = []
 
 // Gets all genres
@@ -14,6 +16,9 @@ const getGenres = async () => {
         console.log('Genres undefined')
       } else {
         genres = result
+        genres.forEach(genre => {
+          allGenres.push(genre)
+        })
       }
     })
     .catch((err) => {
@@ -34,11 +39,12 @@ const getUserGenres = async (userID) => {
 
         userGenres.forEach(userGenre => {
           genres.forEach(genre => {
+            allUserGenres.push(genres)
             /* If current userGenre.genreID is the same as the current genre.id
             and userGenre.userID is the same as the userID parameter, add to
             the currentUserGenres array
             */
-            if (userGenre.genreID === genre.id && userGenre.userID === userID) {
+            if (userGenre.genreID.toString() === genre._id.toString() && userGenre.userID === userID) {
               currentUserGenres.push(genre.name)
             }
           })
@@ -50,8 +56,36 @@ const getUserGenres = async (userID) => {
     })
 }
 
+const addGenre = async (genreName) => {
+  const newGenre = await Genres.create({
+    name: genreName
+  })
+  newGenre.save()
+}
+
+const addUserGenre = async (userGenre) => {
+  const newUserGenre = await UserGenres.create({
+    userID: userGenre.userID,
+    genreID: userGenre.genreID
+  })
+  newUserGenre.save()
+}
+
+const deleteUserGenre = async (userGenre) => {
+  const deletedUserSong = await UserGenres.deleteOne({
+    userID: userGenre.userID,
+    genreID: userGenre.genreID
+  })
+  deletedUserSong.deleteOne()
+}
+
 module.exports = {
   getGenres,
   getUserGenres,
-  currentUserGenres
+  addGenre,
+  addUserGenre,
+  deleteUserGenre,
+  currentUserGenres,
+  allUserGenres,
+  allGenres
 }
