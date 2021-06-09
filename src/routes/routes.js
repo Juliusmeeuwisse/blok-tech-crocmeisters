@@ -19,5 +19,6 @@ router.get('/musiclist', matchDataController.getSongsForMusicList)
 router.get('/profile', profileAndSettingsController.getProfile)
 router.get('/settings', profileAndSettingsController.getSettings)
 router.get('/confirmProfile', loginController.getConfirmProfileData)
+router.post('/confirmProfile', loginController.confirmProfile)
 
 module.exports = router

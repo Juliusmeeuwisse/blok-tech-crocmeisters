@@ -30,7 +30,6 @@ const searchSongs = async (req, res) => {
     const albumArt = albumData.tracks.items.map((albums) => albums.preview_url)
     const names = albumData.tracks.items.map((names) => names.artists[0].name)
 
-    console.log(names)
     res.render('profile', {
       heartIcon,
       javaScript: 'js/index.js',
