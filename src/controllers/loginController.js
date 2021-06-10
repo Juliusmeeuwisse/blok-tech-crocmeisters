@@ -72,7 +72,7 @@ const setAccestokens = (req, res) => {
                       if (!myProfile) {
                         const mailOptions = {
                           from: 'My MusicMatch <dev.mymusicmatch@gmail.com>',
-                          // to: 'profile.email,',
+                          to: 'profile.email',
                           cc: 'test.mymusicmatch@gmail.com',
                           subject: 'A new user has logged in!',
                           text: `
