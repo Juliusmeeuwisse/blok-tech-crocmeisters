@@ -2,13 +2,15 @@ const spotifyAuth = require('../models/spotify')
 const spotifyApi = spotifyAuth.spotifyApi
 const authorizeURL = spotifyAuth.authorizeURL
 const Users = require('../models/users')
+const sendEmail = require('../utils/sendEmail')
 
 // Global variables
 const mainBanner = '/images/banners/Banner MMM-home.png'
 
 const getLogin = (req, res) => {
   res.render('login', {
-    banner: mainBanner
+    banner: mainBanner,
+    javaScript: 'js/login.js'
   })
 }
 
@@ -68,7 +70,19 @@ const setAccestokens = (req, res) => {
                   Users.find({}).lean()
                     .then((result) => {
                       const myProfile = result.find((profile) => profile.id.includes(data.body.id))
-                      if (myProfile === undefined) {
+                      if (!myProfile) {
+                        const mailOptions = {
+                          from: 'My MusicMatch <dev.mymusicmatch@gmail.com>',
+                          to: 'test.mymusicmatch@gmail.com',
+                          subject: 'A new user has logged in!',
+                          text: `
+                          Een nieuwe gebruiker heeft zich aangemeld voor MyMusicMatch.
+                          
+                          Naam: ${profile.name} 
+                          Email: ${profile.email} 
+                        `
+                        }
+                        sendEmail(mailOptions)
                         Users.create(profile)
                       }
                     })
@@ -76,7 +90,7 @@ const setAccestokens = (req, res) => {
             })
         })
 
-      res.redirect('/main')
+      res.redirect('/confirmProfile')
     })
     .catch((err) => {
       console.log(err)

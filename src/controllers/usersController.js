@@ -13,19 +13,20 @@ const usersIndex = (req, res) => {
       const sessionID = data.body.id
       Users.find({}).lean()
         .then((result) => {
-          if (result === undefined) {
+          if (!result) {
             res.render('home', {
               heartIcon,
               banner: mainBanner
             })
           } else {
             const myProfile = result.find((profile) => profile.id.includes(sessionID))
-            console.log(myProfile)
             const userProfiles = result.filter(
-              (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
+              (user) => !myProfile?.likes.includes(user.id) && !myProfile?.dislikes.includes(user.id)
             )
             res.render('home', {
               heartIcon,
+              javaScript: 'js/index.js',
+              check: 'check',
               banner: mainBanner,
               userProfile: userProfiles[0],
               profileImg
@@ -42,7 +43,7 @@ const usersIndex = (req, res) => {
 const likeAndMatch = (req, res) => {
   Users.find({}).lean()
     .then(result => {
-      if (result === undefined) {
+      if (!result) {
         res.redirect('/main')
       } else {
         spotifyApi.getMe()
@@ -64,6 +65,8 @@ const likeAndMatch = (req, res) => {
                 .then(
                   res.render('newMatch', {
                     heartIcon,
+                    javaScript: 'js/index.js',
+                    check: 'check',
                     userProfile: filtertUserProfiles[1],
                     newMatch: filtertUserProfiles[0],
                     banner: mainBanner

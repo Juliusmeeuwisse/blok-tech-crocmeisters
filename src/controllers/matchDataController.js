@@ -11,9 +11,10 @@ const matchBanner = '/images/banners/Banner MMM-Match.png'
 const getMatches = (req, res) => {
   Users.find({}).lean()
     .then((result) => {
-      if (result === undefined) {
+      if (!result) {
         res.render('match', {
           heartIcon,
+          check: 'check',
           banner: matchBanner
         })
       } else {
@@ -24,6 +25,7 @@ const getMatches = (req, res) => {
             const myMatches = result.filter((match) => myProfile.matches.includes(match.id))
             res.render('match', {
               heartIcon,
+              check: 'check',
               banner: matchBanner,
               matches: myMatches
             })
@@ -46,9 +48,10 @@ const getMatches = (req, res) => {
 const getSongsForMusicList = (req, res) => {
   Users.find({}).lean()
     .then((result) => {
-      if (result === undefined) {
+      if (!result) {
         res.render('musiclist', {
           heartIcon,
+          check: 'check',
           banner: musicListBanner
         })
       } else {
@@ -60,6 +63,7 @@ const getSongsForMusicList = (req, res) => {
             const mySongs = myMatches.map((song) => song.songs).flat()
             res.render('musiclist', {
               heartIcon,
+              check: 'check',
               banner: musicListBanner,
               songs: mySongs
             })
