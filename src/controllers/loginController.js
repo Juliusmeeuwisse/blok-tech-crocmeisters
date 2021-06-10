@@ -30,10 +30,18 @@ const setAccestokens = (req, res) => {
         .then((data) => {
           Users.find({}).lean()
             .then((result) => {
+              console.log(data)
               const myProfile = result.find((profile) => profile.id.includes(data.body.id))
               if (!myProfile) {
                 res.redirect('confirmProfile')
               } else {
+                console.log(req.sessionID)
+                req.session = {
+                  id: data.body.id,
+                  name: data.body.display_name,
+                  email: data.body.email
+                }
+                console.log(req.session)
                 res.redirect('main')
               }
             })
@@ -43,6 +51,8 @@ const setAccestokens = (req, res) => {
       console.log(err)
     })
 }
+
+// checkauth next() routes aanpassen
 
 const getConfirmProfileData = (req, res) => {
   spotifyApi.getMyTopTracks({ limit: 3 })
@@ -60,7 +70,6 @@ const getConfirmProfileData = (req, res) => {
       const artistName3 = data.body.items[2].artists[0].name
       const albumArt3 = data.body.items[2].album.images[0].url
       const source3 = data.body.items[2].preview_url
-      console.log(songName3 + ' ' + artistName3)
 
       spotifyApi.getArtists([data.body.items[0].artists[0].id, data.body.items[1].artists[0].id, data.body.items[2].artists[0].id])
         .then((data) => {

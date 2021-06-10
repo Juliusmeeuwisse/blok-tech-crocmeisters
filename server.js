@@ -10,7 +10,7 @@ const session = require('express-session')
 
 const indexRoutes = require('./src/routes/routes')
 
-// const { v4: uuidv4 } = require('uuid')
+const { v4: uuidv4 } = require('uuid')
 
 const app = express()
 
@@ -28,25 +28,31 @@ app
   .use(express.static('public'))
   .use(indexRoutes)
 
-  // sessions
+// sessions
+
   .use(session({
-    resave: false, // checked session docs, false is best option(for now)
-    saveUninitialized: true,
-    secret: process.env.SESSION_SECRET
+    name: 'user',
+    secret: 'mySecret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false,
+      maxAge: 10000
+    }
   }))
 
-const setLocals = (req, res, next) => {
-  if (req.session.user) {
-    res.locals.user = req.session.user
-    res.locals.notification = false
-    next()
-  } else {
-    console.log(req.session)
-    res.locals.user = false
-    res.locals.notification = false
-    next()
-  }
-}
+// const setLocals = (req, res, next) => {
+//   if (req.session.user) {
+//     res.locals.user = req.session.user
+//     res.locals.notification = false
+//     next()
+//   } else {
+//     console.log(req.session)
+//     res.locals.user = false
+//     res.locals.notification = false
+//     next()
+//   }
+// }
 
 // Connection with database
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
