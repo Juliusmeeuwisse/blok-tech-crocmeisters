@@ -2,7 +2,6 @@ const spotifyAuth = require('../models/spotify')
 const spotifyApi = spotifyAuth.spotifyApi
 const authorizeURL = spotifyAuth.authorizeURL
 const Users = require('../models/users')
-const session = require('express-session')
 // const sendEmail = require('../utils/sendEmail')
 
 // Global variables
@@ -30,14 +29,17 @@ const setAccestokens = (req, res) => {
         .then((data) => {
           Users.find({}).lean()
             .then((result) => {
-              console.log(data)
               const myProfile = result.find((profile) => profile.id.includes(data.body.id))
               if (!myProfile) {
+                req.session.user = {
+                  sessionID: data.body.id,
+                  name: data.body.display_name,
+                  email: data.body.email
+                }
                 res.redirect('confirmProfile')
               } else {
-                console.log(req.sessionID)
-                req.session = {
-                  id: data.body.id,
+                req.session.user = {
+                  sessionID: data.body.id,
                   name: data.body.display_name,
                   email: data.body.email
                 }
@@ -170,12 +172,12 @@ const confirmProfile = (req, res) => {
                   .then((result) => {
                     const myProfile = result.find((profile) => profile.id.includes(data.body.id))
                     if (!myProfile) {
-                    // const mailOptions = {
-                    //   from: 'My MusicMatch <dev.mymusicmatch@gmail.com>',
-                    //   to: 'test.mymusicmatch@gmail.com',
-                    //   subject: 'A new user has logged in!',
-                    //   text: `
-                    //   Een nieuwe gebruiker heeft zich aangemeld voor MyMusicMatch.
+                      // const mailOptions = {
+                      //   from: 'My MusicMatch <dev.mymusicmatch@gmail.com>',
+                      //   to: 'test.mymusicmatch@gmail.com',
+                      //   subject: 'A new user has logged in!',
+                      //   text: `
+                      // Een nieuwe gebruiker heeft zich aangemeld voor MyMusicMatch.
 
                       //   Naam: ${profile.name}
                       //   Email: ${profile.email}
@@ -193,7 +195,13 @@ const confirmProfile = (req, res) => {
       })
     res.redirect('main')
   } else {
-    res.redirect('/')
+    req.session.destroy((err) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.redirect('/')
+      }
+    })
   }
 }
 

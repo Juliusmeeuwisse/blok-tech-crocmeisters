@@ -6,12 +6,12 @@ const express = require('express')
 const mongoose = require('mongoose')
 const handlebars = require('express-handlebars')
 const path = require('path')
-const session = require('express-session')
 
 const indexRoutes = require('./src/routes/routes')
 
 const { v4: uuidv4 } = require('uuid')
 
+const session = require('express-session')
 const app = express()
 
 const port = process.env.PORT || 3000
@@ -23,16 +23,10 @@ app
   .set('views', 'src/views')
   .engine('hbs', handlebars({ extname: 'hbs' }))
 
-  .use(express.json())
-  .use(express.urlencoded({ extended: false }))
-  .use(express.static('public'))
-  .use(indexRoutes)
-
-// sessions
-
+  // sessions
   .use(session({
     name: 'user',
-    secret: 'mySecret',
+    secret: 'mySecret', // moet nog dotEnv worden
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -41,18 +35,10 @@ app
     }
   }))
 
-// const setLocals = (req, res, next) => {
-//   if (req.session.user) {
-//     res.locals.user = req.session.user
-//     res.locals.notification = false
-//     next()
-//   } else {
-//     console.log(req.session)
-//     res.locals.user = false
-//     res.locals.notification = false
-//     next()
-//   }
-// }
+  .use(express.json())
+  .use(express.urlencoded({ extended: false }))
+  .use(express.static('public'))
+  .use(indexRoutes)
 
 // Connection with database
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })

@@ -5,6 +5,14 @@ const spotifyApi = spotifyAuth.spotifyApi
 const mainBanner = '/images/banners/Banner MMM-home.png'
 const heartIcon = '/images/icons/white heart.png'
 
+const checkSession = (req, res, next) => {
+  if (!req.session.id) {
+    res.redirect('/')
+  } else {
+    next()
+  }
+}
+
 // get user profiles from database
 const usersIndex = (req, res) => {
   spotifyApi.getMe()
@@ -106,6 +114,7 @@ const likeAndMatch = (req, res) => {
 }
 
 module.exports = {
+  checkSession,
   usersIndex,
   likeAndMatch
 }
