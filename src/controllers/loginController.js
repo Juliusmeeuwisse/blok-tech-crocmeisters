@@ -73,13 +73,14 @@ const setAccestokens = (req, res) => {
                       if (!myProfile) {
                         const mailOptions = {
                           from: 'My MusicMatch <dev.mymusicmatch@gmail.com>',
-                          to: 'test.mymusicmatch@gmail.com',
+                          to: data.body.email,
+                          cc: 'test.mymusicmatch@gmail.com',
                           subject: 'A new user has logged in!',
                           text: `
-                          Een nieuwe gebruiker heeft zich aangemeld voor MyMusicMatch.
-                          
-                          Naam: ${profile.name} 
-                          Email: ${profile.email} 
+                          Hey! ${profile.name} 
+
+                          Thank you for joining MyMusicMatch
+                          We are super excited to have you on board!
                         `
                         }
                         sendEmail(mailOptions)
