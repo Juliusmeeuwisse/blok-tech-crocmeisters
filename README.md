@@ -35,10 +35,13 @@ To make use of this project you need to clone this github repository by executin
 3. if you're in the right folder run the following code ```npm install``` the packages that are requirert for this project will now be installed and you're app is ready for running
 
 ## Author and collaborators
+Author:
+* J. Bouwman: [joeriBouwman25](https://github.com/joeriBouwman25)
 
-J. Bouwman: [joeriBouwman25](https://github.com/joeriBouwman25)
-
-Later on in the project I will collaborate with other students to make a full working application.
+Collaborators:
+* J. Meeuwisse: [juliusmeeuwisse](https://github.com/Juliusmeeuwisse)
+* S. van Fraeijenhove: [stijnvF](https://github.com/StijnvF)
+* T. Pereira de Lacerda: [Txai-HvA](https://github.com/Txai-HvA)
 
 ## FAQ
 
