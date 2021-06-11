@@ -28,6 +28,7 @@ const getGenres = async () => {
 
 // Gets genres based on given user
 const getUserGenres = async (userID) => {
+  console.log(userID)
   getGenres()
   await UserGenres.find({})
     .lean()
@@ -56,9 +57,9 @@ const getUserGenres = async (userID) => {
     })
 }
 
-const addGenre = async (genreName) => {
+const addGenre = async (genre) => {
   const newGenre = await Genres.create({
-    name: genreName
+    name: genre.name
   })
   newGenre.save()
 }

@@ -20,7 +20,10 @@ const getProfile = async (req, res) => {
   await Users.find({}).lean()
     .then((result) => {
       if (result === undefined) {
-        console.log('Result is undefined')
+        res.render('match', {
+          heartIcon,
+          banner: mainBanner
+        })
       } else {
         myProfile = result.find((profile) => profile.id.includes(sessionID))
       }
@@ -49,12 +52,15 @@ const getProfile = async (req, res) => {
   }
 
   // Get available genre data
-  const genreToBeAdded = 'Progressive Housesss'
+  const genreToBeAdded = {
+    name: 'Progressive Housesss'
+  }
+  console.log(genreToBeAdded)
 
   // Get all userGenres that belong to the logged in user
   allUserGenres = genresController.allUserGenres
 
-  const doesGenreExist = genres.find(x => x.name === genreToBeAdded)
+  const doesGenreExist = genres.find(x => x.name === genreToBeAdded.name)
   let doesUserGenreExist = null
   // If genre exists, find the userGenre with the userID and genreID
   if (doesGenreExist !== undefined) {
@@ -71,8 +77,8 @@ const getProfile = async (req, res) => {
   } else {
     try {
       // If the given genre doesn't exist in the database, add the genre
-      const newGenre = genresController.addGenre({
-        name: genreToBeAdded
+      const newGenre = await genresController.addGenre({
+        name: genreToBeAdded.name
       })
       console.log(newGenre)
     } catch (error) {
