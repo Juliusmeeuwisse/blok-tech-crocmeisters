@@ -1,4 +1,4 @@
-<section class="profile" >
+<section class="newProfile" >
     <h1>We've collected the following data for your profile:</h1>
      <article>
         <img src='{{profileImg}}' alt="profiel foto">
@@ -10,38 +10,45 @@
         </ul>
     </article>
 </section>
-<section class="musicList">
-    <h1 id="profileH1">My Favourite Songs:</h1>
-{{#each myProfile.songs}}
-    <article>
-        <img src='{{albumArt}}' alt="favourite song 1">
-        <div>
-        <audio src="{{source}}"></audio>
-        <button class='play'><span></span></button>
-        <h2>{{title}}</h2>
-        <p>{{artist}}</p>
-        </div>
-    </article>
-
-{{/each}}
-<button id="changeSongs">Change Songs</button>
-<article>
+<section class="mySongs">
+    <h1 id="profileH1">Your Favourite Songs:</h1>
+    {{#each myProfile.songs}}
+        <article>
+            <img src='{{albumArt}}' alt="favourite song">
+            <div>
+                <div>
+                    <h2>{{title}}</h2>
+                    <p>{{artist}}</p>
+                </div>
+                <button class='play'><span></span></button>
+                <audio src="{{source}}"></audio>
+            </div>
+            <button id="changeSongs">Change Song</button>
+        </article>
+    {{/each}}
+{{!-- <article>
     <form action="/profile" method="post" class="hiddenForm">
         <input type="text" name="search" placeholder="search for artist or song title" class="hiddenForm">
         <button class="hiddenForm">Search</button>
     </form>
-    </article>
+    </article> --}}
 {{#each data}}
     <p>{{this}}</p>
 {{/each}}
 </section>
-<section>
+<section class="myGenres">
+    <h1 id="profileH1">Your Genres</h1>
     <article>
-        <h2>My Genres</h2>
-    {{#each myProfile.genres}}
-    <ul>
-        <li>{{this}}</li>
-    </ul>
-    {{/each}}
+        <ul>
+        {{#each myProfile.genres}}
+            <li>{{this}},</li>
+        {{/each}}
+        </ul>
     </article>
+</section>
+<section class="confirmProfile">   
+    <form action="/confirmProfile" method="POST">
+        <button name="confirm" value="true">Confirm</button>
+        <button name="decline" value="false">Decline</button>
+    </form>
 </section>

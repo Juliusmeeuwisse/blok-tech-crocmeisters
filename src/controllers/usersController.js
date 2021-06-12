@@ -5,11 +5,24 @@ const spotifyApi = spotifyAuth.spotifyApi
 const mainBanner = '/images/banners/Banner MMM-home.png'
 const heartIcon = '/images/icons/white heart.png'
 
+const checkSession = (req, res, next) => {
+  if (!req.session.id) {
+    res.redirect('/')
+  } else {
+    next()
+  }
+}
+
 // get user profiles from database
 const usersIndex = (req, res) => {
   spotifyApi.getMe()
     .then((data) => {
-      const profileImg = data.body.images[0].url
+      let profileImg = null
+      if (!data.body.images[0]) {
+        profileImg = '/images/unknownImg.png'
+      } else {
+        profileImg = data.body.images[0].url
+      }
       const sessionID = data.body.id
       Users.find({}).lean()
         .then((result) => {
@@ -71,7 +84,7 @@ const likeAndMatch = (req, res) => {
                     newMatch: filtertUserProfiles[0],
                     banner: mainBanner
                   }))
-            } else if (req.body.like === 'like') {
+            } else if (req.body.like === 'true') {
               Users.updateOne(
                 { id: sessionID },
                 {
@@ -101,6 +114,7 @@ const likeAndMatch = (req, res) => {
 }
 
 module.exports = {
+  checkSession,
   usersIndex,
   likeAndMatch
 }
