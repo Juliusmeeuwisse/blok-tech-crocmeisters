@@ -43,7 +43,6 @@ const setAccestokens = (req, res) => {
                   name: data.body.display_name,
                   email: data.body.email
                 }
-                console.log(req.session)
                 res.redirect('main')
               }
             })
