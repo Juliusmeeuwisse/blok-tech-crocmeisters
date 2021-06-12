@@ -26,7 +26,7 @@ const setAccestokens = (req, res) => {
       spotifyApi.setRefreshToken(data.body.refresh_token)
 
       spotifyApi.getMe()
-        .then((data) => {
+        .then((data) => 
           Users.find({}).lean()
             .then((result) => {
               const myProfile = result.find((profile) => profile.id.includes(data.body.id))
