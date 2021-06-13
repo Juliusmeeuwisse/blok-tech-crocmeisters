@@ -9,6 +9,8 @@ const heartIcon = '/images/icons/white heart.png'
 const matchBanner = '/images/banners/Banner MMM-Match.png'
 
 let myProfile = null
+const matchesWithGenres = []
+let genres = []
 
 // get matches for session user from database
 const getMatches = async (req, res) => {
@@ -23,21 +25,31 @@ const getMatches = async (req, res) => {
         myProfile = result.find((myProfile) => myProfile.id.includes(sessionID))
         getUserMatches()
         genresController.getUserGenres()
-        matches.forEach(match => {
-          getUserMatchGenre(match.id)
-          matchUserGenres = []
-        })
-        console.log(userGenres)
       }
     })
     .catch((err) => {
       console.log(err)
     })
 
+  if (matchesWithGenres.length < 1) {
+    for (let i = 0; i < matches.length; i++) {
+      console.log(i)
+      await genresController.getUserGenres(matches[i].id)
+      genres = genresController.currentUserGenres
+      console.log(genres)
+      matchesWithGenres.push({
+        id: matches[i].id,
+        picture: matches[i].picture,
+        name: matches[i].name,
+        genres: genres
+      })
+    }
+  }
+
   res.render('match', {
     heartIcon,
     banner: matchBanner,
-    matches: matches
+    matches: matchesWithGenres
   })
 }
 
@@ -58,7 +70,7 @@ const getUsers = async () => {
 }
 
 const matches = []
-const userGenres = []
+
 // Gets all songs
 const getUserMatches = async () => {
   let userMatches = []
@@ -89,24 +101,6 @@ const getUserMatches = async () => {
         })
       }
     })
-  }
-}
-
-let matchUserGenres = []
-const getUserMatchGenre = async (userID) => {
-  // If user has already been added, do nothing
-  const hasUserBeenAdded = matchUserGenres.find(x => x.userID === userID)
-  if (hasUserBeenAdded === undefined) {
-    // Get genres from match
-    await genresController.getUserGenres(userID)
-    matchUserGenres = genresController.currentUserGenres
-    const userObj = {
-      userID: userID,
-      genres: matchUserGenres
-    }
-    console.log(userObj)
-    // Add matchgenres to list
-    // userGenres.push(userObj)
   }
 }
 

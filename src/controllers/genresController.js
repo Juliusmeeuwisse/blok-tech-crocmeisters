@@ -28,7 +28,6 @@ const getGenres = async () => {
 
 // Gets genres based on given user
 const getUserGenres = async (userID) => {
-  console.log(userID)
   getGenres()
   await UserGenres.find({})
     .lean()
@@ -38,9 +37,9 @@ const getUserGenres = async (userID) => {
       } else {
         userGenres = result
 
+        allUserGenres.push(genres)
         userGenres.forEach(userGenre => {
           genres.forEach(genre => {
-            allUserGenres.push(genres)
             /* If current userGenre.genreID is the same as the current genre.id
             and userGenre.userID is the same as the userID parameter, add to
             the currentUserGenres array
