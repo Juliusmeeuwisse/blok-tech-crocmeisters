@@ -10,7 +10,7 @@ const sessionID = '1128bae9-5a62-4905-a404-2c9386e26df9' // Fake sessionID for n
 let currentUserGenres = []
 let givenUserSongs = []
 let songs = []
-const genres = []
+let genres = []
 let allUserSongs = []
 let allUserGenres = []
 
@@ -55,17 +55,16 @@ const getProfile = async (req, res) => {
   const genreToBeAdded = {
     name: 'Progressive Housesss'
   }
-  console.log(genreToBeAdded)
 
   // Get all userGenres that belong to the logged in user
   allUserGenres = genresController.allUserGenres
 
-  const doesGenreExist = genres.find(x => x.name === genreToBeAdded.name)
+  await genresController.getGenres
+  genres = await genresController.allGenres
+  const doesGenreExist = await genres.find(x => x.name === genreToBeAdded.name)
   let doesUserGenreExist = null
   // If genre exists, find the userGenre with the userID and genreID
-  if (doesGenreExist !== undefined) {
-    doesUserGenreExist = allUserGenres.find(x => x.userID === myProfile.id && x.genreID.toString() === doesGenreExist._id.toString())
-  }
+  doesUserGenreExist = await allUserGenres.find(x => x.userID === myProfile.id && x.genreID.toString() === doesGenreExist._id.toString())
 
   // If genreToBeAdded already exists in the database...
   if (doesGenreExist !== undefined && doesUserGenreExist === undefined) {
@@ -77,21 +76,23 @@ const getProfile = async (req, res) => {
   } else {
     try {
       // If the given genre doesn't exist in the database, add the genre
-      const newGenre = await genresController.addGenre({
+      genresController.addGenre({
         name: genreToBeAdded.name
       })
+      // Get genres 
+      await genresController.getGenres
+      genres = genresController.allGenres
+      // Get the genreID from the just created genre
+      const newGenre = await genres.find(x => x.name === genreToBeAdded.name)
       console.log(newGenre)
+      // // Create userGenre to connect the new genre with the user
+      genresController.addUserGenre({
+        userID: myProfile.id,
+        genreID: newGenre.id
+      })
     } catch (error) {
       console.log(error)
     }
-
-    // // Get the genreID from the just created genre
-    // const newGenreID = genres.find(x => x.id === newGenre.id)._id
-    // // Create userGenre to connect the new genre with the user
-    // genresController.addUserGenre({
-    //   userID: myProfile.id,
-    //   genreID: newGenreID
-    // })
   }
 
   res.render('profile', {
