@@ -4,7 +4,7 @@ const UserGenres = require('../models/userGenres')
 
 let genres = []
 let userGenres = []
-const currentUserGenres = []
+let currentUserGenres = []
 
 // Gets all genres
 const getGenres = async () => {
@@ -36,6 +36,7 @@ const getUsersGenres = async () => {
 // Gets genres based on given user
 const getUserGenres = async (userID) => {
   userGenres = []
+  currentUserGenres = []
   getGenres()
   userGenres = await UserGenres.find({}).lean()
   userGenres.forEach(userGenre => {
