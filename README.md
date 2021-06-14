@@ -60,4 +60,4 @@ Feel free to ask questions or contact us!
 * J. Bouwman: Joeri.bouwman@hva.nl
 * J. Meeuwisse: julius.meeuwisse@hva.nl
 * S. van Fraeijenhove: stijn.van.fraeijenhove@hva.nl
-* T. Pereira de Lacerda: 
+* T. Pereira de Lacerda: txai.pereira.de.lacerda@hva.nl
