@@ -1,59 +1,54 @@
 const Genres = require('../models/genres')
 const UserGenres = require('../models/userGenres')
 
-const allGenres = []
 let genres = []
 let userGenres = []
-const allUserGenres = []
 const currentUserGenres = []
 
 // Gets all genres
 const getGenres = async () => {
-  await Genres.find({})
-    .lean()
-    .then((result) => {
-      if (result === undefined) {
-        console.log('Genres undefined')
-      } else {
-        genres = result
-        genres.forEach(genre => {
-          allGenres.push(genre)
+  genres = await Genres.find({})
+  return genres
+}
+
+// Gets genres from all users
+const getUsersGenres = async () => {
+  userGenres = []
+  getGenres()
+  userGenres = await UserGenres.find({})
+  userGenres.forEach(userGenre => {
+    genres.forEach(genre => {
+      /* If current userGenre.genreID is the same as the current genre.id, 
+      add to the currentUserGenres array
+      */
+      if (userGenre.genreID.toString() === genre._id.toString()) {
+        currentUserGenres.push({
+          userID: userGenre.userID,
+          genre: genre.name
         })
       }
     })
-    .catch((err) => {
-      console.log(err)
-    })
+  })
+  return currentUserGenres
 }
 
 // Gets genres based on given user
 const getUserGenres = async (userID) => {
+  userGenres = []
   getGenres()
-  await UserGenres.find({})
-    .lean()
-    .then((result) => {
-      if (result === undefined) {
-        console.log('userGenres undefined')
-      } else {
-        userGenres = result
-
-        allUserGenres.push(genres)
-        userGenres.forEach(userGenre => {
-          genres.forEach(genre => {
-            /* If current userGenre.genreID is the same as the current genre.id
-            and userGenre.userID is the same as the userID parameter, add to
-            the currentUserGenres array
-            */
-            if (userGenre.genreID.toString() === genre._id.toString() && userGenre.userID === userID) {
-              currentUserGenres.push(genre.name)
-            }
-          })
-        })
+  userGenres = await UserGenres.find({})
+  userGenres.forEach(userGenre => {
+    genres.forEach(genre => {
+      /* If current userGenre.genreID is the same as the current genre.id
+        and userGenre.userID is the same as the userID parameter, add to
+        the currentUserGenres array
+        */
+      if (userGenre.genreID.toString() === genre._id.toString() && userGenre.userID === userID) {
+        currentUserGenres.push(genre.name)
       }
     })
-    .catch((err) => {
-      console.log(err)
-    })
+  })
+  return currentUserGenres
 }
 
 const addGenre = async (genre) => {
@@ -86,6 +81,5 @@ module.exports = {
   addUserGenre,
   deleteUserGenre,
   currentUserGenres,
-  allUserGenres,
-  allGenres
+  getUsersGenres
 }

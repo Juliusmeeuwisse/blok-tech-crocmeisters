@@ -79,16 +79,16 @@ const getProfile = async (req, res) => {
       genresController.addGenre({
         name: genreToBeAdded.name
       })
-      // Get genres 
+      // Get genres
       await genresController.getGenres
       genres = genresController.allGenres
       // Get the genreID from the just created genre
       const newGenre = await genres.find(x => x.name === genreToBeAdded.name)
       console.log(newGenre)
       // // Create userGenre to connect the new genre with the user
-      genresController.addUserGenre({
+      await genresController.addUserGenre({
         userID: myProfile.id,
-        genreID: newGenre.id
+        genreID: newGenre.id///////////////////////////////////
       })
     } catch (error) {
       console.log(error)

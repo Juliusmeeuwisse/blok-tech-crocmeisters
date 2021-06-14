@@ -9,8 +9,8 @@ const heartIcon = '/images/icons/white heart.png'
 const matchBanner = '/images/banners/Banner MMM-Match.png'
 
 let myProfile = null
-const matchesWithGenres = []
-let genres = []
+let matches = []
+const finalMatches = []
 
 // get matches for session user from database
 const getMatches = async (req, res) => {
@@ -23,71 +23,48 @@ const getMatches = async (req, res) => {
         })
       } else {
         myProfile = result.find((myProfile) => myProfile.id.includes(sessionID))
-        getUserMatches()
-        genresController.getUserGenres()
       }
     })
     .catch((err) => {
       console.log(err)
     })
 
-  if (matchesWithGenres.length < 1) {
-    for (let i = 0; i < matches.length; i++) {
-      console.log(i)
-      await genresController.getUserGenres(matches[i].id)
-      genres = genresController.currentUserGenres
-      console.log(genres)
-      matchesWithGenres.push({
-        id: matches[i].id,
-        picture: matches[i].picture,
-        name: matches[i].name,
-        genres: genres
+  if (matches.length < 1) {
+    // Get all matches
+    matches = await getUserMatches()
+    // Get all userGenres
+    const userGenres = await genresController.getUsersGenres()
+    let matchGenres = []
+    matches.forEach(match => {
+      matchGenres = []
+      userGenres.forEach(userGenre => {
+        // If match id is the same as the userGenre userID (so if the genre belongs to the match)...
+        if (match.id === userGenre.userID) {
+          // Add to matchGenres
+          matchGenres.push(userGenre.genre)
+        }
       })
-    }
+      // Add match to match list
+      finalMatches.push({
+        id: match.id,
+        picture: match.picture,
+        name: match.name,
+        genres: matchGenres
+      })
+    })
   }
 
   res.render('match', {
     heartIcon,
     banner: matchBanner,
-    matches: matchesWithGenres
+    matches: finalMatches
   })
 }
 
-let users = []
-const getUsers = async () => {
-  await Users.find({})
-    .lean()
-    .then((result) => {
-      if (result === undefined) {
-        console.log('Users undefined')
-      } else {
-        users = result
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
-
-const matches = []
-
 // Gets all songs
 const getUserMatches = async () => {
-  let userMatches = []
-  await UserMatches.find({})
-    .lean()
-    .then((result) => {
-      if (result === undefined) {
-        console.log('UserMatches undefined')
-      } else {
-        userMatches = result
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-
-  getUsers()
+  const userMatches = await UserMatches.find({})
+  const users = await Users.find({})
   // Loop through all userMatches
   if (!(matches.length > 1)) {
     userMatches.forEach(userMatch => {
@@ -102,14 +79,27 @@ const getUserMatches = async () => {
       }
     })
   }
+  return matches
 }
 
-// const deleteMatch = () => {
-//   Users.find({}).lean()
-//     .then((result) => {
-//       console.log(result)
-//     })
-// }
+// Add userMatch
+const addUserGenre = async (matchUserID) => {
+  const newUserMatch = await UserMatches.create({
+    userID: myProfile.id,
+    matchedUserID: matchUserID,
+    liked: true
+  })
+  newUserMatch.save()
+}
+
+// Delete userMatch
+const deleteUserMatch = async (matchUserID) => {
+  const deletedUserMatch = await UserMatches.deleteOne({
+    userID: myProfile.id,
+    matchedUserID: matchUserID
+  })
+  deletedUserMatch.deleteOne()
+}
 
 // get favourite songs from session users matches from database
 const getSongsForMusicList = (req, res) => {
