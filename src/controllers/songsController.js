@@ -3,57 +3,30 @@ const UserSongs = require('../models/userSongs')
 
 let songs = []
 let userSongs = []
-const allUserSongs = []
 const givenUserSongs = []
-const allSongs = []
 
 // Gets all songs
 const getSongs = async () => {
-  await Songs.find({})
-    .lean()
-    .then((result) => {
-      if (result === undefined) {
-        console.log('Songs undefined')
-      } else {
-        songs = result
-        songs.forEach(song => {
-          allSongs.push(song)
-        })
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  songs = await Songs.find({}).lean()
+  return songs
 }
 
 // Gets songs based on given user
 const getUserSongs = async (userID) => {
   getSongs()
-  await UserSongs.find({})
-    .lean()
-    .then((result) => {
-      if (result === undefined) {
-        console.log('userSongs undefined')
-      } else {
-        userSongs = result
-
-        userSongs.forEach(userSong => {
-          allUserSongs.push(userSong)
-          songs.forEach(song => {
-            /* If current userSongs.songID is the same as the current song._id
-              and userSong.userID is the same as the userID parameter, add to
-              the givenUserSongs array
-              */
-            if (userSong.songID === song._id.toString() && userSong.userID === userID) {
-              givenUserSongs.push(song)
-            }
-          })
-        })
+  userSongs = await UserSongs.find({}).lean()
+  userSongs.forEach(userSong => {
+    songs.forEach(song => {
+      /* If current userSongs.songID is the same as the current song._id
+          and userSong.userID is the same as the userID parameter, add to
+          the givenUserSongs array
+          */
+      if (userSong.songID === song._id.toString() && userSong.userID === userID) {
+        givenUserSongs.push(song)
       }
     })
-    .catch((err) => {
-      console.log(err)
-    })
+  })
+  return givenUserSongs
 }
 
 const addSong = async (song) => {
@@ -89,7 +62,5 @@ module.exports = {
   addSong,
   addUserSong,
   deleteUserSong,
-  songs,
-  allSongs,
-  allUserSongs
+  songs
 }

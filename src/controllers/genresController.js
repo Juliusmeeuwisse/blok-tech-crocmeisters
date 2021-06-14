@@ -1,3 +1,4 @@
+const { ObjectID } = require('mongodb')
 const Genres = require('../models/genres')
 const UserGenres = require('../models/userGenres')
 
@@ -7,7 +8,7 @@ const currentUserGenres = []
 
 // Gets all genres
 const getGenres = async () => {
-  genres = await Genres.find({})
+  genres = await Genres.find({}).lean()
   return genres
 }
 
@@ -15,10 +16,10 @@ const getGenres = async () => {
 const getUsersGenres = async () => {
   userGenres = []
   getGenres()
-  userGenres = await UserGenres.find({})
+  userGenres = await UserGenres.find({}).lean()
   userGenres.forEach(userGenre => {
     genres.forEach(genre => {
-      /* If current userGenre.genreID is the same as the current genre.id, 
+      /* If current userGenre.genreID is the same as the current genre.id,
       add to the currentUserGenres array
       */
       if (userGenre.genreID.toString() === genre._id.toString()) {
@@ -36,7 +37,7 @@ const getUsersGenres = async () => {
 const getUserGenres = async (userID) => {
   userGenres = []
   getGenres()
-  userGenres = await UserGenres.find({})
+  userGenres = await UserGenres.find({}).lean()
   userGenres.forEach(userGenre => {
     genres.forEach(genre => {
       /* If current userGenre.genreID is the same as the current genre.id
@@ -51,13 +52,18 @@ const getUserGenres = async (userID) => {
   return currentUserGenres
 }
 
+// Add genre
 const addGenre = async (genre) => {
+  const id = ObjectID()
   const newGenre = await Genres.create({
+    _id: id,
     name: genre.name
   })
   newGenre.save()
+  return id
 }
 
+// Add userGenre
 const addUserGenre = async (userGenre) => {
   const newUserGenre = await UserGenres.create({
     userID: userGenre.userID,
@@ -66,6 +72,7 @@ const addUserGenre = async (userGenre) => {
   newUserGenre.save()
 }
 
+// Delete userGenre
 const deleteUserGenre = async (userGenre) => {
   const deletedUserSong = await UserGenres.deleteOne({
     userID: userGenre.userID,
@@ -77,9 +84,8 @@ const deleteUserGenre = async (userGenre) => {
 module.exports = {
   getGenres,
   getUserGenres,
+  getUsersGenres,
   addGenre,
   addUserGenre,
-  deleteUserGenre,
-  currentUserGenres,
-  getUsersGenres
+  deleteUserGenre
 }

@@ -11,8 +11,8 @@ let currentUserGenres = []
 let givenUserSongs = []
 let songs = []
 let genres = []
+const userGenres = []
 let allUserSongs = []
-let allUserGenres = []
 
 let myProfile
 // render profile
@@ -33,67 +33,28 @@ const getProfile = async (req, res) => {
     })
 
   // Get all songs for the add and delete methods
-  songsController.getSongs()
-  songs = songsController.allSongs
+  songs = songsController.getSongs()
 
-  // Display songs based on loggedInUser
-  if (!(givenUserSongs.length > 0)) {
+  if (givenUserSongs.length < 1) {
     // Gets songs based on loggedin user
-    await songsController.getUserSongs(myProfile.id)
-    givenUserSongs = songsController.givenUserSongs
+    givenUserSongs = await songsController.getUserSongs(myProfile.id)
   }
 
   // Display genres based on loggedInUser
   if (!(currentUserGenres.length > 0)) {
     // Gets genres based on loggedin user
-    await genresController.getUserGenres(myProfile.id)
-    // genre array data from the genresController goes in currentUserGenres
-    currentUserGenres = genresController.currentUserGenres
+    currentUserGenres = await genresController.getUserGenres(myProfile.id)
   }
 
-  // Get available genre data
-  const genreToBeAdded = {
-    name: 'Progressive Housesss'
-  }
 
-  // Get all userGenres that belong to the logged in user
-  allUserGenres = genresController.allUserGenres
 
-  await genresController.getGenres
-  genres = await genresController.allGenres
-  const doesGenreExist = await genres.find(x => x.name === genreToBeAdded.name)
-  let doesUserGenreExist = null
-  // If genre exists, find the userGenre with the userID and genreID
-  doesUserGenreExist = await allUserGenres.find(x => x.userID === myProfile.id && x.genreID.toString() === doesGenreExist._id.toString())
 
-  // If genreToBeAdded already exists in the database...
-  if (doesGenreExist !== undefined && doesUserGenreExist === undefined) {
-    // Create userGenre
-    genresController.addUserGenre({
-      userID: myProfile.id,
-      genreID: doesGenreExist._id
-    })
-  } else {
-    try {
-      // If the given genre doesn't exist in the database, add the genre
-      genresController.addGenre({
-        name: genreToBeAdded.name
-      })
-      // Get genres
-      await genresController.getGenres
-      genres = genresController.allGenres
-      // Get the genreID from the just created genre
-      const newGenre = await genres.find(x => x.name === genreToBeAdded.name)
-      console.log(newGenre)
-      // // Create userGenre to connect the new genre with the user
-      await genresController.addUserGenre({
-        userID: myProfile.id,
-        genreID: newGenre.id///////////////////////////////////
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
+
+
+
+
+
+  
 
   res.render('profile', {
     heartIcon,
@@ -104,6 +65,42 @@ const getProfile = async (req, res) => {
   })
 }
 
+
+const addNewGenre = (req, res) => {
+// Get available genre data
+const genreToBeAdded = {
+  name: 'Progressive Housesss'
+}
+// Get all genres
+genres = await genresController.getGenres()
+
+const doesGenreExist = await genres.find(x => x.name === genreToBeAdded.name)
+// If genre exists, find the userGenre with the userID and genreID
+const userGenres = await genresController.getUserGenres()
+const doesUserGenreExist = await userGenres.find(x => x.userID === myProfile.id && x.genreID.toString() === doesGenreExist._id.toString())
+
+// If genre already exists in the database and user doesn't a userGenre...
+if (doesGenreExist !== undefined && doesUserGenreExist === undefined) {
+// Create userGenre
+  genresController.addUserGenre({
+    userID: myProfile.id,
+    genreID: doesGenreExist._id
+  })
+} else {
+  // If the given genre doesn't exist in the database, add the genre. Return just created genreID
+  const genreID = await genresController.addGenre({
+    name: genreToBeAdded.name
+  })
+
+  // Create userGenre to connect the new genre with the user
+  await genresController.addUserGenre({
+    userID: myProfile.id,
+    genreID: genreID
+  })
+}
+}
+
+///////////////////////////////////////////////////
 const addUserSong = (req, res) => {
   // Get available song data
   const songToBeAdded = {
@@ -111,14 +108,11 @@ const addUserSong = (req, res) => {
     artist: req.body.artist
   }
 
-  // Get all userSongs that belong to the logged in user
-  allUserSongs = songsController.allUserSongs
-
   const doesSongExist = songs.find(x => x.title === songToBeAdded.title && x.artist === songToBeAdded.artist)
   let doesUserSongExist = null
   // If songs exists, find the userSong with the userID and songID
   if (doesSongExist !== undefined) {
-    doesUserSongExist = allUserSongs.find(x => x.userID === myProfile.id && x.songID.toString() === doesSongExist._id.toString())
+    doesUserSongExist = givenUserSongs.find(x => x.userID === myProfile.id && x.songID.toString() === doesSongExist._id.toString())
   }
 
   // If songToBeAdded already exists in the database...
@@ -148,6 +142,7 @@ const addUserSong = (req, res) => {
   }
 }
 
+///////////////////////////////////////////////////
 const deleteUserSong = (req, res) => {
   // Get available song data
   const songToBeDeleted = {
