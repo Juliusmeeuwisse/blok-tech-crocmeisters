@@ -30,7 +30,7 @@ To install this project you will need to install node, if you already installed 
 
 #### install project
 To make use of this project you need to clone this github repository by executing the following command in your terminal:
-1.  ```$git clone https://github.com/joeriBouwman25/CMD-Project-Tech-2021.git``` 
+1.  ```$git clone https://github.com/Juliusmeeuwisse/blok-tech-crocmeisters``` 
 2. navigate to the cloned github folders in the terminal
 3. if you're in the right folder run the following code ```npm install``` the packages that are requirert for this project will now be installed and you're app is ready for running
 
@@ -51,10 +51,13 @@ More information about that later on this week.
 
 ## license
 
-My Music Match is released under terms of the MIT license.
+My Music Match is released under terms of the MIT [License](https://github.com/Juliusmeeuwisse/blok-tech-crocmeisters/blob/main/LICENSE).
 
 ## Contact
 
-Feel free to ask questions or contact me!
+Feel free to ask questions or contact us!
 
-Joeri.bouwman@hva.nl
+* J. Bouwman: Joeri.bouwman@hva.nl
+* J. Meeuwisse: julius.meeuwisse@hva.nl
+* S. van Fraeijenhove: stijn.van.fraeijenhove@hva.nl
+* T. Pereira de Lacerda: 
