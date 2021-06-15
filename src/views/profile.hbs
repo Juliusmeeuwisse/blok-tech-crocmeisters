@@ -31,7 +31,7 @@
  <button id="changeSongs">Change Songs</button>
  
   <form action="toevoegen" method="post">
-    <section>
+    <section class="change">
       <h2>Change your favourite songs</h2>
       {{#each myProfile.songs}}
       <ul>
@@ -44,7 +44,7 @@
       </ul>
       {{/each}}
     </section>
-    <button id="submitButton">Submit</button>
+    <button id="submitButton" class="submitButton">Submit</button>
   </form>
 
 

@@ -757,6 +757,20 @@ footer a {
   text-align: end;
 }
 
+/* .change {
+  display: flex;
+}
+
+form .submitButton {
+  background-color: #1db954;
+  border-radius: 2em;
+  padding: .5em 2em .5em 2em;
+  color: white;
+  border: 0;
+  font-size: large;
+} */
+
+
 @keyframes logoGrow {
   0% {
     transform: scale(1);
