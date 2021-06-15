@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: sans-serif, Helvetica, Arial;
   background-color: #191414;
 }
@@ -309,10 +311,10 @@ form button:last-of-type {
   border-left: 11.5px solid #fff;
 }
 
-.musicList article:last-of-type,
+/* .musicList article:last-of-type,
 .match article:last-of-type {
   margin-bottom: 5em;
-}
+} */
 
 .matchID {
   display: none;
@@ -757,19 +759,42 @@ footer a {
   text-align: end;
 }
 
-/* .change {
-  display: flex;
-}
-
-form .submitButton {
-  background-color: #1db954;
-  border-radius: 2em;
-  padding: .5em 2em .5em 2em;
-  color: white;
+#submitButton {
+  position: unset;
+  /* top: unset;
+  left: unset;
+  bottom: 0.3em;
+  right: 0.5em; */
+  background-color: #585858;
+  box-shadow: 2px 2px 4px #282828;
+  font-size: 12px;
+  border-style: none;
   border: 0;
-  font-size: large;
-} */
-
+  border-radius: 7px;
+  height: 2em;
+  width: 8em;
+  color: #fff;
+}
+.editform {
+  width: 100%;
+}
+.change {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.change ul li input {
+  width: 12em;
+  border: 0px;
+  border-radius: 7px;
+  padding: .5em 1em .5em 1em;
+  margin: .5em 0 .5em 0;
+  width: 100%;
+}
+.change h2 {
+  text-align: start;
+  font-size: 18px;
+}
 
 @keyframes logoGrow {
   0% {
