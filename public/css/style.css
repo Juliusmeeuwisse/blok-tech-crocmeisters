@@ -761,10 +761,6 @@ footer a {
 
 #submitButton {
   position: unset;
-  /* top: unset;
-  left: unset;
-  bottom: 0.3em;
-  right: 0.5em; */
   background-color: #585858;
   box-shadow: 2px 2px 4px #282828;
   font-size: 12px;
@@ -775,25 +771,37 @@ footer a {
   width: 8em;
   color: #fff;
 }
-.editform {
-  width: 100%;
+#editform {
+  display: flex;
 }
+
 .change {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
+  
 }
-.change ul li input {
+.change article ul li::marker {
+  content: none;
+}
+.change article ul li {
+  width: 70%;
+}
+
+.change article ul li input {
   width: 12em;
   border: 0px;
   border-radius: 7px;
   padding: .5em 1em .5em 1em;
   margin: .5em 0 .5em 0;
-  width: 100%;
+  width: 25em;
 }
+
 .change h2 {
   text-align: start;
   font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 0.3em 0.3em;
 }
 
 @keyframes logoGrow {

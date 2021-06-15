@@ -27,13 +27,14 @@
 
   {{/each}}
 
-
  <button id="changeSongs">Change Songs</button>
  
-  <form action="toevoegen" method="post" class="editform">
+  <form action="toevoegen" method="post" id="editform">
     <section class="change">
-      <h2>Change your favourite songs</h2>
+      <h2>Change your favourite songs:</h2>
+     
       {{#each myProfile.songs}}
+       <article>
       <ul>
         <li>
           <input id="song" type="text" name="Song" placeholder="Title" required>
@@ -42,19 +43,21 @@
           <input id="song" type="text" name="lastname" placeholder="Artist" required>
         </li>
       </ul>
+      </article>
       {{/each}}
+
        <button id="submitButton">Submit</button>
     </section>
    
   </form>
 
-{{!-- 
+
   <article>
     <form action="/profile" method="post" class="hiddenForm">
       <input type="text" name="search" placeholder="search for artist or song title" class="hiddenForm">
       <button class="hiddenForm">Search</button>
     </form>
-  </article> --}}
+  </article>
 
 
   {{#each data}}
