@@ -800,15 +800,18 @@ footer a {
 
 #results {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
   justify-content: left; 
+  flex-direction: column;
+  
 }
 
 #results li {
-  margin-bottom: 1em;
+  margin-bottom: .5em;
+  margin-top: .5em;
+  list-style-type: none;
+  margin-left: 1em;
 }
-
-
 
 @keyframes logoGrow {
   0% {
