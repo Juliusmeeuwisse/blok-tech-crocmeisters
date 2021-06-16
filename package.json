@@ -4,7 +4,7 @@
   "description": "package for the backend of a matching application",
   "main": "server.js",
   "scripts": {
-    "test": "test test",
+    "test": "nodemon server.js",
     "start": "node server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -13,13 +13,16 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "connect-timeout": "^1.9.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.0",
+    "express-session": "^1.17.2",
     "mongodb": "^3.6.6",
     "mongoose": "^5.12.10",
+    "nodemailer": "^6.6.1",
     "querystring": "^0.2.1",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9",
@@ -31,6 +34,7 @@
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.23.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1"
+    "eslint-plugin-promise": "^4.3.1",
+    "nodemon": "^2.0.7"
   }
 }

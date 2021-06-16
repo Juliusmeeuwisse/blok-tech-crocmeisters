@@ -1,0 +1,54 @@
+<section class="newProfile" >
+    <h1>We've collected the following data for your profile:</h1>
+     <article>
+        <img src='{{profileImg}}' alt="profiel foto">
+        <ul>
+            <li>Username:</li>
+            <li>{{myProfile.name}}</li>
+            <li>E-mail:</li>
+            <li>{{myProfile.email}}</li>
+        </ul>
+    </article>
+</section>
+<section class="mySongs">
+    <h1 id="profileH1">Your Favourite Songs:</h1>
+    {{#each myProfile.songs}}
+        <article>
+            <img src='{{albumArt}}' alt="favourite song">
+            <div>
+                <div>
+                    <h2>{{title}}</h2>
+                    <p>{{artist}}</p>
+                </div>
+                <button class='play'><span></span></button>
+                <audio src="{{source}}"></audio>
+            </div>
+            <button id="changeSongs">Change Song</button>
+        </article>
+    {{/each}}
+{{!-- <article>
+    <form action="/profile" method="post" class="hiddenForm">
+        <input type="text" name="search" placeholder="search for artist or song title" class="hiddenForm">
+        <button class="hiddenForm">Search</button>
+    </form>
+    </article> --}}
+{{#each data}}
+    <p>{{this}}</p>
+{{/each}}
+</section>
+<section class="myGenres">
+    <h1 id="profileH1">Your Genres</h1>
+    <article>
+        <ul>
+        {{#each myProfile.genres}}
+            <li>{{this}},</li>
+        {{/each}}
+        </ul>
+    </article>
+</section>
+<section class="confirmProfile">   
+    <form action="/confirmProfile" method="POST">
+        <button name="confirm" value="true">Confirm</button>
+        <button name="decline" value="false">Decline</button>
+    </form>
+</section>
