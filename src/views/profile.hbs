@@ -1,4 +1,4 @@
-<section class="profile">
+(<section class="profile">
   <article>
     <img src='{{profileImg}}' alt="profiel foto">
     <ul>
@@ -22,34 +22,30 @@
       <button class='play'><span></span></button>
       <h2>{{title}}</h2>
       <p>{{artist}}</p>
-    </div>
+    </div>       
   </article>
-
+    <form action="/profile" method="post" id="editform">
+<section class="change">
+  <article>
+    <ul>
+        <li>
+          <input id="song" type="text" name="field{{@index}}" placeholder="Title/Artist">
+        </li>
+        <li><button value="{{@index}}" id="submitButton">Submit</button></li>
+      </ul>
+    </article>
+  </section>
+</form>
   {{/each}}
 
  <button id="changeSongs">Change Songs</button>
  
-  <form action="toevoegen" method="post" id="editform">
-    <section class="change">
-      <h2>Change your favourite songs:</h2>
-     
-      {{#each myProfile.songs}}
-       <article>
-      <ul>
-        <li>
-          <input id="song" type="text" name="Song" placeholder="Title" required>
-        </li>
-        <li>
-          <input id="song" type="text" name="lastname" placeholder="Artist" required>
-        </li>
-      </ul>
-      </article>
-      {{/each}}
 
-       <button id="submitButton">Submit</button>
-    </section>
-   
-  </form>
+      
+     
+
+       
+ 
 
 
   <article>

@@ -47,12 +47,31 @@ const getProfile = (req, res) => {
 }
 
 const searchSongs = (req, res) => {
-  res.render('login', {
-    banner: mainBanner,
-    javaScript: 'js/index.js',
-    check: 'check',
-    heartIcon
-  })
+
+  if (req.body.field0) {
+    spotifyApi.searchTracks(req.body.field0, {
+        limit: 5
+  const searchResults = data.body.tracks.items      .then((data) => {
+        console.log(data.body)
+      })
+  } else if (req.body.field1) {
+    const searchResults = data.body.tracks.itemss(req.body.field1, {
+        limit: 5
+      })
+      .then((data) => {
+        console.log(data.body)
+    const searchResults = data.body.tracks.items  } else if (req.body.field2) {
+    spotifyApi.searchTracks(req.body.field2, {
+        limit: 5
+      })
+      .then((data) => {
+        console.log(data.body)
+      })
+  } else {
+    console.log('undefined')
+  }
+  res.redirect('/profile')
+
 }
 
 // render settings

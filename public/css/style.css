@@ -771,6 +771,7 @@ footer a {
   width: 8em;
   color: #fff;
 }
+
 #editform {
   display: flex;
 }
@@ -795,13 +796,6 @@ footer a {
   padding: .5em 1em .5em 1em;
   margin: .5em 0 .5em 0;
   width: 25em;
-}
-
-.change h2 {
-  text-align: start;
-  font-size: 18px;
-  font-weight: bold;
-  margin: 0 0 0.3em 0.3em;
 }
 
 @keyframes logoGrow {
