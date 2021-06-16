@@ -21,6 +21,13 @@ const getMatches = (req, res) => {
       } else {
         spotifyApi.getMe()
           .then((data) => {
+            let profileImg = null
+            if (!data.body.images[0]) {
+              profileImg = '/images/unknownImg.png'
+            } else {
+              profileImg = data.body.images[0].url
+            }
+            const spotifyProfile = data.body
             const sessionID = data.body.id
             const myProfile = result.find((myProfile) => myProfile.id.includes(sessionID))
             const myMatches = result.filter((match) => myProfile.matches.includes(match.id))
@@ -29,7 +36,10 @@ const getMatches = (req, res) => {
               check: 'check',
               javaScript: 'js/index.js',
               banner: matchBanner,
-              matches: myMatches
+              matches: myMatches,
+              myProfile,
+              spotifyProfile,
+              profileImg
             })
           })
       }
@@ -60,6 +70,13 @@ const getSongsForMusicList = (req, res) => {
       } else {
         spotifyApi.getMe()
           .then((data) => {
+            let profileImg = null
+            if (!data.body.images[0]) {
+              profileImg = '/images/unknownImg.png'
+            } else {
+              profileImg = data.body.images[0].url
+            }
+            const spotifyProfile = data.body
             const sessionID = data.body.id
             const myProfile = result.find((myProfile) => myProfile.id.includes(sessionID))
             const myMatches = result.filter((match) => myProfile.matches.includes(match.id))
@@ -69,7 +86,10 @@ const getSongsForMusicList = (req, res) => {
               check: 'check',
               javaScript: 'js/index.js',
               banner: musicListBanner,
-              songs: mySongs
+              songs: mySongs,
+              myProfile,
+              spotifyProfile,
+              profileImg
             })
           })
       }

@@ -22,5 +22,7 @@ router
   .get('/settings', usersController.checkSession, profileAndSettingsController.getSettings)
   .get('/confirmProfile', usersController.checkSession, loginController.getConfirmProfileData)
   .post('/confirmProfile', usersController.checkSession, loginController.confirmProfile)
+  .get('/getDelete', usersController.checkSession, loginController.getDelete)
+  .post('/getRemove', usersController.checkSession, loginController.remove)
 
 module.exports = router

@@ -7,7 +7,10 @@
     "test": "nodemon server.js",
     "start": "node server.js",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "postcss": "npx postcss public/css/style.css > public/css/style_output.css",
+    "css-size-help": "css-size --help",
+    "csssize": "css-size public/css/style.css"
   },
   "author": "Joeri",
   "license": "MIT",
@@ -16,6 +19,7 @@
     "connect-timeout": "^1.9.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "css-size": "^5.0.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.0",
@@ -27,14 +31,18 @@
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9",
     "spotify-web-api-node": "^5.0.2",
-    "uuid": "^3.4.0"
+    "uuid": "^3.4.0",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
+    "cssnano": "^5.0.6",
     "eslint": "^7.26.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.23.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "postcss": "^8.3.4",
+    "postcss-cli": "^8.3.1"
   }
 }
