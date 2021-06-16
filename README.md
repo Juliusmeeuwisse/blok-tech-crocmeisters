@@ -3,6 +3,8 @@
 
 My Music Match, shortened to MMM, is an online matching application where people can find other people based on their musical tastes. MMM uses the Spotify API to create playlists with the favorite songs of users when matches occur. This github page will only show a part of the application because I will only work on one feature. This feature will be the matching of users.
 
+https://my-music-match-crocedition.herokuapp.com/
+
 ## Requirements
  My Music Match is a node.js app that works with express and Spotify. The application implements the Spotify API and uses express to host the application. For more information on the Spotify API check the following link;
 [https://developer.spotify.com/documentation/web-api/](https://developer.spotify.com/documentation/web-api/)
@@ -30,28 +32,35 @@ To install this project you will need to install node, if you already installed 
 
 #### install project
 To make use of this project you need to clone this github repository by executing the following command in your terminal:
-1.  ```$git clone https://github.com/joeriBouwman25/CMD-Project-Tech-2021.git``` 
+1.  ```$git clone https://github.com/Juliusmeeuwisse/blok-tech-crocmeisters.git``` 
 2. navigate to the cloned github folders in the terminal
-3. if you're in the right folder run the following code ```npm install``` the packages that are requirert for this project will now be installed and you're app is ready for running
+3. if you're in the right folder run the following code ```npm install``` the packages that are requirert for this project will now be installed and you're 
+app is ready for running
 
 ## Author and collaborators
+Author:
+* J. Bouwman: [joeriBouwman25](https://github.com/joeriBouwman25)
 
-J. Bouwman: [joeriBouwman25](https://github.com/joeriBouwman25)
-
-Later on in the project I will collaborate with other students to make a full working application.
+Collaborators:
+* J. Meeuwisse: [juliusmeeuwisse](https://github.com/Juliusmeeuwisse)
+* S. van Fraeijenhove: [stijnvF](https://github.com/StijnvF)
+* T. Pereira de Lacerda: [Txai-HvA](https://github.com/Txai-HvA)
 
 ## FAQ
 
-_How will the My Music Match look like?_
+_What will the My Music Match look like?_
 
 More information about that later on this week.
 
 ## license
 
-My Music Match is released under terms of the MIT license.
+My Music Match is released under terms of the MIT [License](https://github.com/Juliusmeeuwisse/blok-tech-crocmeisters/blob/main/LICENSE).
 
 ## Contact
 
-Feel free to ask questions or contact me!
+Feel free to ask questions or contact us!
 
-Joeri.bouwman@hva.nl
+* J. Bouwman: Joeri.bouwman@hva.nl
+* J. Meeuwisse: julius.meeuwisse@hva.nl
+* S. van Fraeijenhove: stijn.van.fraeijenhove@hva.nl
+* T. Pereira de Lacerda: txai.pereira.de.lacerda@hva.nl
