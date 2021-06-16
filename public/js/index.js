@@ -2,8 +2,6 @@ const music = document.querySelectorAll('audio')
 const button = document.getElementsByClassName('play')
 const icon = document.querySelectorAll('span')
 
-// const changeButton = document.getElementById('changeSongs')
-
 let a = true
 
 // play music and change play button
