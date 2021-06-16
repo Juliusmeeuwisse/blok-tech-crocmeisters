@@ -798,6 +798,18 @@ footer a {
   width: 25em;
 }
 
+#results {
+  display: flex;
+  flex-direction: column;
+  justify-content: left; 
+}
+
+#results li {
+  margin-bottom: 1em;
+}
+
+
+
 @keyframes logoGrow {
   0% {
     transform: scale(1);
