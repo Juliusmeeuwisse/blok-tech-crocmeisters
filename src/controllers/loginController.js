@@ -230,8 +230,14 @@ const remove = (req, res) => {
           .then((data) => {
             const sessionID = data.body.id
             const myProfile = result.find((profile) => profile.id.includes(sessionID))
-            Users.dropUser(myProfile)
-            res.redirect('login')
+            const userId = myProfile._id
+            console.log(userId)
+            Users.findOneAndDelete({ _id: userId }).exec()
+            res.render('login', {
+              javaScript: 'js/index.js',
+              banner: mainBanner
+            }
+            )
           })
       }
     })
