@@ -3,7 +3,7 @@
 
 My Music Match, shortened to MMM, is an online matching application where people can find other people based on their musical tastes. MMM uses the Spotify API to create playlists with the favorite songs of users when matches occur. This github page will only show a part of the application because I will only work on one feature. This feature will be the matching of users.
 
-[https://my-music-match-crocedition.herokuapp.com/]
+https://my-music-match-crocedition.herokuapp.com/
 
 ## Requirements
  My Music Match is a node.js app that works with express and Spotify. The application implements the Spotify API and uses express to host the application. For more information on the Spotify API check the following link;
