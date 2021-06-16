@@ -36,25 +36,22 @@
     </article>
   </section>
 </form>
+{{/each}}
+
+  {{#if searchResults}}
+  <article>
+  {{#each searchResults}}
+    <li>
+      {{name}}
+    </li>
   {{/each}}
+  </article>
+  {{/if}}
+  
+
+  
 
  <button id="changeSongs">Change Songs</button>
- 
-
-      
-     
-
-       
- 
-
-
-  <article>
-    <form action="/profile" method="post" class="hiddenForm">
-      <input type="text" name="search" placeholder="search for artist or song title" class="hiddenForm">
-      <button class="hiddenForm">Search</button>
-    </form>
-  </article>
-
 
   {{#each data}}
   <p>{{this}}</p>
