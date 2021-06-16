@@ -9,10 +9,11 @@ const heartIcon = '/images/icons/white heart.png'
 
 let userProfiles = []
 let givenUserSongs = []
+let currentMatches = []
 let myProfile
 // get user profiles from database
 const usersIndex = async (req, res) => {
-  Users.find({}).lean()
+  await Users.find({}).lean()
     .then((result) => {
       if (result === undefined) {
         res.render('home', {
@@ -23,13 +24,14 @@ const usersIndex = async (req, res) => {
       } else {
         myProfile = result.find((profile) => profile.id.includes(sessionID))
         userProfiles = result.filter(
-          (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id)
-        )
+          (user) => !myProfile.likes.includes(user.id) && !myProfile.dislikes.includes(user.id))
       }
     })
     .catch((err) => {
       console.log(err)
     })
+
+  await removeExistingMatches()
 
   givenUserSongs = []
   if (userProfiles[0] !== undefined) {
@@ -47,10 +49,22 @@ const usersIndex = async (req, res) => {
   })
 }
 
+const removeExistingMatches = async () => {
+  currentMatches = await matchDataController.getUserMatches(myProfile.id)
+  let pos
+  // Filter out loggedinuser
+  pos = userProfiles.indexOf(myProfile)
+  userProfiles.splice(pos, 1)
+  // If currentMatches can be found in userProfiles, remove them from userProfiles
+  currentMatches.forEach(currentMatch => {
+    pos = userProfiles.indexOf(currentMatch)
+    userProfiles.splice(pos, 1)
+  })
+}
+
 // update session user in database
 const likeAndMatch = async (req, res) => {
-  // let tempUsers = []
-  const currentMatches = await matchDataController.getUserMatches(myProfile.id)
+  currentMatches = await matchDataController.getUserMatches(myProfile.id)
 
   let pos
   // Filter out loggedinuser
@@ -67,7 +81,6 @@ const likeAndMatch = async (req, res) => {
     // Gets songs based on user
     givenUserSongs = await songsController.getUserSongs(userProfiles[1].id)
   }
-  console.log(givenUserSongs)
 
   let lastUser = userProfiles[0]
 
@@ -79,8 +92,6 @@ const likeAndMatch = async (req, res) => {
         lastUser = userProfiles[0],
         givenUserSongs = [],
         givenUserSongs = await songsController.getUserSongs(userProfiles[0].id).then(
-          console.log(userProfiles[0].id),
-          console.log(givenUserSongs),
           res.render('newMatch', {
             heartIcon,
             userProfile: userProfiles[0],

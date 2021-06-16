@@ -84,7 +84,6 @@ const getUserMatches = async (myProfileID) => {
 
 // Add userMatch
 const addUserMatch = async (myProfileID, matchUserID, liked) => {
-  console.log('yo')
   const newUserMatch = await UserMatches.create({
     userID: myProfileID,
     matchedUserID: matchUserID,
