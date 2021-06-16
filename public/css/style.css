@@ -361,6 +361,12 @@ form button:last-of-type {
   margin-bottom: 0.3em;
 }
 
+.profile form {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+
 .login h1 {
   top: 10%;
 }
@@ -717,6 +723,15 @@ form button:last-of-type {
 #logoutButton {
   position: unset;
   background-color: #504f4f;
+  height: 1.5em;
+  width: 5em;
+}
+
+#logoutButton a {
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+  font-family: sans-serif, Helvetica, Arial;
 }
 
 #footerSpotifyLogo {
