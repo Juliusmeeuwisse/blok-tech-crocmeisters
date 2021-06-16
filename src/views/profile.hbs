@@ -1,16 +1,19 @@
-(<section class="profile">
-  <article>
-    <img src='{{profileImg}}' alt="profiel foto">
-    <ul>
-      <li>Username:</li>
-      <li>{{spotifyProfile.display_name}}</li>
-      <li>E-mail:</li>
-      <li>{{spotifyProfile.email}}</li>
-      <li>Profile:</li>
-      <li><a href="{{spotifyProfile.external_urls.spotify}}">{{spotifyProfile.external_urls.spotify}}</a></li>
-    </ul>
-    <a href="https://accounts.spotify.com/en/logout">Logout</a>
-  </article>
+
+<section class="profile" >
+     <article>
+        <img src='{{profileImg}}' alt="profiel foto">
+        <ul>
+            <li>Username:</li>
+            <li>{{spotifyProfile.display_name}}</li>
+            <li>E-mail:</li>
+            <li>{{spotifyProfile.email}}</li>
+            <li>Profile:</li>
+            <li><a href="{{spotifyProfile.external_urls.spotify}}">{{spotifyProfile.external_urls.spotify}}</a></li>
+        </ul>
+    </article>
+    <form action="/logout">
+        <button id='logoutButton'><a href="https://accounts.spotify.com/en/logout">Logout</a></button>
+        </form>
 </section>
 <section class="musicList">
   <h1 id="profileH1">My Favourite Songs:</h1>
