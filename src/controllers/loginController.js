@@ -203,7 +203,7 @@ const confirmProfile = (req, res) => {
   }
 }
 
-const deleteAccount = (req, res) => {
+const getDelete = (req, res) => {
   res.render('deleteAccount', {
     banner: mainBanner,
     javaScript: 'js/login.js'
@@ -216,5 +216,5 @@ module.exports = {
   setAccestokens,
   getConfirmProfileData,
   confirmProfile,
-  deleteAccount
+  getDelete
 }
