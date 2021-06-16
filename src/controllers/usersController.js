@@ -66,16 +66,6 @@ const removeExistingMatches = async () => {
 const likeAndMatch = async (req, res) => {
   currentMatches = await matchDataController.getUserMatches(myProfile.id)
 
-  let pos
-  // Filter out loggedinuser
-  pos = userProfiles.indexOf(myProfile)
-  userProfiles.splice(pos, 1)
-  // If currentMatches can be found in userProfiles, remove them from userProfiles
-  currentMatches.forEach(currentMatch => {
-    pos = userProfiles.indexOf(currentMatch)
-    userProfiles.splice(pos, 1)
-  })
-
   givenUserSongs = []
   if (userProfiles[0] !== undefined) {
     // Gets songs based on user
@@ -103,12 +93,12 @@ const likeAndMatch = async (req, res) => {
     console.log('2')
     lastUser = userProfiles[0]
     matchDataController.addUserMatch(myProfile.id, lastUser.id, false)
-      .then(userProfiles.shift(), res.redirect('/'))
+      .then(userProfiles.shift(), res.redirect('/')).then(await removeExistingMatches())
   } else {
     console.log('3')
     lastUser = userProfiles[0]
     matchDataController.addUserMatch(myProfile.id, lastUser.id, false)
-      .then(userProfiles.shift(), res.redirect('/'))
+      .then(userProfiles.shift(), res.redirect('/')).then(await removeExistingMatches())
   }
 }
 
