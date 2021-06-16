@@ -41,6 +41,13 @@
   {{#if searchResults}}
   <article id="results" class="none results">
   {{#each searchResults}}
+    <img src='{{albumArt}}' alt="favourite song 1">
+    
+      <audio src="{{source}}"></audio>
+      <button class='play'><span></span></button>
+      <h2>{{title}}</h2>
+      <p>{{artist}}</p>
+          
     <li>
       {{name}}
     </li>
