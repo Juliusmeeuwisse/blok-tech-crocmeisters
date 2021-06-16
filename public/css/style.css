@@ -813,6 +813,11 @@ footer a {
   margin-left: 1em;
 }
 
+.none {
+  display: none !important;
+}
+
+
 @keyframes logoGrow {
   0% {
     transform: scale(1);

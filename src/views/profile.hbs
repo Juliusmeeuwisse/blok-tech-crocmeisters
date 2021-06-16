@@ -24,7 +24,7 @@
       <p>{{artist}}</p>
     </div>       
   </article>
-    <form action="/profile" method="post" id="editform">
+    <form action="/profile" method="post" class="editform" >
 <section class="change">
   <article>
     <ul>
@@ -39,7 +39,7 @@
 {{/each}}
 
   {{#if searchResults}}
-  <article id="results">
+  <article id="results" class="results">
   {{#each searchResults}}
     <li>
       {{name}}
