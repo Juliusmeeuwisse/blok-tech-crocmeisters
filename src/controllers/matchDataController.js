@@ -31,7 +31,7 @@ const getMatches = async (req, res) => {
 
   if (matches.length < 1) {
     // Get all matches
-    matches = await getUserMatches()
+    matches = await getUserMatches(myProfile.id)
     // Get all userGenres
     const userGenres = await genresController.getUsersGenres()
     let matchGenres = []
@@ -62,14 +62,14 @@ const getMatches = async (req, res) => {
 }
 
 // Gets all songs
-const getUserMatches = async () => {
+const getUserMatches = async (myProfileID) => {
   const userMatches = await UserMatches.find({})
   const users = await Users.find({})
   // Loop through all userMatches
   if (!(matches.length > 1)) {
     userMatches.forEach(userMatch => {
       // Get all the matches from the loggedinuser
-      if (myProfile.id === userMatch.userID) {
+      if (myProfileID === userMatch.userID) {
         users.forEach(user => {
           if (user.id === userMatch.matchedUserID) {
             // Add each user that matches with the loggedinuser
@@ -83,11 +83,12 @@ const getUserMatches = async () => {
 }
 
 // Add userMatch
-const addUserGenre = async (matchUserID) => {
+const addUserMatch = async (myProfileID, matchUserID, liked) => {
+  console.log('yo')
   const newUserMatch = await UserMatches.create({
-    userID: myProfile.id,
+    userID: myProfileID,
     matchedUserID: matchUserID,
-    liked: true
+    liked: liked
   })
   newUserMatch.save()
 }
@@ -128,5 +129,7 @@ const getSongsForMusicList = (req, res) => {
 
 module.exports = {
   getMatches,
-  getSongsForMusicList
+  getSongsForMusicList,
+  getUserMatches,
+  addUserMatch
 }

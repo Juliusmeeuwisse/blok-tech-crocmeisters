@@ -44,8 +44,6 @@ const getProfile = async (req, res) => {
     // Gets genres based on loggedin user
     currentUserGenres = await genresController.getUserGenres(myProfile.id)
   }
-  console.log('refresh wwwwwwwwwwwwwwwwwwwwwwwwwwwwww')
-  console.log(currentUserGenres)
 
   res.render('profile', {
     heartIcon,

@@ -3,7 +3,7 @@ const UserSongs = require('../models/userSongs')
 
 let songs = []
 let userSongs = []
-const givenUserSongs = []
+let givenUserSongs = []
 
 // Gets all songs
 const getSongs = async () => {
@@ -13,6 +13,7 @@ const getSongs = async () => {
 
 // Gets songs based on given user
 const getUserSongs = async (userID) => {
+  givenUserSongs = []
   getSongs()
   userSongs = await UserSongs.find({}).lean()
   userSongs.forEach(userSong => {
