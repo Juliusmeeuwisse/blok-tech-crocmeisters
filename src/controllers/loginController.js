@@ -210,11 +210,43 @@ const getDelete = (req, res) => {
   })
 }
 
+const getRemove = (req, res) => {
+  res.render('login', {
+    banner: mainBanner,
+    javaScript: 'js/login.js'
+  })
+}
+
+const remove = (req, res) => {
+  Users.find({}).lean()
+    .then((result) => {
+      if (result === undefined) {
+        res.render('login', {
+          javaScript: 'js/index.js',
+          banner: mainBanner
+        })
+      } else {
+        spotifyApi.getMe()
+          .then((data) => {
+            const sessionID = data.body.id
+            const myProfile = result.find((profile) => profile.id.includes(sessionID))
+            Users.dropUser(myProfile)
+            res.redirect('login')
+          })
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
 module.exports = {
   getLogin,
   redirectToSpotifyLogin,
   setAccestokens,
   getConfirmProfileData,
   confirmProfile,
-  getDelete
+  getDelete,
+  getRemove,
+  remove
 }
