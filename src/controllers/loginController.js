@@ -2,7 +2,7 @@ const spotifyAuth = require('../models/spotify')
 const spotifyApi = spotifyAuth.spotifyApi
 const authorizeURL = spotifyAuth.authorizeURL
 const Users = require('../models/users')
-// const sendEmail = require('../utils/sendEmail')
+const sendEmail = require('../utils/sendEmail')
 
 // Global variables
 const mainBanner = '/images/banners/Banner MMM-home.png'
@@ -170,18 +170,19 @@ const confirmProfile = (req, res) => {
                   .then((result) => {
                     const myProfile = result.find((profile) => profile.id.includes(data.body.id))
                     if (!myProfile) {
-                      // const mailOptions = {
-                      //   from: 'My MusicMatch <dev.mymusicmatch@gmail.com>',
-                      //   to: 'test.mymusicmatch@gmail.com',
-                      //   subject: 'A new user has logged in!',
-                      //   text: `
-                      // Een nieuwe gebruiker heeft zich aangemeld voor MyMusicMatch.
+                      const mailOptions = {
+                        from: 'My MusicMatch <dev.mymusicmatch@gmail.com>',
+                        to: data.body.email,
+                        cc: 'test.mymusicmatch@gmail.com',
+                        subject: 'A new user has logged in!',
+                        text: `
+                        Hey! ${data.body.display_name} 
 
-                      //   Naam: ${profile.name}
-                      //   Email: ${profile.email}
-                      // `
-                      // }
-                      // sendEmail(mailOptions)
+                        Thank you for joining MyMusicMatch
+                        We are super excited to have you on board!
+                      `
+                      }
+                      sendEmail(mailOptions)
                       Users.create(profileData)
                     }
                   })
