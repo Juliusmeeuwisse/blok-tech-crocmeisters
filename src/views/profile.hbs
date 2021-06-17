@@ -1,3 +1,4 @@
+
 <section class="profile" >
      <article>
         <img src='{{profileImg}}' alt="profiel foto">
@@ -15,37 +16,64 @@
         </form>
 </section>
 <section class="musicList">
-    <h1 id="profileH1">My Favourite Songs:</h1>
-{{#each myProfile.songs}}
-    <article>
-        <img src='{{albumArt}}' alt="favourite song 1">
-        <div>
-        <audio src="{{source}}"></audio>
-        <button class='play'><span></span></button>
-        <h2>{{title}}</h2>
-        <p>{{artist}}</p>
-        </div>
+  <h1 id="profileH1">My Favourite Songs:</h1>
+  {{#each myProfile.songs}}
+  <article>
+    <img src='{{albumArt}}' alt="favourite song 1">
+    <div>
+      <audio src="{{source}}"></audio>
+      <button class='play'><span></span></button>
+      <h2>{{title}}</h2>
+      <p>{{artist}}</p>
+    </div>       
+  </article>
+    <form action="/profile" method="post" class="none editform" >
+<section class="change">
+  <article>
+    <ul>
+        <li>
+          <input id="song" type="text" name="field{{@index}}" placeholder="Title/Artist">
+        </li>
+        <li><button value="{{@index}}" id="submitButton">Submit</button></li>
+      </ul>
     </article>
+  </section>
+</form>
+{{/each}}
 
-{{/each}}
-<button id="changeSongs">Change Songs</button>
-<article>
-    <form action="/profile" method="post" class="hiddenForm">
-        <input type="text" name="search" placeholder="search for artist or song title" class="hiddenForm">
-        <button class="hiddenForm">Search</button>
-    </form>
-    </article>
-{{#each data}}
-    <p>{{this}}</p>
-{{/each}}
+  {{#if searchResults}}
+  <article id="results" class="none results">
+  {{#each searchResults}}
+    <img src='{{albumArt}}' alt="favourite song 1">
+    
+      <audio src="{{source}}"></audio>
+      <button class='play'><span></span></button>
+      <h2>{{title}}</h2>
+      <p>{{artist}}</p>
+          
+    <li>
+      {{name}}
+    </li>
+  {{/each}}
+  </article>
+  {{/if}}
+  
+
+  
+
+ <button id="changeSongs">Change Songs</button>
+
+  {{#each data}}
+  <p>{{this}}</p>
+  {{/each}}
 </section>
 <section>
-    <article>
-        <h2>My Genres</h2>
+  <article>
+    <h2>My Genres</h2>
     {{#each myProfile.genres}}
     <ul>
-        <li>{{this}}</li>
+      <li>{{this}}</li>
     </ul>
     {{/each}}
-    </article>
+  </article>
 </section>
