@@ -20,19 +20,6 @@ for (let i = 0; i < button.length; i++) {
   button[i].addEventListener('click', playMusic)
 }
 
-const changeSongs = document.querySelector('#changeSongs')
-const result = document.querySelectorAll('.results')
-const forms = document.querySelectorAll('.editform')
-
-changeSongs.addEventListener('click', () => {
-  result.forEach((results) => {
-    results.classList.toggle('none')
-  })
-  forms.forEach((form) => {
-    form.classList.toggle('none')
-  })
-})
-
 // const searchForSongs = () => {
 //   const form = document.getElementsByClassName('hiddenForm')
 //   const hiddenForm = Array.from(form)

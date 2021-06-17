@@ -22,7 +22,6 @@ router
   .get('/settings', usersController.checkSession, profileAndSettingsController.getSettings)
   .get('/confirmProfile', usersController.checkSession, loginController.getConfirmProfileData)
   .post('/confirmProfile', usersController.checkSession, loginController.confirmProfile)
-  .post('/profile', usersController.checkSession, profileAndSettingsController.searchSongs)
   .get('/getDelete', usersController.checkSession, loginController.getDelete)
   .post('/getRemove', usersController.checkSession, loginController.remove)
 
